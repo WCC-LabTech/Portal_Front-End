@@ -1,0 +1,11 @@
+/* Labaide css stylesheet */
+body, p, ul, li, h1, h2, h3, h4, h5, h6 {margin:0; padding:0;}
+body {font: 75%/1.3 normal Verdana, Geneva, sans-serif;}
+
+.clearB {clear:both;}
+
+/* Header */
+header {height:75px; background-color:#333; position:relative;}
+h1 {color:#fff; font-size:2em;padding:8px 0 0 25px;}
+header .login {position:absolute; top:13px; right:50px; color:#fff; text-align:right;}
+header .login a {color:#00F;}

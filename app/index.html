@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" ng-app>
+<head>
+  <meta charset="utf-8">
+  <title>Washtenaw Community College: Lab Aide Site</title>
+  <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+  <header ng-controller="userLogin">
+      	<h1>Washtenaw Community College</h1>
+        <div id="login" class="login" ng-hide="is_loggedIn">
+           	<form name="loginForm" ng-submit="login()">
+				<input type="text" required class="input-block-level" placeholder="Username" ng-model="username" name="username">
+        		<div ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+					<span ng-show="loginForm.username.$error.required">Username required.</span>
+				</div>
+				<input type="password" required class="input-block-level" placeholder="Password" ng-model="password" name="password">
+				<div ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+					<span ng-show="loginForm.password.$error.required">Password required.</span>
+				</div>
+				<div ng-show="invalidUsernamePassword">
+					<span>Invalid username or password</span>
+				</div>
+				<p><span><a href="#forgotPassword" data-toggle="modal" class="btn btn-link">Forgot password?</a></span>
+				<span><button class="btn btn-primary btn-large" ng-disabled="loginForm.$invalid" type="submit">Login</button></span></p>
+            </form>
+            </div>
+            <div class="login" ng-show="is_loggedIn">
+            	<span><h2>Logged in as {{username}} | <a href="#" onclick="return false;" ng-click="logout()">Logout</a></h2></span>
+            </div>
+	</header>
+	<section>
+    	<h1>{{$scope.username}}</h1>
+    </section>
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+  -->
+  <script src="lib/angular/angular.js"></script>
+  <script src="lib/angular/angular-cookies.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/directives.js"></script>
+</body>
+</html>

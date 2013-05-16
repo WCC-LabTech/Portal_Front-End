@@ -34,18 +34,23 @@ function cookieExp() {
 	var expDate = new Date(currentDate.getTime() + 86400000);
 	
 	return expDate.toGMTString();
-}	
+}
+
+function is_loggedIn() {
+	var loggedIn;
+	loggedIn = readCookie("username");
+	if (loggedIn == "null" || loggedIn == null) {
+			return false;
+		} else {
+			return true;
+		}
+}
 	
 function userLogin($scope, $http) {
 	
-		var loggedIn;
-		loggedIn = readCookie("username");
-		
-		if (loggedIn == "null" || loggedIn == null) {
-			$scope.is_loggedIn = false;
-		} else {
-			$scope.is_loggedIn = true;
-			$scope.username = loggedIn;
+		$scope.is_loggedIn = is_loggedIn();
+		if ($scope.is_loggedIn == true) {
+			$scope.username = readCookie("username");
 		}
 		$scope.login = function() {
     	$http.post('Http://207.75.134.159:8080/api-token-auth/login', {"username": $scope.username, "password": $scope.password}).success(function(data, status, headers, config) {
@@ -69,3 +74,10 @@ function userLogin($scope, $http) {
 		document.location.reload(true);
 	}
 }
+
+function nav($scope) {
+	
+	
+
+}
+

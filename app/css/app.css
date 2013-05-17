@@ -9,3 +9,16 @@ header {height:75px; background-color:#333; position:relative;}
 h1 {color:#fff; font-size:2em;padding:8px 0 0 25px;}
 header .login {position:absolute; top:13px; right:50px; color:#fff; text-align:right;}
 header .login a {color:#00F;}
+
+/* Navigation */
+nav {width:150px; height:100%; padding:20px 5px 0; position:fixed; float:left; border-right:1px solid black;}
+nav .menu {font-size:1.3em; width:125px; margin:20px auto;}
+nav .menu ul {list-style:none;}
+nav .menu li {padding-left:20px;}
+nav .menu li a {display:block; width:100px;}
+nav .menu li a:hover {background-color:#ccc;}
+
+/* Content */
+#content {margin-left:175px;}
+/* Footer */
+footer {text-align:center;}

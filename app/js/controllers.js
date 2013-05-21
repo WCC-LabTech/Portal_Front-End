@@ -6,27 +6,48 @@ angular.module('myApp.controllers', []).
   controller('MyCtrl1', [function() {
 
   }])
-  .controller('MyCtrl2', [function() {
-
+  .controller('MyCtrl2', ['$scope', '$http', function($scope, $http) {
+		var data;
+		var categories;
+		/*tp, 'events', 'get');
+		data.success(function(response) {
+			console.log(response);
+		});
+		data.error(function() {
+			alert('error');
+		});
+		
+		//Get Categories data
+		categories = api_call($http, 'categories', 'get');
+		categories.success(function(response) {
+			console.log(response);
+		});
+		*/
   }])
   .controller('userLogin', ['$scope', '$http', function($scope, $http) {
 	  $scope.is_loggedIn = is_loggedIn();
 		if ($scope.is_loggedIn == true) {
 			$scope.username = readCookie("username");
 		}
+		var data = new Object;
+		var login;
 		$scope.login = function() {
-    	$http.post('Http://207.75.134.159:8080/api-token-auth/login', {"username": $scope.username, "password": $scope.password}).success(function(data, status, headers, config) {
-        	console.log(status);
-        	console.log(data);
+		data = {"username": $scope.username, "password": $scope.password};
+		login = api_call($http, 'api-token-auth/login', 'post', data);
+		login.success(function(data) {
 			setCookie('Authorization', data.token);
 			setCookie('username', $scope.username);
 			$scope.is_loggedIn = true;
-    	}).error(function(data, status, headers, config) {
-        	if (400 === status) {
+		});
+		login.error(function(status) {
+			if (400 === status) {
             	$scope.invalidUsernamePassword = true;
-        	}
-    	});
+        	} else {
+				alert('No Response from Django Server');
+			}
+		});
     	return false;
+	
 	};
 	
 	$scope.logout = function() {
@@ -37,50 +58,8 @@ angular.module('myApp.controllers', []).
 	}
   }])
   .controller('nav', ['$scope', function($scope) {
-	  
+	  $scope.lab_aide = true;
+	  $scope.lab_tech = true;
+	  $scope.faculty = true;
+	  $scope.admin = true;
   }]);
-  
-function readCookie(key) {
-	var currentcookie;
-	var firstidx;
-	var lastidx;
-	currentcookie = document.cookie;
-    if (currentcookie.length > 0)
-    {
-        firstidx = currentcookie.indexOf(key + "=");
-        if (firstidx != -1)
-        {
-            firstidx = firstidx + key.length + 1;
-            lastidx = currentcookie.indexOf(";",firstidx);
-            if (lastidx == -1)
-            {
-                lastidx = currentcookie.length;
-            }
-            return unescape(currentcookie.substring(firstidx, lastidx));
-        }
-    }
-    return null;
-}
-
-function setCookie(c_name,value) {
-	var exdate= cookieExp();
-	var c_value=escape(value) + "; expires="+exdate;
-	document.cookie=c_name + "=" + c_value;
-}
-
-function cookieExp() {
-	var currentDate = new Date();
-	var expDate = new Date(currentDate.getTime() + 86400000);
-	
-	return expDate.toGMTString();
-}
-
-function is_loggedIn() {
-	var loggedIn;
-	loggedIn = readCookie("username");
-	if (loggedIn == "null" || loggedIn == null) {
-			return false;
-		} else {
-			return true;
-		}
-}

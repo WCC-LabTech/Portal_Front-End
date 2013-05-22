@@ -6,5 +6,6 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
   config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/home', {templateUrl: 'partials/home.html'});
     $routeProvider.when('/timesheet', {templateUrl: 'partials/timesheets/home.html', controller: 'MyCtrl2'});
+	$routeProvider.when('/periods', {templateUrl: 'partials/timesheets/periods.html', controller: 'periods'});
     $routeProvider.otherwise({redirectTo: '/home'});
   }]);

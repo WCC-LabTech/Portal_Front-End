@@ -1,0 +1,40 @@
+<h2>Pay Period: {{period}}</h2>
+
+<table class="timesheet" width="80%" cellpadding="0" cellspacing="0">
+	<caption>Entries</caption>
+	<thead>
+    	<tr>
+        	<th>Date</th>
+            <th>Day</th>
+            <th>Category</th>
+            <th>Start</th>
+            <th>End</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<tr class="entries" ng-repeat="entry in entries | orderBy:predicate">
+        	<td>{{entry.start_date}}</td>
+    		<td></td>
+    		<td>{{entry.category}}</td>
+            <td>{{entry.start_time}}</td>
+            <td>{{entry.end_time}}</td>
+        </tr>
+    	<tr>
+    		<td colspan="5"><a href="#" onclick="return false;" ng-click="form = true;">Add Entry</a></td>
+    	</tr>
+    </tbody>
+</table>
+
+<div class="entry_form" ng-controller="addEntry" ng-show="form">
+    <form name="entryForm" ng-submit="formSubmit()">
+        <div class="label">Start Time:</div>
+        <div class="input"><input type="text" id="start_time" ng-model="start_time" name="start_time" required /></div>
+        <div class="label">End Time:</div>
+        <div class="input"><input type="text" id="end_time" ng-model="end_time" name="end_time" required/></div>
+        <div class="label">Start Date:</div> 
+        <div class="input"><input type="text" id="start_date" ng-model="start_date" name="start_date" datepicker required/></div>
+        <div class="label">End Date:</div> 
+        <div class="input"><input type="text" id="end_date" ng-model="end_date" name="end_date" required/></div>
+    	<div class="submit"><input type="submit" name="submit" value="Record Entry" />
+    </form>
+</div>

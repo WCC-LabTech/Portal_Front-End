@@ -17,6 +17,8 @@ angular.module('myApp.controllers', []).
 			alert('error');
 		});
 		
+		$scope.predicate = "-id";
+		
 		function period(period) {
 			$scope.period = period;
 			console.log($scope.period);
@@ -84,7 +86,7 @@ angular.module('myApp.controllers', []).
 		});
 	  
 	  $scope.period = readCookie('period');
-	  entries = api_call($http, 'events/', 'get');
+	  entries = api_call($http, 'events/pay_period/' + $scope.period + '/', 'get');
 	  entries.success(function(data) {
 		  $scope.entries = data;
 	  });

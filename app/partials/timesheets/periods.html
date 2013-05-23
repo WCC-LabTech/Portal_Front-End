@@ -24,17 +24,39 @@
     	</tr>
     </tbody>
 </table>
+<br />
+<br />
+<table class="timesheet" width="70%" cellpadding="0" cellspacing="0">
+	<thead>
+    	<tr>
+			<th width="25%">Date</th>
+            <th>Comments</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<tr class="entries" ng-repeat="entry in entries | orderBy:predicate">
+        	<td>{{entry.start_date}}</td>
+            <td>{{entry.comments}}</td>
+        </tr>
+    </tbody>
+</table>
 
-<div class="entry_form" ng-controller="addEntry" ng-show="form">
+<div class="entry_form" ng-show="form">
     <form name="entryForm" ng-submit="formSubmit()">
+    	<div class="label">Category:</div>
+        <div class="input"><select ng-model="category">
+        						<option ng-repeat="category in categories" value="{{category.id}}">{{category.name}}</option>
+                           </select>
         <div class="label">Start Time:</div>
-        <div class="input"><input type="text" id="start_time" ng-model="start_time" name="start_time" required /></div>
+        <div class="input"><input ui-timepicker type="text" id="start_time" ng-model="start_time" name="start_time" required />
         <div class="label">End Time:</div>
-        <div class="input"><input type="text" id="end_time" ng-model="end_time" name="end_time" required/></div>
+        <div class="input"><input ui-datetime type="text" id="end_time" ng-model="end_time" name="end_time" required/></div>
         <div class="label">Start Date:</div> 
-        <div class="input"><input type="text" id="start_date" ng-model="start_date" name="start_date" datepicker required/></div>
+        <div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" id="start_date" ng-model="start_date" name="start_date" required/></div>
         <div class="label">End Date:</div> 
-        <div class="input"><input type="text" id="end_date" ng-model="end_date" name="end_date" required/></div>
+        <div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" id="end_date" ng-model="end_date" name="end_date" required/></div>
+        <div class="label">Comments:</div>
+        <div class="input"><textarea ng-model="comments"></textarea>
     	<div class="submit"><input type="submit" name="submit" value="Record Entry" />
     </form>
 </div>

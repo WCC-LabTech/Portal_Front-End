@@ -8,19 +8,13 @@ angular.module('myApp.controllers', []).
   }])
   .controller('MyCtrl2', ['$scope', '$http', function($scope, $http) {
 		var data;
-		var categories;
-		data = api_call($http, 'events/', 'get');
+		var periods;
+		data = api_call($http, 'pay_period/', 'get');
 		data.success(function(response) {
-			
+			$scope.periods = response;
 		});
 		data.error(function() {
 			alert('error');
-		});
-		
-		//Get Categories data
-		categories = api_call($http, 'categories/', 'get');
-		categories.success(function(response) {
-			;
 		});
 		
 		function period(period) {
@@ -33,6 +27,7 @@ angular.module('myApp.controllers', []).
 	  $scope.is_loggedIn = is_loggedIn();
 		if ($scope.is_loggedIn == true) {
 			$scope.username = readCookie("username");
+			$http.defaults.headers.common['Authorization'] = 'Token ' + readCookie('Authorization');
 		}
 		var data = new Object;
 		var login;
@@ -42,7 +37,9 @@ angular.module('myApp.controllers', []).
 		login.success(function(data) {
 			setCookie('Authorization', data.token);
 			setCookie('username', $scope.username);
+			 $http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
 			$scope.is_loggedIn = true;
+			//$scope.$digest();
 		});
 		login.error(function(status) {
 			if (400 === status) {
@@ -59,6 +56,8 @@ angular.module('myApp.controllers', []).
 		setCookie('username', null);
 		//setCookie('groups', null);
 		setCookie('Authorization', null);
+		setCookie('csrftoken', null);
+		setCookie('sessionid', null);
 		document.location.reload(true);
 	}
   }])
@@ -70,13 +69,20 @@ angular.module('myApp.controllers', []).
   }])
   .controller('periods', ['$scope', '$http', function($scope, $http) {
 	  var entries;
-	  $('#start_time').timepicker({timeFormat: 'HH:mm'}).val();
-	  $('#end_time').timepicker({timeFormat: 'HH:mm'}).val();
-	  $('#start_date').datepicker({ dateFormat: 'yy-mm-dd', showButtonPanel: true }).val();
-	  $('#end_date').datepicker({ dateFormat: 'yy-mm-dd' }).val();
-	  
+	  var categories;
+	  var periods;
+	  //$('#start_time').timepicker({timeFormat: 'HH:mm'}).val();
+	  //$('#end_time').timepicker({timeFormat: 'HH:mm'}).val();
+	  //$('#start_date').datepicker({ dateFormat: 'yy-mm-dd', showButtonPanel: true });
+	  //$('#end_date').datepicker({ dateFormat: 'yy-mm-dd' });
 	  
 	  $scope.form = false;
+	  //Get Categories data
+		categories = api_call($http, 'categories/', 'get');
+		categories.success(function(response) {
+			$scope.categories = response;
+		});
+	  
 	  $scope.period = readCookie('period');
 	  entries = api_call($http, 'events/', 'get');
 	  entries.success(function(data) {
@@ -84,17 +90,17 @@ angular.module('myApp.controllers', []).
 	  });
 	  
 	  $scope.predicate = "start_date";
-  }])
-  .controller('addEntry', ['$scope', '$http', function($scope, $http) {
 	  
 	  $scope.formSubmit = function() {
 		  var data = {};
+		  data.category = $scope.category;
 		  data.start_time = $scope.start_time;
 		  data.end_time = $scope.end_time;
 		  data.start_date = $scope.start_date;
 		  data.end_date = $scope.end_date;
+		  data.comments = $scope.comments;
 		  
-		  console.log(data);
+		  api_call($http, 'events/', 'post', data);
 		  $scope.form = false;
 	  }
   }]);

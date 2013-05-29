@@ -42,21 +42,28 @@
 </table>
 
 <div class="entry_form" ng-show="form">
+	<div class="close"><a href="#" ng-click="form = false;" onclick="return false;">X - Close</a></div>
     <form name="entryForm" ng-submit="formSubmit()">
     	<div class="label">Category:</div>
-        <div class="input"><select ng-model="category">
+        <div class="input"><select ng-model="category" tabindex="10">
         						<option ng-repeat="category in categories" value="{{category.id}}">{{category.name}}</option>
-                           </select>
+                           </select></div>
+        <div class="clearB"></div>
         <div class="label">Start Time:</div>
-        <div class="input"><input ui-timepicker type="text" id="start_time" ng-model="start_time" name="start_time" required />
+        <div class="input"><input ui-timepicker tabindex="20" type="text" id="start_time" ng-model="start_time" name="start_time" required /></div>
+        <div class="clearB"></div>
         <div class="label">End Time:</div>
-        <div class="input"><input ui-datetime type="text" id="end_time" ng-model="end_time" name="end_time" required/></div>
+        <div class="input"><input ui-datetime tabindex="30" type="text" id="end_time" ng-model="end_time" name="end_time" required/></div>
+        <div class="clearB"></div>
         <div class="label">Start Date:</div> 
-        <div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" id="start_date" ng-model="start_date" name="start_date" required/></div>
+        <div class="input"><input ui-date ui-date-format="yy-mm-dd" tabindex="40" type="text" id="start_date" ng-model="start_date" name="start_date" required/></div>
+        <div class="clearB"></div>
         <div class="label">End Date:</div> 
-        <div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" id="end_date" ng-model="end_date" name="end_date" required/></div>
+        <div class="input"><input ui-date ui-date-format="yy-mm-dd" tabindex="50" type="text" id="end_date" ng-model="end_date" name="end_date" required/></div>
+        <div class="clearB"></div>
         <div class="label">Comments:</div>
-        <div class="input"><textarea ng-model="comments"></textarea>
-    	<div class="submit"><input type="submit" name="submit" value="Record Entry" />
+        <div class="input"><textarea ng-model="comments" tabindex="60"></textarea>
+    	<div class="clearB"></div>
+        <div class="submit"><input type="submit" name="submit" value="Record Entry" />
     </form>
 </div>

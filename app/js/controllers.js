@@ -110,4 +110,7 @@ angular.module('myApp.controllers', []).
 		  api_call($http, 'events/', 'post', data);
 		  $scope.form = false;
 	  }
+  }])
+  .controller('tsadmin', ['$scope', '$http', function($scope, $http) {
+	  
   }]);

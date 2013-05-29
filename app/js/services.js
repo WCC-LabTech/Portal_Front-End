@@ -37,6 +37,16 @@ function api_call($http, api, method, data) {
 	return respond;
 }
 
+function getCat($http, cat) {
+	var category
+	$http.get(api_url('categories/' + cat + '/')).success(function(data) {
+		console.log(data.name);
+		category = data.name;
+	});
+	
+	return category;
+}
+
 function readCookie(key) {
 	var currentcookie;
 	var firstidx;

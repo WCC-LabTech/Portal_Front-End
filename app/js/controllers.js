@@ -54,12 +54,11 @@ angular.module('myApp.controllers', []).
 	
 	};
 	
-	$scope.logout = function() {
+	$scope.logout = function() { 
 		setCookie('username', null);
 		//setCookie('groups', null);
 		setCookie('Authorization', null);
-		setCookie('csrftoken', null);
-		setCookie('sessionid', null);
+		$http.defaults.headers.common['Authorization'] = null;
 		document.location.reload(true);
 	}
   }])
@@ -88,6 +87,12 @@ angular.module('myApp.controllers', []).
 	  $scope.period = readCookie('period');
 	  entries = api_call($http, 'events/pay_period/' + $scope.period + '/', 'get');
 	  entries.success(function(data) {
+		  var x;
+		  var catName;
+		  for (x in data) {
+		  	catName = $.grep($scope.categories, function(e) {return e.id == data[x].category});
+			data[x].category = catName['0'].name;
+		  }
 		  $scope.entries = data;
 	  });
 	  

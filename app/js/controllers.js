@@ -109,8 +109,43 @@ angular.module('myApp.controllers', []).
 		  
 		  api_call($http, 'events/', 'post', data);
 		  $scope.form = false;
+                  
+                  setTimeout(function() {
+                            entries = api_call($http, 'events/pay_period/' + $scope.period + '/', 'get');
+                            entries.success(function(data) {
+                                      var x;
+                                      var catName;
+                                      for (x in data) {
+                                      	catName = $.grep($scope.categories, function(e) {return e.id == data[x].category});
+                                      	data[x].category = catName['0'].name;
+                                      }
+                                  $scope.entries = data;
+                            });
+                  }, 500);
 	  }
   }])
   .controller('tsadmin', ['$scope', '$http', function($scope, $http) {
-	  
+	  var payperiods;
+          payperiods = api_call($http, 'pay_period/', 'get');
+          payperiods.success(function(periods) {
+             $scope.periods = periods;
+          });
+          $scope.predicate = "-id";
+          
+          $scope.formSubmit = function() {
+              var data = {};
+              data.name = $scope.name;
+              data.start = $scope.start_date;
+              data.end = $scope.end_date
+              
+              api_call($http, 'pay_period/', 'post', data);
+              $scope.form = false;
+              setTimeout(function() {
+                            payperiods = api_call($http, 'pay_period/', 'get');
+                            payperiods.success(function(periods) {
+                                          $scope.periods = periods;
+                            });
+              }, 500);
+              
+          }
   }]);

@@ -50,6 +50,9 @@ nav .menu li a:hover {background-color:#ccc;}
 .entry_form .label {float:left; margin-left:50px; width:100px;}
 .entry_form .input {float:left; width:200px;}
 
+.controls {margin:50px 0 0 150px;}
+.controls .option a {text-decoration:none; color:black; height:20px; width:150px; padding:5px; text-align: center; font-size:1.3em; border:1px solid black; border-radius:8px; box-shadow: 3px 3px 3px 0 #000;}
+
 /* Footer */
 footer {text-align:center;}
 

@@ -148,4 +148,13 @@ angular.module('myApp.controllers', []).
               }, 500);
               
           }
+		  
+		  $scope.catSubmit = function() {
+			  var data = {};
+			  data.name = $scope.catName;
+			  data.is_project = $scope.is_project;
+			  
+			  api_call($http, 'categories/', 'post', data);
+			  $scope.category = false;
+		  }
   }]);

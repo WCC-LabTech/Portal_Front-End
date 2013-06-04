@@ -132,14 +132,14 @@ angular.module('myApp.controllers', []).
           });
           $scope.predicate = "-id";
           
-          $scope.formSubmit = function() {
+          $scope.periodSubmit = function() {
               var data = {};
               data.name = $scope.name;
               data.start = $scope.start_date;
               data.end = $scope.end_date
               
               api_call($http, 'pay_period/', 'post', data);
-              $scope.form = false;
+              $scope.period = false;
               setTimeout(function() {
                             payperiods = api_call($http, 'pay_period/', 'get');
                             payperiods.success(function(periods) {

@@ -20,12 +20,18 @@
 </table>
 
 <div class="controls">
-    <div class="option"><a href="#" onclick="return false;" ng-click="form = true;">Add Pay Period</a></div>    
+    <ul class="option">
+        <li><a href="#" onclick="return false;" ng-click="period = true;">Add Pay Period</a></li>
+        <li><a href="#" onclick="return false;" ng-click="category = true;">Add Category</a></li>
+        <li><a href="#" onclick="return false;" ng-click="">Print Timesheets</a></li>
+        <li><a href="#" onclick="return false;" ng-click="">Timesheet Reports</a></li>
+    </ul>
+    <div class="clearB"></div>
 </div>
 
-<div class="entry_form" ng-show="form">
-    <div class="close"><a href="#" ng-click="form = false;" onclick="return false;">X - Close</a></div>
-    <form name="entryForm" ng-submit="formSubmit()">
+<div class="entry_form" ng-show="period">
+    <div class="close"><a href="#" ng-click="period = false;" onclick="return false;">X - Close</a></div>
+    <form name="entryForm" ng-submit="periodSubmit()">
         <div class="label">Pay Period Name: </div>
         <div class="input"><input type="text" ng-model="name" /> </div>
         <div class="clearB"></div>
@@ -36,5 +42,19 @@
         <div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" ng-model="end_date" /></div>
         <div class="clearB"></div>
         <div class="submit"><input type="submit" name="submit" value="Add Pay Period" /></div>
+    </form>
+</div>
+
+<div class="entry_form" ng-show="category">
+    <div class="close"><a href="#" ng-click="category = false;" onclick="return false;">X - Close</a></div>
+    <form name="entryForm" ng-submit="catSubmit()">
+        <div class="label">Category Name: </div>
+        <div class="input"><input type="text" ng-model="categories" /></div>
+        <div class="clearB"></div>
+        <div class="label">Is this a project?</div>
+        <div class="input"><input type="checkbox" ng-model="is_project" /></div>
+        <div class="clearB"></div>
+        <div class="submit"><input type="submit" name="submit" value="Add Category" /></div>
+        
     </form>
 </div>

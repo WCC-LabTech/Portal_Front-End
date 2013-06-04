@@ -50,7 +50,9 @@ nav .menu li a:hover {background-color:#ccc;}
 .entry_form .label {float:left; margin-left:50px; width:100px;}
 .entry_form .input {float:left; width:200px;}
 
-.controls {margin:50px 0 0 150px;}
+.controls {width: 90%; text-align: center; margin:25px auto;}
+.controls .option ul {list-style: none;}
+.controls .option li {display: inline; margin:25px 25px 0 0;}
 .controls .option a {text-decoration:none; color:black; height:20px; width:150px; padding:5px; text-align: center; font-size:1.3em; border:1px solid black; border-radius:8px; box-shadow: 3px 3px 3px 0 #000;}
 
 /* Footer */

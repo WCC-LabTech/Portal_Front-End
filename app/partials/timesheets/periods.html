@@ -14,7 +14,7 @@
     <tbody>
     	<tr class="entries" ng-repeat="entry in entries | orderBy:predicate">
         	<td>{{entry.start_date}}</td>
-    		<td></td>
+    		<td>{{entry.start_date.getDay()}}</td>
     		<td>{{entry.category}}</td>
             <td>{{entry.start_time}}</td>
             <td>{{entry.end_time}}</td>
@@ -50,10 +50,10 @@
                            </select></div>
         <div class="clearB"></div>
         <div class="label">Start Time:</div>
-        <div class="input"><input ui-timepicker tabindex="20" type="text" id="start_time" ng-model="start_time" name="start_time" required /></div>
+        <div class="input"><input ui-timepicker tabindex="20" type="time" id="start_time" ng-model="start_time" name="start_time" required /></div>
         <div class="clearB"></div>
         <div class="label">End Time:</div>
-        <div class="input"><input ui-datetime tabindex="30" type="text" id="end_time" ng-model="end_time" name="end_time" required/></div>
+        <div class="input"><input ui-datetime tabindex="30" type="time" id="end_time" ng-model="end_time" name="end_time" required/></div>
         <div class="clearB"></div>
         <div class="label">Start Date:</div> 
         <div class="input"><input ui-date ui-date-format="yy-mm-dd" tabindex="40" type="text" id="start_date" ng-model="start_date" name="start_date" required/></div>
@@ -64,6 +64,6 @@
         <div class="label">Comments:</div>
         <div class="input"><textarea ng-model="comments" tabindex="60"></textarea>
     	<div class="clearB"></div>
-        <div class="submit"><input type="submit" name="submit" value="Record Entry" /></div>
+        <div class="submit"><input type="submit" tabindex="70" name="submit" value="Record Entry" /></div>
     </form>
 </div>

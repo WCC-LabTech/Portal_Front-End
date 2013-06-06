@@ -72,10 +72,8 @@ angular.module('myApp.controllers', []).
 	  var entries;
 	  var categories;
 	  var periods;
-	  //$('#start_time').timepicker({timeFormat: 'HH:mm'}).val();
-	  //$('#end_time').timepicker({timeFormat: 'HH:mm'}).val();
-	  //$('#start_date').datepicker({ dateFormat: 'yy-mm-dd', showButtonPanel: true });
-	  //$('#end_date').datepicker({ dateFormat: 'yy-mm-dd' });
+          var total;
+          $scope.total = 0;
 	  
 	  $scope.form = false;
 	  //Get Categories data
@@ -89,9 +87,19 @@ angular.module('myApp.controllers', []).
 	  entries.success(function(data) {
 		  var x;
 		  var catName;
+                  var start;
+                  var end;
+                  var mili;
+                  var hours;
 		  for (x in data) {
 		  	catName = $.grep($scope.categories, function(e) {return e.id == data[x].category});
 			data[x].category = catName['0'].name;
+                        start = new Date(data[x].start_date + " " + data[x].start_time);
+                        end = new Date(data[x].end_date + " " + data[x].end_time);
+                        mili = end - start;
+                        hours = (((mili / 1000) / 60) / 60);
+                        data[x].total = hours;
+                        $scope.total += hours;                  
 		  }
 		  $scope.entries = data;
 	  });
@@ -109,20 +117,31 @@ angular.module('myApp.controllers', []).
 		  
 		  api_call($http, 'events/', 'post', data);
 		  $scope.form = false;
-                  
+                  $scope.total = 0;
                   setTimeout(function() {
                             entries = api_call($http, 'events/pay_period/' + $scope.period + '/', 'get');
                             entries.success(function(data) {
-                                      var x;
-                                      var catName;
-                                      for (x in data) {
-                                      	catName = $.grep($scope.categories, function(e) {return e.id == data[x].category});
-                                      	data[x].category = catName['0'].name;
+                                          var x;
+                                          var catName;
+                                          var start;
+                                          var end;
+                                          var mili;
+                                          var hours;
+                                          for (x in data) {
+                                          	catName = $.grep($scope.categories, function(e) {return e.id == data[x].category});
+                                          	data[x].category = catName['0'].name;
+                                                start = new Date(data[x].start_date + " " + data[x].start_time);
+                                                end = new Date(data[x].end_date + " " + data[x].end_time);
+                                                mili = end - start;
+                                                hours = (((mili / 1000) / 60) / 60);
+                                                data[x].total = hours;
+                                                $scope.total += hours; 
                                       }
                                   $scope.entries = data;
                             });
                   }, 500);
 	  }
+          
   }])
   .controller('tsadmin', ['$scope', '$http', function($scope, $http) {
 	  var payperiods;
@@ -157,4 +176,12 @@ angular.module('myApp.controllers', []).
 			  api_call($http, 'categories/', 'post', data);
 			  $scope.category = false;
 		  }
+  }])
+  .controller('periodadmin', ['$scope', '$http', function($scope, $http) {
+              var entries;
+              var period;
+              
+              period = readCookie('period');
+              entries = api_call($http, '', 'get');
+              
   }]);

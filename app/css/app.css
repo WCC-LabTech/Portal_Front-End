@@ -43,7 +43,8 @@ nav .menu li a:hover {background-color:#ccc;}
 .timesheet th:only-child {border-radius:6px 6px 0 0;}
 .timesheet tr:hover{background: #fbf8e9; transition: all 0.1s ease-in-out;}
 .timesheet td a {display:block; padding:10px;}
-.timesheet .entries td, .timesheet .entries {padding:10px;}
+.timesheet .entries td, .timesheet .entries, .timesheet .total td{padding:10px;}
+.timesheet .total td:first-child {text-align: right; font-weight:bold;}
 
 .entry_form {position:absolute; width:500px; left:50%; margin-left:-250px; top:100px; background-color:#fff; padding:20px; border:1px solid black; border-radius:8px;}
 .entry_form .close{position: absolute; top:5px; right:5px;}

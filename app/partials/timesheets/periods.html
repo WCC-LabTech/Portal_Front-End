@@ -9,6 +9,7 @@
             <th>Category</th>
             <th>Start</th>
             <th>End</th>
+	    <th>Hour's Worked</th>
         </tr>
     </thead>
     <tbody>
@@ -18,9 +19,14 @@
     		<td>{{entry.category}}</td>
             <td>{{entry.start_time | date:'h:mma'}}</td>
             <td>{{entry.end_time | date:'h:mma'}}</td>
+	    <td>{{entry.total}}</td>
         </tr>
+	<tr class="total">
+		<td colspan=5>Total: </td>
+		<td>{{total}} hours</td>
+	</tr>
     	<tr>
-    		<td colspan="5"><a href="#" onclick="return false;" ng-click="form = true;">Add Entry</a></td>
+    		<td colspan="6"><a href="#" onclick="return false;" ng-click="form = true;">Add Entry</a></td>
     	</tr>
     </tbody>
 </table>

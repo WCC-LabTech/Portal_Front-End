@@ -86,24 +86,9 @@ angular.module('myApp.controllers', []).
 	  entries = api_call($http, 'events/pay_period/' + $scope.period + '/', 'get');
 	  entries.success(function(data) {
 		  var x;
-		  var catName;
-                  var start;
-                  var end;
-                  var mili;
-                  var hours;
-                  var day;
 		  for (x in data) {
-		  	catName = $.grep($scope.categories, function(e) {return e.id == data[x].category});
-			data[x].category = catName['0'].name;
-                        start = new Date(data[x].start_date + " " + data[x].start_time);
-                        end = new Date(data[x].end_date + " " + data[x].end_time);
-                        mili = end - start;
-                        hours = (((mili / 1000) / 60) / 60);
-                        day = new Date(data[x].start_date);
-                        day = day.getUTCDay();
-                        data[x].day = weekDay(day);
-                        data[x].total = hours;
-                        $scope.total += hours;                  
+                        data[x] = adjustEntry(data[x], $scope.categories);
+                        $scope.total += data[x].total;
 		  }
 		  $scope.entries = data;
 	  });
@@ -126,24 +111,9 @@ angular.module('myApp.controllers', []).
                             entries = api_call($http, 'events/pay_period/' + $scope.period + '/', 'get');
                             entries.success(function(data) {
                                           var x;
-                                          var catName;
-                                          var start;
-                                          var end;
-                                          var mili;
-                                          var hours;
-                                          var day;
                                           for (x in data) {
-                                          	catName = $.grep($scope.categories, function(e) {return e.id == data[x].category});
-                                          	data[x].category = catName['0'].name;
-                                                start = new Date(data[x].start_date + " " + data[x].start_time);
-                                                end = new Date(data[x].end_date + " " + data[x].end_time);
-                                                mili = end - start;
-                                                hours = (((mili / 1000) / 60) / 60);
-                                                day = new Date(data[x].start_date);
-                                                day = day.getUTCDay();
-                                                data[x].day = weekDay(day);
-                                                data[x].total = hours;
-                                                $scope.total += hours; 
+                                                data[x] = adjustEntry(data[x], $scope.categories);
+                                                $scope.total += data[x].total;
                                       }
                                   $scope.entries = data;
                             });

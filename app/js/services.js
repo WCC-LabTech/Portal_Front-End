@@ -104,3 +104,26 @@ function weekDay(day) {
        
        return weekday[day];
 }
+
+function adjustEntry(data, categories) {
+       var catName;
+       var start;
+       var end;
+       var mili;
+       var hours;
+       var day;
+       
+       catName = $.grep(categories, function(e) {return e.id == data.category});
+       data.category = catName['0'].name;
+       start = new Date(data.start_date + " " + data.start_time);
+       end = new Date(data.end_date + " " + data.end_time);
+       mili = end - start;
+       hours = (((mili / 1000) / 60) / 60);
+       day = new Date(data.start_date);
+       day = day.getUTCDay();
+       data.day = weekDay(day);
+       data.total = hours;
+              
+       return data;
+       
+}

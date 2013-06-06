@@ -99,7 +99,6 @@ angular.module('myApp.controllers', []).
                         end = new Date(data[x].end_date + " " + data[x].end_time);
                         mili = end - start;
                         hours = (((mili / 1000) / 60) / 60);
-                        
                         day = new Date(data[x].start_date);
                         day = day.getUTCDay();
                         data[x].day = weekDay(day);
@@ -132,6 +131,7 @@ angular.module('myApp.controllers', []).
                                           var end;
                                           var mili;
                                           var hours;
+                                          var day;
                                           for (x in data) {
                                           	catName = $.grep($scope.categories, function(e) {return e.id == data[x].category});
                                           	data[x].category = catName['0'].name;
@@ -139,6 +139,9 @@ angular.module('myApp.controllers', []).
                                                 end = new Date(data[x].end_date + " " + data[x].end_time);
                                                 mili = end - start;
                                                 hours = (((mili / 1000) / 60) / 60);
+                                                day = new Date(data[x].start_date);
+                                                day = day.getUTCDay();
+                                                data[x].day = weekDay(day);
                                                 data[x].total = hours;
                                                 $scope.total += hours; 
                                       }

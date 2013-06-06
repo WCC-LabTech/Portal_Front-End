@@ -15,7 +15,7 @@
     <tbody>
     	<tr class="entries" ng-repeat="entry in entries | orderBy:predicate">
         	<td>{{entry.start_date}}</td>
-    		<td>{{entry.start_date | date:'EEEE'}}</td>
+    		<td>{{entry.day}}</td>
     		<td>{{entry.category}}</td>
             <td>{{entry.start_time | date:'h:mma'}}</td>
             <td>{{entry.end_time | date:'h:mma'}}</td>

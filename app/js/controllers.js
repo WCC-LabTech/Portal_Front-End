@@ -39,8 +39,12 @@ angular.module('myApp.controllers', []).
 		login.success(function(data) {
 			setCookie('Authorization', data.token);
 			setCookie('username', $scope.username);
-			 $http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
+			$http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
 			$scope.is_loggedIn = true;
+			$scope.lab_aide = true;
+		    $scope.lab_tech = true;
+	 	    $scope.faculty = true;
+	  	    $scope.admin = true;
 			//$scope.$digest();
 		});
 		login.error(function(status) {
@@ -63,10 +67,14 @@ angular.module('myApp.controllers', []).
 	}
   }])
   .controller('nav', ['$scope', function($scope) {
-	  $scope.lab_aide = true;
-	  $scope.lab_tech = true;
-	  $scope.faculty = true;
-	  $scope.admin = true;
+	  //var loggedin = is_loggedIn();
+	  
+	  //if (loggedin == true) {
+		  $scope.lab_aide = true;
+		  $scope.lab_tech = true;
+	 	  $scope.faculty = true;
+	  	  $scope.admin = true;
+	  //}
   }])
   .controller('periods', ['$scope', '$http', function($scope, $http) {
 	  var entries;

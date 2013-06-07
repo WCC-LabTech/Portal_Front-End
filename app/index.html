@@ -11,10 +11,11 @@
         <div id="login" class="login" ng-hide="is_loggedIn">
            	<form name="loginForm" ng-submit="login()">
 				<input type="text" required class="input-block-level" placeholder="Username" ng-model="username" name="username">
-        		<div ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+        		
+				<input type="password" required class="input-block-level" placeholder="Password" ng-model="password" name="password">
+                <div ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
 					<span ng-show="loginForm.username.$error.required">Username required.</span>
 				</div>
-				<input type="password" required class="input-block-level" placeholder="Password" ng-model="password" name="password">
 				<div ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
 					<span ng-show="loginForm.password.$error.required">Password required.</span>
 				</div>
@@ -30,7 +31,7 @@
             </div>
 	</header>
 	<nav ng-controller="nav">
-    	<div class="menu" ng-show="lab_aide">
+    	<div class="menu">
         	<h2>Navigation</h2>
 			<ul>
 				<li><a href="http://bosapp.wccnet.edu/wiki" target="_blank">Wiki</a></li>
@@ -85,7 +86,7 @@
   
   	</div>
 	<div class="clearB"></div>
-  	<footer>Angular seed app: v<span app-version></span></footer>
+  	<footer>WCC Faculty Portal - Version 1.0</footer>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>

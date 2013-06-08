@@ -116,7 +116,7 @@ function adjustEntry(data, categories) {
        catName = $.grep(categories, function(e) {return e.id == data.category});
        data.category = catName['0'].name;
        start = new Date(data.start_date + " " + data.start_time);
-       end = new Date(data.end_date + " " + data.end_time);
+       end = new Date(data.start_date + " " + data.end_time);
        mili = end - start;
        hours = (((mili / 1000) / 60) / 60);
        day = new Date(data.start_date);

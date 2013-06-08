@@ -109,7 +109,6 @@ angular.module('myApp.controllers', []).
 		  data.start_time = $scope.start_time;
 		  data.end_time = $scope.end_time;
 		  data.start_date = $scope.start_date;
-		  data.end_date = $scope.end_date;
 		  data.comments = $scope.comments;
 		  
 		  api_call($http, 'events/', 'post', data);

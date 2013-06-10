@@ -14,7 +14,6 @@ angular.module('myApp.controllers', []).
 		data.success(function(response) {
                         for (x in response) {
                             response[x].id = get_id(response[x].url);
-                            console.log(response[x].id);
                         }
 			$scope.periods = response;
 		});
@@ -54,8 +53,8 @@ angular.module('myApp.controllers', []).
 		});
 		login.error(function(status) {
 			if (400 === status) {
-            	$scope.invalidUsernamePassword = true;
-        	} else {
+                            $scope.invalidUsernamePassword = true;
+                        } else {
 				alert('No Response from Django Server');
 			}
 		});
@@ -87,12 +86,13 @@ angular.module('myApp.controllers', []).
 	  var periods;
           var total;
           $scope.total = 0;
+          $scope.on_campus = false;
 	  
 	  $scope.form = false;
 	  //Get Categories data
 		categories = api_call($http, 'category/', 'get');
 		categories.success(function(response) {
-			$scope.categories = response;
+                        $scope.categories = response;
 		});
 	  
 	  $scope.period = readCookie('period');
@@ -115,9 +115,17 @@ angular.module('myApp.controllers', []).
 		  data.start_time = $scope.start_time;
 		  data.end_time = $scope.end_time;
 		  data.start_date = $scope.start_date;
+                  
+                  if ($scope.on_campus.checked == true) {
+                            data.on_campus = true;
+                  } else {
+                            data.on_campus = false;
+                  }
 		  data.comments = $scope.comments;
+                  
+                  console.log($scope.on_campus);
 		  
-		  api_call($http, 'workevent', 'post', data);
+		  api_call($http, 'workevent/', 'post', data);
 		  $scope.form = false;
                   $scope.total = 0;
                   setTimeout(function() {

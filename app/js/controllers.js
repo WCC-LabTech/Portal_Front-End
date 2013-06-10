@@ -9,8 +9,13 @@ angular.module('myApp.controllers', []).
   .controller('MyCtrl2', ['$scope', '$http', function($scope, $http) {
 		var data;
 		var periods;
-		data = api_call($http, 'pay_period/', 'get');
+                var x;
+		data = api_call($http, 'payperiod/', 'get');
 		data.success(function(response) {
+                        for (x in response) {
+                            response[x].id = get_id(response[x].url);
+                            console.log(response[x].id);
+                        }
 			$scope.periods = response;
 		});
 		data.error(function() {
@@ -85,13 +90,14 @@ angular.module('myApp.controllers', []).
 	  
 	  $scope.form = false;
 	  //Get Categories data
-		categories = api_call($http, 'categories/', 'get');
+		categories = api_call($http, 'category/', 'get');
 		categories.success(function(response) {
 			$scope.categories = response;
 		});
 	  
 	  $scope.period = readCookie('period');
-	  entries = api_call($http, 'events/pay_period/' + $scope.period + '/', 'get');
+          $scope.periodName = readCookie('periodName');
+	  entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');
 	  entries.success(function(data) {
 		  var x;
 		  for (x in data) {
@@ -111,11 +117,11 @@ angular.module('myApp.controllers', []).
 		  data.start_date = $scope.start_date;
 		  data.comments = $scope.comments;
 		  
-		  api_call($http, 'events/', 'post', data);
+		  api_call($http, 'workevent', 'post', data);
 		  $scope.form = false;
                   $scope.total = 0;
                   setTimeout(function() {
-                            entries = api_call($http, 'events/pay_period/' + $scope.period + '/', 'get');
+                            entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');
                             entries.success(function(data) {
                                           var x;
                                           for (x in data) {
@@ -130,7 +136,7 @@ angular.module('myApp.controllers', []).
   }])
   .controller('tsadmin', ['$scope', '$http', function($scope, $http) {
 	  var payperiods;
-          payperiods = api_call($http, 'pay_period/', 'get');
+          payperiods = api_call($http, 'payperiod/', 'get');
           payperiods.success(function(periods) {
              $scope.periods = periods;
           });
@@ -142,10 +148,10 @@ angular.module('myApp.controllers', []).
               data.start = $scope.start_date;
               data.end = $scope.end_date
               
-              api_call($http, 'pay_period/', 'post', data);
+              api_call($http, 'payperiod/', 'post', data);
               $scope.period = false;
               setTimeout(function() {
-                            payperiods = api_call($http, 'pay_period/', 'get');
+                            payperiods = api_call($http, 'payperiod/', 'get');
                             payperiods.success(function(periods) {
                                           $scope.periods = periods;
                             });
@@ -158,7 +164,7 @@ angular.module('myApp.controllers', []).
 			  data.name = $scope.catName;
 			  data.is_project = $scope.is_project;
 			  
-			  api_call($http, 'categories/', 'post', data);
+			  api_call($http, 'category/', 'post', data);
 			  $scope.category = false;
 		  }
   }])

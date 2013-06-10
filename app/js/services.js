@@ -82,6 +82,13 @@ function cookieExp() {
 	return expDate.toGMTString();
 }
 
+function get_id(url) {
+       var split = url.split('/');
+       var id = split[split.length - 1];
+       
+       return id;
+}
+
 function is_loggedIn() {
 	var loggedIn;
 	loggedIn = readCookie("username");
@@ -113,7 +120,7 @@ function adjustEntry(data, categories) {
        var hours;
        var day;
        
-       catName = $.grep(categories, function(e) {return e.id == data.category});
+       catName = $.grep(categories, function(e) {return e.url == data.category});
        data.category = catName['0'].name;
        start = new Date(data.start_date + " " + data.start_time);
        end = new Date(data.start_date + " " + data.end_time);

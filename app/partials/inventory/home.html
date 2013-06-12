@@ -1,0 +1,16 @@
+<h2>Inventory Management</h2>
+
+<table class="timesheet" width="80%" cellpadding="0" cellspacing="0">
+	<thead>
+    	<tr>
+        	<th>Equipment Name</th>
+            <th>Room</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<tr ng-repeat="item in equip">
+        	<td>{{item.name}}</td>
+            <td>{{item.room}}</td>
+        </tr>
+    </tbody>
+</table>

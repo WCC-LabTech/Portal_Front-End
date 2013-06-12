@@ -183,4 +183,13 @@ angular.module('myApp.controllers', []).
               period = readCookie('period');
               entries = api_call($http, '', 'get');
               
+  }])
+  .controller('inventoryhome', ['$scope', '$http', function ($scope, $http) {
+	 		var inventory;
+			
+			inventory = api_call($http, 'Equip/', 'get');
+			inventory.success(function(equip) {
+				console.log(equip);
+				$scope.equip = equip;
+			});
   }]);

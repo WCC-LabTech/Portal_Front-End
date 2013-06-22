@@ -3,33 +3,25 @@
 	{
 		"selected_items":
 		[
+			[
+				"api_",
+				"api_call"
+			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "labaide.sublime-project",
-			"settings":
-			{
-				"buffer_size": 69,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "index.html",
-			"settings":
-			{
-				"buffer_size": 4156,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 75.0,
 		"selected_items":
 		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
 			[
 				"p",
 				"Package Control: Install Package"
@@ -67,7 +59,7 @@
 				"Github: Open File"
 			]
 		],
-		"width": 575.0
+		"width": 467.0
 	},
 	"console":
 	{
@@ -84,6 +76,14 @@
 	},
 	"file_history":
 	[
+		"/home/craig/labaide/app/labaide.sublime-project",
+		"/opt/lampp/htdocs/labaide/app/partials/timesheets/home.html",
+		"/opt/lampp/htdocs/labaide/app/partials/timesheets/periods.html",
+		"/opt/lampp/htdocs/labaide/app/partials/timesheets/admin.html",
+		"/opt/lampp/htdocs/labaide/app/js/controllers.js",
+		"/home/craig/labaide/app/index.html",
+		"/opt/lampp/htdocs/labaide/app/js/app.js",
+		"/opt/lampp/htdocs/labaide/app/partials/timesheets/adminperiods.html",
 		"/home/craig/.config/sublime-text-2/Packages/Git/Git.sublime-settings",
 		"/home/craig/.config/sublime-text-2/Packages/User/Git.sublime-settings"
 	],
@@ -120,63 +120,8 @@
 	"groups":
 	[
 		{
-			"selected": 1,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "labaide.sublime-project",
-					"settings":
-					{
-						"buffer_size": 69,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "index.html",
-					"settings":
-					{
-						"buffer_size": 4156,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4156,
-								4156
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

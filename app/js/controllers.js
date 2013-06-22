@@ -96,7 +96,7 @@ angular.module('myApp.controllers', []).
 		});
 	  
 	  $scope.period = readCookie('period');
-          $scope.periodName = readCookie('periodName');
+      $scope.periodName = readCookie('periodName');
 	  entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');
 	  entries.success(function(data) {
 		  var x;
@@ -144,8 +144,12 @@ angular.module('myApp.controllers', []).
   }])
   .controller('tsadmin', ['$scope', '$http', function($scope, $http) {
 	  var payperiods;
+	  var x;
           payperiods = api_call($http, 'payperiod/', 'get');
           payperiods.success(function(periods) {
+          		for (x in periods) {
+          			periods[x].id = get_id(periods[x].url);
+          		}
              $scope.periods = periods;
           });
           $scope.predicate = "-id";
@@ -177,11 +181,55 @@ angular.module('myApp.controllers', []).
 		  }
   }])
   .controller('periodadmin', ['$scope', '$http', function($scope, $http) {
+              var categories;
               var entries;
               var period;
-              
+              var users;
+              var username;
+              var x;
+              var y;
+              var z;
+              var complete;
+              var total = 0;
+
+              categories = api_call($http, 'category/', 'get');
+			  categories.success(function(response) {
+              	  $scope.categories = response;
+			  });
+
+              users = api_call($http, 'user/', 'get');
+              users.success(function(data) {
+              		$scope.users = data;
+              });
+                            
               period = readCookie('period');
-              entries = api_call($http, '', 'get');
+              $scope.period = readCookie('periodName');
+              setTimeout(function() {
+              	entries = api_call($http, 'report/timesheet/' + period + '/', 'get');
+              	entries.success(function(entry) {
+               		for (x in entry) {
+               			username = $.grep($scope.users, function(e) {return e.url == 'http://207.75.134.87:8080' + entry[x].user});
+               		    entry[x].user = username['0'].username;
+               		    entry[x].category = 'http://207.75.134.87:8080' + entry[x].category;
+               		    entry[x] = adjustEntry(entry[x], $scope.categories);
+               		}
+              		complete = sort_reports(entry);
+              		for (z in complete) {
+              			total = 0;
+              			for (y in complete[z]) {
+              				if (complete[z][y].total != null) {
+	              				total += complete[z][y].total;
+	              			}
+              			}
+              			complete[z].total = total;
+
+              		}
+              		$scope.entries = complete;
+
+              	});
+              }, 50);
+
+              $scope.predicate = "start_date";
               
   }])
   .controller('inventoryhome', ['$scope', '$http', function ($scope, $http) {

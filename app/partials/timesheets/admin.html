@@ -10,7 +10,7 @@
     </thead>
     <tbody>
     	<tr ng-repeat="period in periods | orderBy:predicate">
-    		<td><a onclick="setCookie('period', '{{period.name}}');" href="#/adminperiods">{{period.name}}</a></td>
+    		<td><a onclick="setCookie('period', '{{period.id}}'); setCookie('periodName', '{{period.name}}');" href="#/adminperiods">{{period.name}}</a></td>
 	        <td class="entries">{{period.start}}</td>
     	    <td class="entries">{{period.end}}</td>
 	    </tr>

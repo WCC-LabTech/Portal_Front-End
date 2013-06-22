@@ -1,24 +1,30 @@
-<div class="timesheet">
+
 	<div class="name"></div>
-    <div class="pay_period"></div>
-    <div class="entries">
-    	<table width="80%" cellpadding="0" cellspacing="0">
-        	<thead>
-            	<tr>
-                	<th>Date</th>
-                    <th>Time In</th>
-                    <th>Time Out</th>
-                    <th>Hours Worked</th>
-                </tr>
-            </thead>
-            <tbody>
-            	<tr>
-                	<td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+    <div class="pay_period"><h2>Pay Period: {{period}}</h2></div>
+
+        <div class="user" ng-repeat="entry in entries">
+            <h2>{{entry.username}}</h2>
+            <div class="title">Start Date<hr>
+                <div ng-repeat="time in entry | orderBy:predicate">
+                    <span>{{time.start_date}}</span>
+                </div>
+            </div>
+            <div class="title">Start Time<hr>
+                <div ng-repeat="time in entry | orderBy:predicate">
+                    <span>{{time.start_time}}</span>
+                </div>
+            </div>
+            <div class="title">End Time<hr>
+                <div ng-repeat="time in entry | orderBy:predicate">
+                    <span>{{time.end_time}}</span>
+                </div>
+            </div>
+            <div class="title">Total<hr>
+                <div ng-repeat="time in entry | orderBy:predicate">
+                    <span>{{time.total}}</span>
+                </div>
+            </div>
+            <div class="total">
+                <span><h3>Total Hours: {{entry.total}}<h3></span>
+            </div>
+        </div>

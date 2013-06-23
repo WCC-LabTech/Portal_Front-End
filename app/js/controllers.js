@@ -112,8 +112,8 @@ angular.module('myApp.controllers', []).
 	  $scope.formSubmit = function() {
 		  var data = {};
 		  data.category = $scope.category;
-		  data.start_time = $scope.start_time;
-		  data.end_time = $scope.end_time;
+		  data.start_time = $scope.start_time + ":00";
+		  data.end_time = $scope.end_time + ":00";
 		  data.start_date = $scope.start_date;
                   
                   if ($scope.on_campus.checked == true) {
@@ -123,7 +123,7 @@ angular.module('myApp.controllers', []).
                   }
 		  data.comments = $scope.comments;
                   
-                  console.log($scope.on_campus);
+                  console.log(data);
 		  
 		  api_call($http, 'workevent/', 'post', data);
 		  $scope.form = false;

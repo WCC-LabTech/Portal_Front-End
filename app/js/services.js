@@ -149,20 +149,22 @@ function sort_reports(data) {
   var response = {};
   var x;
   var iter = 0;
-
+  console.log(data);
   for (x in data) {
-    if (typeof response[data[x].user] == 'undefined') {
-      response[data[x].user] = {};
-      response[data[x].user].username = data[x].user;
-    }
-    response[data[x].user][iter] = {};
+      if (typeof response[data[x].user] == 'undefined') {
+        response[data[x].user] = {};
+        response[data[x].user].username = data[x].user;
+      }
+      response[data[x].user][iter] = {};
 
-    response[data[x].user][iter]['start_date'] = data[x].start_date;
-    response[data[x].user][iter]['category'] = data[x].category;
-    response[data[x].user][iter]['start_time'] = data[x].start_time;
-    response[data[x].user][iter]['end_time'] = data[x].end_time;
-    response[data[x].user][iter]['total'] = data[x].total;
-    iter = iter + 1;
-  }
+      response[data[x].user][iter]['start_date'] = data[x].start_date;
+      response[data[x].user][iter]['category'] = data[x].category;
+      response[data[x].user][iter]['start_time'] = data[x].start_time;
+      response[data[x].user][iter]['end_time'] = data[x].end_time;
+      response[data[x].user][iter]['total'] = data[x].total;
+      iter = iter + 1;
+    }
+  
+
   return response;
 }

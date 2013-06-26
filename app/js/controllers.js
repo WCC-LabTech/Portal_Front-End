@@ -175,7 +175,8 @@ angular.module('myApp.controllers', []).
 			  var data = {};
 			  data.name = $scope.catName;
 			  data.is_project = $scope.is_project;
-			  
+			  console.log(data);
+
 			  api_call($http, 'category/', 'post', data);
 			  $scope.category = false;
 		  }
@@ -232,7 +233,10 @@ angular.module('myApp.controllers', []).
               $scope.predicate = "start_date";
               
   }])
-  .controller('inventoryhome', ['$scope', '$http', function ($scope, $http) {
+  .controller('adminreports', ['$scope', '$http', function($scope, $http) {
+
+  }])
+  .controller('inventoryhome', ['$scope', '$http', function($scope, $http) {
 	 		var inventory;
 			
 			inventory = api_call($http, 'Equip/', 'get');

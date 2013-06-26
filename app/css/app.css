@@ -11,7 +11,7 @@ header .login {position:absolute; top:13px; right:50px; color:#fff; text-align:r
 header .login a {color:#00F;}
 
 /* Navigation */
-nav {width:150px; height:100%; padding:20px 5px 0; float:left; border-right:1px solid black;}
+nav {width:150px; min-height:800px; padding:20px 5px 0; float:left; border-right:1px solid black;}
 nav .menu {font-size:1.3em; width:125px; margin:20px auto;}
 nav .menu ul {list-style:none;}
 nav .menu li {padding-left:5px; font-size:.9em;}
@@ -19,6 +19,8 @@ nav .menu li a {display:block; width:135px;}
 nav .menu li a:hover {background-color:#ccc;}
 
 /* Content */
+.soon {font-size:4em; font-weight:bold;}
+
 #content {margin-left:175px; min-height:800px;}
 .timesheet caption {text-align:left; font-size:2em; font-weight:bold;}
 .timesheet {border:1px solid #ccc; border-radius:6px; box-shadow:0 1px 1px #ccc; margin:0 auto;}

@@ -149,7 +149,6 @@ function sort_reports(data) {
   var response = {};
   var x;
   var iter = 0;
-  console.log(data);
   for (x in data) {
       if (typeof response[data[x].user] == 'undefined') {
         response[data[x].user] = {};

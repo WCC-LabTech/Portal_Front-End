@@ -2,20 +2,20 @@
 	<div class="name"></div>
     <div class="pay_period"><h2>Pay Period: {{period}}</h2></div>
 
-        <div class="user" ng-repeat="entry in entries">
+        <div class="user" ng-repeat="entry in entries | orderBy:'username'">
             <h2>{{entry.username}}</h2>
             <div class="title">Start Date<hr>
-                <div ng-repeat="time in entry | orderBy:predicate">
+                <div ng-repeat="time in entry | orderBy:'start_date'">
                     <span>{{time.start_date}}</span>
                 </div>
             </div>
             <div class="title">Start Time<hr>
-                <div ng-repeat="time in entry | orderBy:predicate">
+                <div ng-repeat="time in entry | orderBy:predicate:reverse">
                     <span>{{time.start_time}}</span>
                 </div>
             </div>
             <div class="title">End Time<hr>
-                <div ng-repeat="time in entry | orderBy:predicate">
+                <div ng-repeat="time in entry | orderBy:predicate:reverse">
                     <span>{{time.end_time}}</span>
                 </div>
             </div>

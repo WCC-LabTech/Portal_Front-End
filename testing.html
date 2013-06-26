@@ -9,7 +9,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script>
 $.ajax({
-	url: "http://108.171.31.39:8888/Equip/",
+	url: "http://207.75.134.113:8888/Inventory_Management/showall/Manufacturer/",
 	method: "GET",
 	
 	success: function(data) {
@@ -17,5 +17,11 @@ $.ajax({
 	}
 });
 </script>
+<form method="POST" action="http://207.75.134.113:8888/Inventory_Management/showall/Manufacturer/" >
+	<input type="text" name="name" />
+    <input type="submit" name="submit" value="Submit" />
+</form>
+
+
 </body>
 </html>

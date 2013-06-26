@@ -9,6 +9,10 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 	$routeProvider.when('/periods', {templateUrl: 'partials/timesheets/periods.html', controller: 'periods'});
 	$routeProvider.when('/tsadmin', {templateUrl: 'partials/timesheets/admin.html', controller: 'tsadmin'});
 	$routeProvider.when('/adminperiods', {templateUrl: 'partials/timesheets/adminperiods.html', controller: 'periodadmin'});
+	$routeProvider.when('/reports', {templateUrl: 'partials/timesheets/adminreports.html', controller: 'adminreports'});
 	$routeProvider.when('/inventory', {templateUrl: 'partials/inventory/home.html', controller: 'inventoryhome'});
+
+	$routeProvider.when('/facrequest', {templateUrl: 'partials/facrequest/home.html'});
+
     $routeProvider.otherwise({redirectTo: '/home'});
   }]);

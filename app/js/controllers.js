@@ -208,10 +208,10 @@ angular.module('myApp.controllers', []).
               	entries = api_call($http, 'report/timesheet/' + period + '/', 'get');
               	entries.success(function(entry) {
                		for (x in entry) {
-               			username = $.grep($scope.users, function(e) {return e.url == 'http://home.cspuredesign.com:8080' + entry[x].user});
+               			username = $.grep($scope.users, function(e) {return e.url == 'http://207.75.134.43:8080' + entry[x].user});
                     
                		    entry[x].user = username['0'].first_name + ' ' + username['0'].last_name;
-               		    entry[x].category = 'http://home.cspuredesign.com:8080' + entry[x].category;
+               		    entry[x].category = 'http://207.75.134.43:8080' + entry[x].category;
                		    entry[x] = adjustEntry(entry[x], $scope.categories);
                		}
               		complete = sort_reports(entry);

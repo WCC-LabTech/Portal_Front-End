@@ -119,17 +119,20 @@ function adjustEntry(data, categories) {
        var mili;
        var hours;
        var day;
+       var start_date;
        
        catName = $.grep(categories, function(e) {return e.url == data.category});
        data.category = catName['0'].name;
-       start = new Date(data.start_date + " " + data.start_time);
-       end = new Date(data.start_date + " " + data.end_time);
+       start_date = data.start_date.replace(/-/g, '/');
+       start = new Date(start_date + " " + data.start_time);
+       end = new Date(start_date + " " + data.end_time);
        mili = end - start;
        hours = (((mili / 1000) / 60) / 60);
        day = new Date(data.start_date);
        day = day.getUTCDay();
        data.day = weekDay(day);
        data.total = Math.round(hours *100) / 100;
+       console.log(start);
               
        return data;
        

@@ -16,21 +16,29 @@
 	"buffers":
 	[
 		{
+			"contents": "'use strict';\n\n/* Services */\n\n\n// Demonstrate how to register services\n// In this case it is a simple value service.\nangular.module('myApp.services', []).\n  value('version', '0.2')\n  .factory('userLogin', ['$http', function($http, data) {\n	 $http.post('Http://10.0.0.3:8080/api-token-auth/login', {\"username\": $scope.username, \"password\": $scope.password}).success(function(data) {\n		user.data = data;\n		user.auth = true;\n		return user;\n	 }).error(function() {\n		 user.auth = false;\n		 return user;\n	 });\n  }]);\n\nfunction api_url(api) {\n	var url;\n	url = \"Http://10.0.0.3:8080/\" + api;\n	return url;\n}\n\nfunction api_call($http, api, method, data) {\n	var respond;\n	if (method == 'post') {\n		respond = $http.post(api_url(api), data);\n	}\n	if (method == 'get') {\n		respond = $http.get(api_url(api));\n	}\n	\n	return respond;\n}\n\nfunction getCat($http, cat) {\n	var category\n	$http.get(api_url('categories/' + cat + '/')).success(function(data) {\n		console.log(data.name);\n		category = data.name;\n	});\n	\n	return category;\n}\n\nfunction readCookie(key) {\n	var currentcookie;\n	var firstidx;\n	var lastidx;\n	currentcookie = document.cookie;\n    if (currentcookie.length > 0)\n    {\n        firstidx = currentcookie.indexOf(key + \"=\");\n        if (firstidx != -1)\n        {\n            firstidx = firstidx + key.length + 1;\n            lastidx = currentcookie.indexOf(\";\",firstidx);\n            if (lastidx == -1)\n            {\n                lastidx = currentcookie.length;\n            }\n            return unescape(currentcookie.substring(firstidx, lastidx));\n        }\n    }\n    return null;\n}\n\nfunction setCookie(c_name,value) {\n	var exdate= cookieExp();\n	var c_value=escape(value) + \"; expires=\"+exdate;\n	document.cookie=c_name + \"=\" + c_value;\n}\n\nfunction cookieExp() {\n	var currentDate = new Date();\n	var expDate = new Date(currentDate.getTime() + 86400000);\n	\n	return expDate.toGMTString();\n}\n\nfunction get_id(url) {\n       var split = url.split('/');\n       var id = split[split.length - 1];\n       \n       return id;\n}\n\nfunction is_loggedIn() {\n	var loggedIn;\n	loggedIn = readCookie(\"username\");\n	if (loggedIn == \"null\" || loggedIn == null) {\n			return false;\n		} else {\n			return true;\n		}\n}\n\nfunction weekDay(day) {\n       var weekday=new Array(7);\n       weekday[0]=\"Sunday\";\n       weekday[1]=\"Monday\";\n       weekday[2]=\"Tuesday\";\n       weekday[3]=\"Wednesday\";\n       weekday[4]=\"Thursday\";\n       weekday[5]=\"Friday\";\n       weekday[6]=\"Saturday\";\n       \n       return weekday[day];\n}\n\nfunction adjustEntry(data, categories) {\n       var catName;\n       var start;\n       var end;\n       var mili;\n       var hours;\n       var day;\n       \n       catName = $.grep(categories, function(e) {return e.url == data.category});\n       data.category = catName['0'].name;\n       start = new Date(data.start_date + \" \" + data.start_time);\n       end = new Date(data.start_date + \" \" + data.end_time);\n       mili = end - start;\n       hours = (((mili / 1000) / 60) / 60);\n       day = new Date(data.start_date);\n       day = day.getUTCDay();\n       data.day = weekDay(day);\n       data.total = Math.round(hours *100) / 100;\n              \n       return data;\n       \n}\n\nfunction get_username($http, data) {\n  var returnuser = null;\n  var userlink = data.substring(1);\n  var user = api_call($http, userlink, 'get');\n  user.success(function(username) {\n      returnuser = username.username;\n  });\n  console.log(returnuser);\n}\n\nfunction sort_reports(data) {\n  var response = {};\n  var x;\n  var iter = 0;\n  for (x in data) {\n      if (typeof response[data[x].user] == 'undefined') {\n        response[data[x].user] = {};\n        response[data[x].user].username = data[x].user;\n      }\n      response[data[x].user][iter] = {};\n\n      response[data[x].user][iter]['start_date'] = data[x].start_date;\n      response[data[x].user][iter]['category'] = data[x].category;\n      response[data[x].user][iter]['start_time'] = data[x].start_time;\n      response[data[x].user][iter]['end_time'] = data[x].end_time;\n      response[data[x].user][iter]['total'] = data[x].total;\n      iter = iter + 1;\n    }\n  \n\n  return response;\n}",
 			"file": "/opt/lampp/htdocs/labaide/app/js/services.js",
+			"file_size": 4107,
+			"file_write_time": 1372908770000000,
 			"settings":
 			{
-				"buffer_size": 4117,
+				"buffer_size": 4103,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "'use strict';\n\n/* Controllers */\n\nangular.module('myApp.controllers', []).\n  controller('MyCtrl1', [function() {\n\n  }])\n  .controller('MyCtrl2', ['$scope', '$http', function($scope, $http) {\n		var data;\n		var periods;\n                var x;\n		data = api_call($http, 'payperiod/', 'get');\n		data.success(function(response) {\n                        for (x in response) {\n                            response[x].id = get_id(response[x].url);\n                        }\n			$scope.periods = response;\n		});\n		data.error(function() {\n			alert('error');\n		});\n		\n		$scope.predicate = \"-id\";\n		\n		function period(period) {\n			$scope.period = period;\n			console.log($scope.period);\n		}\n		\n  }])\n  .controller('userLogin', ['$scope', '$http', function($scope, $http) {\n	  $scope.is_loggedIn = is_loggedIn();\n		if ($scope.is_loggedIn == true) {\n			$scope.username = readCookie(\"username\");\n			$http.defaults.headers.common['Authorization'] = 'Token ' + readCookie('Authorization');\n		}\n		var data = new Object;\n		var login;\n		$scope.login = function() {\n		data = {\"username\": $scope.username, \"password\": $scope.password};\n		login = api_call($http, 'api-token-auth/login', 'post', data);\n		login.success(function(data) {\n			setCookie('Authorization', data.token);\n			setCookie('username', $scope.username);\n			$http.defaults.headers.common['Authorization'] = 'Token ' + data.token;\n			$scope.is_loggedIn = true;\n			$scope.lab_aide = true;\n		    $scope.lab_tech = true;\n	 	    $scope.faculty = true;\n	  	    $scope.admin = true;\n			//$scope.$digest();\n		});\n		login.error(function(status) {\n			if (400 === status) {\n                            $scope.invalidUsernamePassword = true;\n                        } else {\n				alert('No Response from Django Server');\n			}\n		});\n    	return false;\n	\n	};\n	\n	$scope.logout = function() { \n		setCookie('username', null);\n		//setCookie('groups', null);\n		setCookie('Authorization', null);\n		$http.defaults.headers.common['Authorization'] = null;\n		document.location.reload(true);\n	}\n  }])\n  .controller('nav', ['$scope', function($scope) {\n	  //var loggedin = is_loggedIn();\n	  \n	  //if (loggedin == true) {\n		  $scope.lab_aide = true;\n		  $scope.lab_tech = true;\n	 	  $scope.faculty = true;\n	  	  $scope.admin = true;\n	  //}\n  }])\n  .controller('periods', ['$scope', '$http', function($scope, $http) {\n	  var entries;\n	  var categories;\n	  var periods;\n          var total;\n          $scope.total = 0;\n          $scope.on_campus = false;\n	  \n	  $scope.form = false;\n	  //Get Categories data\n		categories = api_call($http, 'category/', 'get');\n		categories.success(function(response) {\n                        $scope.categories = response;\n		});\n	  \n	  $scope.period = readCookie('period');\n      $scope.periodName = readCookie('periodName');\n	  entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');\n	  entries.success(function(data) {\n		  var x;\n		  for (x in data) {\n                        data[x] = adjustEntry(data[x], $scope.categories);\n                        $scope.total += data[x].total;\n		  }\n		  $scope.entries = data;\n	  });\n	  \n	  $scope.predicate = \"start_date\";\n	  \n	  $scope.formSubmit = function() {\n		  var data = {};\n		  data.category = $scope.category;\n		  data.start_time = $scope.start_time + \":00\";\n		  data.end_time = $scope.end_time + \":00\";\n		  data.start_date = $scope.start_date;\n                  \n                  if ($scope.on_campus.checked == true) {\n                            data.on_campus = true;\n                  } else {\n                            data.on_campus = false;\n                  }\n		  data.comments = $scope.comments;\n                  \n                  console.log(data);\n		  \n		  api_call($http, 'workevent/', 'post', data);\n		  $scope.form = false;\n                  $scope.total = 0;\n                  setTimeout(function() {\n                            entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');\n                            entries.success(function(data) {\n                                          var x;\n                                          for (x in data) {\n                                                data[x] = adjustEntry(data[x], $scope.categories);\n                                                $scope.total += data[x].total;\n                                      }\n                                  $scope.entries = data;\n                            });\n                  }, 500);\n	  }\n          \n  }])\n  .controller('tsadmin', ['$scope', '$http', function($scope, $http) {\n	  var payperiods;\n	  var x;\n          payperiods = api_call($http, 'payperiod/', 'get');\n          payperiods.success(function(periods) {\n          		for (x in periods) {\n          			periods[x].id = get_id(periods[x].url);\n          		}\n             $scope.periods = periods;\n          });\n          $scope.predicate = \"-id\";\n          \n          $scope.periodSubmit = function() {\n              var data = {};\n              data.name = $scope.name;\n              data.start = $scope.start_date;\n              data.end = $scope.end_date\n              \n              api_call($http, 'payperiod/', 'post', data);\n              $scope.period = false;\n              setTimeout(function() {\n                            payperiods = api_call($http, 'payperiod/', 'get');\n                            payperiods.success(function(periods) {\n                                          $scope.periods = periods;\n                            });\n              }, 500);\n              \n          }\n		  \n		  $scope.catSubmit = function() {\n			  var data = {};\n			  data.name = $scope.catName;\n			  data.is_project = $scope.is_project;\n			  console.log(data);\n\n			  api_call($http, 'category/', 'post', data);\n			  $scope.category = false;\n		  }\n  }])\n  .controller('periodadmin', ['$scope', '$http', function($scope, $http) {\n              var categories;\n              var entries;\n              var period;\n              var users;\n              var username;\n              var x;\n              var y;\n              var z;\n              var complete;\n              var total = 0;\n\n              categories = api_call($http, 'category/', 'get');\n			  categories.success(function(response) {\n              	  $scope.categories = response;\n			  });\n\n              users = api_call($http, 'user/', 'get');\n              users.success(function(data) {\n              		$scope.users = data;\n              });\n                            \n              period = readCookie('period');\n              $scope.period = readCookie('periodName');\n              setTimeout(function() {\n              	entries = api_call($http, 'report/timesheet/' + period + '/', 'get');\n              	entries.success(function(entry) {\n               		for (x in entry) {\n               			username = $.grep($scope.users, function(e) {return e.url == 'http://207.75.134.87:8080' + entry[x].user});\n               		    entry[x].user = username['0'].username;\n               		    entry[x].category = 'http://207.75.134.87:8080' + entry[x].category;\n               		    entry[x] = adjustEntry(entry[x], $scope.categories);\n               		}\n              		complete = sort_reports(entry);\n              		for (z in complete) {\n              			total = 0;\n              			for (y in complete[z]) {\n              				if (complete[z][y].total != null) {\n	              				total += complete[z][y].total;\n	              			}\n              			}\n              			complete[z].total = total;\n\n              		}\n              		$scope.entries = complete;\n\n              	});\n              }, 50);\n\n              $scope.predicate = \"start_date\";\n              \n  }])\n  .controller('adminreports', ['$scope', '$http', function($scope, $http) {\n  	if ($scope.report == 'category') {\n  		$scope.layout = 'category';\n\n  		data = api_call($http, 'report/timesheet/', 'get')\n\n  	}\n\n  }])\n  .controller('inventoryhome', ['$scope', '$http', function($scope, $http) {\n	 		var inventory;\n			\n			inventory = api_call($http, 'Equip/', 'get');\n			inventory.success(function(equip) {\n				console.log(equip);\n				$scope.equip = equip;\n			});\n  }]);\n",
 			"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
-			"file_size": 7993,
-			"file_write_time": 1372010734000000,
 			"settings":
 			{
-				"buffer_size": 8125,
+				"buffer_size": 8406,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/env/site/faculty_requests/Faculty_request/project/faculty_request/models.py",
+			"settings":
+			{
+				"buffer_size": 945,
 				"line_ending": "Unix"
 			}
 		},
@@ -46,7 +54,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/css/app.css",
 			"settings":
 			{
-				"buffer_size": 10815,
+				"buffer_size": 11280,
 				"line_ending": "Unix"
 			}
 		},
@@ -54,7 +62,23 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
 			"settings":
 			{
-				"buffer_size": 95,
+				"buffer_size": 702,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/request.html",
+			"settings":
+			{
+				"buffer_size": 1439,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/show.html",
+			"settings":
+			{
+				"buffer_size": 0,
 				"line_ending": "Unix"
 			}
 		},
@@ -70,7 +94,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/index.html",
 			"settings":
 			{
-				"buffer_size": 3390,
+				"buffer_size": 3387,
 				"line_ending": "Unix"
 			}
 		},
@@ -86,15 +110,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/js/app.js",
 			"settings":
 			{
-				"buffer_size": 1135,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/admin.html",
-			"settings":
-			{
-				"buffer_size": 2517,
+				"buffer_size": 1244,
 				"line_ending": "Unix"
 			}
 		}
@@ -163,10 +179,10 @@
 	},
 	"file_history":
 	[
+		"/opt/lampp/htdocs/labaide/app/partials/timesheets/admin.html",
 		"/opt/lampp/htdocs/labaide/app/partials/timesheets/periods.html",
 		"/home/craig/labaide/app/labaide.sublime-project",
 		"/opt/lampp/htdocs/labaide/app/partials/timesheets/home.html",
-		"/opt/lampp/htdocs/labaide/app/partials/timesheets/admin.html",
 		"/opt/lampp/htdocs/labaide/app/js/controllers.js",
 		"/home/craig/labaide/app/index.html",
 		"/opt/lampp/htdocs/labaide/app/js/app.js",
@@ -208,7 +224,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -216,15 +232,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/services.js",
 					"settings":
 					{
-						"buffer_size": 4117,
+						"buffer_size": 4103,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3505,
-								3505
+								437,
+								437
 							]
 						],
 						"settings":
@@ -234,7 +250,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1989.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -244,29 +260,57 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
 					"settings":
 					{
-						"buffer_size": 8125,
+						"buffer_size": 8406,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7859,
-								7859
+								8356,
+								8356
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3519.0,
+						"translation.y": 3621.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+					"file": "/env/site/faculty_requests/Faculty_request/project/faculty_request/models.py",
+					"settings":
+					{
+						"buffer_size": 945,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/adminperiods.html",
 					"settings":
 					{
@@ -294,24 +338,53 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "/opt/lampp/htdocs/labaide/app/css/app.css",
 					"settings":
 					{
-						"buffer_size": 10815,
+						"buffer_size": 11280,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								472,
-								472
+								3221,
+								3221
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 510.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
+					"settings":
+					{
+						"buffer_size": 702,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								549,
+								549
+							]
+						],
+						"settings":
+						{
+							"auto_name": "",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -320,24 +393,50 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
+					"buffer": 6,
+					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/request.html",
 					"settings":
 					{
-						"buffer_size": 95,
+						"buffer_size": 1439,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								95,
-								95
+								1295,
+								1295
 							]
 						],
 						"settings":
 						{
-							"auto_name": "",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/show.html",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
 							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
@@ -347,7 +446,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 8,
 					"file": "/opt/lampp/htdocs/labaide/app/js/filters.js",
 					"settings":
 					{
@@ -375,19 +474,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 9,
 					"file": "/opt/lampp/htdocs/labaide/app/index.html",
 					"settings":
 					{
-						"buffer_size": 3390,
+						"buffer_size": 3387,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2567,
-								2567
+								2332,
+								2332
 							]
 						],
 						"settings":
@@ -397,13 +496,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 425.0,
+						"translation.y": 442.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 10,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/adminreports.html",
 					"settings":
 					{
@@ -429,52 +528,24 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 11,
 					"file": "/opt/lampp/htdocs/labaide/app/js/app.js",
 					"settings":
 					{
-						"buffer_size": 1135,
+						"buffer_size": 1244,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1073,
-								1073
+								1094,
+								1094
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/admin.html",
-					"settings":
-					{
-						"buffer_size": 2517,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								865,
-								865
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

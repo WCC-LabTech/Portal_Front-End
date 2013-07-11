@@ -1,3 +1,25 @@
 <h2>Faculty Request System</h2>
 
-<span class="soon">Faculty Request System Coming Soon!!</span>
+<table class="timesheet" width="80%" cellspacing="0" cellpadding="0">
+	<thead>
+    	<tr>
+    		<th width="10%">Due Date</th>
+        	<th width="15%">Lab Tech</th>
+        	<th width="15%">Request Type</th>
+        	<th width="40%">Subject</th>
+        	<th width="10%">Status</th>
+            <th width="10%">Accept</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<tr ng-repeat="request in requests">
+    		<td class="entries">{{request.due_date}}</td>
+    		<td class="entries">{{request.labtech_Name}}</td>
+    		<td class="entries">{{request.request_Type}}</td>
+    		<td class="entries">{{request.subject}}</td>
+    		<td class="entries">{{request.request_status}}</td>
+            <td class="entries"><input type="button" ng-show="request.accept" ng-click="acceptRequest" value="Accept Request" /></td>
+    	</tr>
+
+    </tbody>
+</table>

@@ -8,7 +8,7 @@
 angular.module('myApp.services', []).
   value('version', '0.2')
   .factory('userLogin', ['$http', function($http, data) {
-	 $http.post('Http://207.75.134.87:8080/api-token-auth/login', {"username": $scope.username, "password": $scope.password}).success(function(data) {
+	 $http.post('http://home.cspuredesign.com:8080/api-token-auth/login', {"username": $scope.username, "password": $scope.password}).success(function(data) {
 		user.data = data;
 		user.auth = true;
 		return user;
@@ -21,7 +21,7 @@ angular.module('myApp.services', []).
 
 function api_url(api) {
 	var url;
-	url = "Http://207.75.134.87:8080/" + api;
+	url = "http://home.cspuredesign.com:8080/" + api;
 	return url;
 }
 
@@ -166,4 +166,13 @@ function sort_reports(data) {
   
 
   return response;
+}
+
+function getUserById(users, id) {
+  var username;
+  var user;
+  var userId = api_url('user/') + id + '/';
+  username = $.grep(users, function(e) {return e.url == userId});
+  user = username['0'].first_name + " " + username['0'].last_name;
+  return user;
 }

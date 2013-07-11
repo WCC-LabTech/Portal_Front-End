@@ -53,6 +53,12 @@ nav .menu li a:hover {background-color:#ccc;}
 .entry_form .label {float:left; margin-left:50px; width:100px;}
 .entry_form .input {float:left; width:200px;}
 
+.entry_form_full {position:absolute; width:500px; left:50%; margin-left:-300px; top:100px; background-color:#fff; padding:20px; border:1px solid black; border-radius:8px;}
+.entry_form_full .close{position: absolute; top:5px; right:5px;}
+.entry_form_full .label {float:left; margin-left:50px; width:200px; padding-bottom:15px;}
+.entry_form_full .input {float:left; width:200px; padding-bottom:15px;}
+.entry_form_full .submit {text-align: right; margin-right:50px;}
+
 .controls {width: 90%; text-align: center; margin:25px auto;}
 .controls .option ul {list-style: none;}
 .controls .option li {display: inline; margin:25px 25px 0 0;}
@@ -62,6 +68,11 @@ nav .menu li a:hover {background-color:#ccc;}
 .user .title {float:left;}
 .user .title div {border-bottom:1px solid black; padding-right:25px;}
 .user .total {text-align: right; padding-right:25px; margin-top:10px;}
+
+.inventory a {text-decoration: none; color:#fff;}
+
+.search {width:80%; height:25px; margin:15px auto;}
+.search .box {float:left; width:20%; text-align: center;}
 
 /* Footer */
 footer {text-align:center;}

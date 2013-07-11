@@ -1,0 +1,36 @@
+<h2>Faculty Request Form</h2>
+
+<div class="entry_form_full">
+	<form name="request" ng-submit="requestSubmit()">
+		<div class="label">Faculty Name</div>
+		<div class="input"><input type="text" ng-model="faculty_name" /></div>
+		<div class="clearB"></div>
+		<div class="label">Requested Lab Tech</div>
+		<div class="input"><input type="text" ng-model="lab_tech" /></div>
+		<div class="clearB"></div>
+		<div class="label">Request Type</div>
+		<div class="input">
+			<select ng-model="request_type">
+				<option value="RM">Room</option>
+				<option value="EQ">Equipment</option>
+				<option value="CG">Configure</option>
+				<option value="LB">Lab</option>
+				<option value="OT">Other</option>
+			</select>
+		</div>
+		<div class="clearB"></div>
+		<div class="label">File Upload</div>
+		<div class="input"><input type="file" ng-model="file" /></div>
+		<div class="clearB"></div>
+		<div class="label">Subject</div>
+		<div class="input"><input type="text" ng-model="subject" /></div>
+		<div class="clearB"></div>
+		<div class="label">Description</div>
+		<div class="input"><textarea ng-model="description"></textarea></div>
+		<div class="clearB"></div>
+		<div class="label">Due Date</div>
+		<div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" ng-model="due_date" /></div>
+		<div class="clearB"></div>
+		<div class="submit"><input type="submit" name="submit" value="Submit Request" /></div>
+	</form>
+</div>

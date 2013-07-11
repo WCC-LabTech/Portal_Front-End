@@ -41,17 +41,12 @@ angular.module('myApp.controllers', []).
 		data = {"username": $scope.username, "password": $scope.password};
 		login = api_call($http, 'api-token-auth/login', 'post', data);
 		login.success(function(data) {
-			setCookie('Authorization', data.token);
-			setCookie('username', $scope.username);
-			$http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
-			$scope.is_loggedIn = true;
-			$scope.lab_aide = true;
-		    $scope.lab_tech = true;
-	 	    $scope.faculty = true;
-	  	    $scope.admin = true;
-			//$scope.$digest();
+			   setCookie('Authorization', data.token);
+			   setCookie('username', $scope.username);
+			   $http.defaults.headers.common['Authorization'] = 'Token ' + data.token;
+			   $scope.is_loggedIn = true;
 		});
-		login.error(function(status) {
+		login.error(function(data, status) {
 			if (400 === status) {
                             $scope.invalidUsernamePassword = true;
                         } else {
@@ -71,14 +66,21 @@ angular.module('myApp.controllers', []).
 	}
   }])
   .controller('nav', ['$scope', function($scope) {
-	  //var loggedin = is_loggedIn();
+	  var loggedin = is_loggedIn();
 	  
-	  //if (loggedin == true) {
+	 // if (loggedin == true) {
 		  $scope.lab_aide = true;
 		  $scope.lab_tech = true;
 	 	  $scope.faculty = true;
-	  	  $scope.admin = true;
+	  	$scope.admin = true;
 	  //}
+
+    $scope.$on('user_login', function() {
+        $scope.lab_aide = true;
+        $scope.lab_tech = true;
+        $scope.faculty = true;
+        $scope.admin = true; 
+    });
   }])
   .controller('periods', ['$scope', '$http', function($scope, $http) {
 	  var entries;
@@ -121,10 +123,7 @@ angular.module('myApp.controllers', []).
                   } else {
                             data.on_campus = false;
                   }
-		  data.comments = $scope.comments;
-                  
-                  console.log(data);
-		  
+		  data.comments = $scope.comments;		  
 		  api_call($http, 'workevent/', 'post', data);
 		  $scope.form = false;
                   $scope.total = 0;
@@ -209,9 +208,10 @@ angular.module('myApp.controllers', []).
               	entries = api_call($http, 'report/timesheet/' + period + '/', 'get');
               	entries.success(function(entry) {
                		for (x in entry) {
-               			username = $.grep($scope.users, function(e) {return e.url == 'http://207.75.134.87:8080' + entry[x].user});
-               		    entry[x].user = username['0'].username;
-               		    entry[x].category = 'http://207.75.134.87:8080' + entry[x].category;
+               			username = $.grep($scope.users, function(e) {return e.url == 'http://home.cspuredesign.com:8080' + entry[x].user});
+                    
+               		    entry[x].user = username['0'].first_name + ' ' + username['0'].last_name;
+               		    entry[x].category = 'http://home.cspuredesign.com:8080' + entry[x].category;
                		    entry[x] = adjustEntry(entry[x], $scope.categories);
                		}
               		complete = sort_reports(entry);
@@ -234,14 +234,70 @@ angular.module('myApp.controllers', []).
               
   }])
   .controller('adminreports', ['$scope', '$http', function($scope, $http) {
+  	if ($scope.report == 'category') {
+  		$scope.layout = 'category';
+
+  		data = api_call($http, 'report/timesheet/', 'get')
+
+  	}
 
   }])
   .controller('inventoryhome', ['$scope', '$http', function($scope, $http) {
 	 		var inventory;
 			
-			inventory = api_call($http, 'Equip/', 'get');
+			inventory = api_call($http, 'inventory/Equip/', 'get');
 			inventory.success(function(equip) {
-				console.log(equip);
 				$scope.equip = equip;
 			});
+      $scope.predicate = 'description.toString()';
+  }])
+  .controller('requestform', ['$scope', '$http', function($scope, $http) {
+
+  		$scope.requestSubmit = function() {
+			var due_date = new Date($scope.due_date).toISOString();
+
+  			var data = {};
+                        data.labtech_Name = $scope.lab_tech;
+			data.faculty_Name = $scope.faculty_name;
+			data.subject = $scope.subject;
+			data.description = $scope.description;
+			data.due_date = due_date;
+			data.request_Type = $scope.request_type;
+			data.request_status = 'pd';
+			console.log(data);			
+			api_call($http, 'request/admin/', 'post', data);
+  		}
+  }])
+  .controller('requests', ['$scope', '$http', function($scope, $http) {
+  		var requests;
+		var x;
+		var username;
+    var users = {};
+    var users_get = api_call($http, 'user/', 'get');
+    $scope.predicate = 'description';
+    users_get.success(function(response) {
+      users = response;
+    });
+
+      setTimeout(function() {
+  		requests = api_call($http, 'request/admin/', 'get');
+  		
+        requests.success(function(response) {
+  		  
+        	for (x in response) {
+          response[x].due_date = new Date(response[x].due_date).toLocaleString();
+	   			response[x].labtech_Name = getUserById(users, response[x].labtech_Name);
+          if (response[x].request_status == "pd") {
+            response[x].labtech_Name = "Requested: " + response[x].labtech_Name;
+            response[x].request_status = "Pending";
+            response[x].accept = true;
+          }
+
+			    }
+         
+					$scope.requests = response;
+         
+  		  });
+      }, 100);
+
   }]);

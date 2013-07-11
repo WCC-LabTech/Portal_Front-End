@@ -13,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-    	<tr class="entries" ng-repeat="entry in entries | orderBy:predicate">
+    	<tr class="entries" ng-repeat="entry in entries | orderBy:['start_date', 'start_time']">
         	<td>{{entry.start_date}}</td>
     		<td>{{entry.day}}</td>
     		<td>{{entry.category}}</td>
@@ -40,7 +40,7 @@
         </tr>
     </thead>
     <tbody>
-    	<tr class="entries" ng-repeat="entry in entries | orderBy:predicate">
+    	<tr class="entries" ng-repeat="entry in entries | orderBy:['start_date', 'start_time']">
         	<td>{{entry.start_date}}</td>
             <td>{{entry.comments}}</td>
         </tr>

@@ -1,16 +1,41 @@
 <h2>Inventory Management</h2>
 
+<div class="search">
+    <div class="box desc">
+        <input type="text" ng-model="search.description" placeholder="Search By Description" />
+    </div>
+    <div class="box type">
+        <input type="text" ng-model="search.equip_type" placeholder="Search By Type" />
+    </div>
+    <div class="box model">
+        <input type="text" ng-model="search.model_num" placeholder="Search By Model Number" />
+    </div>
+    <div class="box serial">
+        <input type="text" ng-model="search.serial_num" placeholder="Search By Serial Number" />
+    </div>
+    <div class="box loc">
+        <input type="text" ng-model="search.location" placeholder="Search By Location" />
+    </div>
+    <div class="clearB"></div>
+</div>
+
 <table class="timesheet" width="80%" cellpadding="0" cellspacing="0">
 	<thead>
-    	<tr>
-        	<th>Equipment Name</th>
-            <th>Room</th>
+    	<tr class="inventory">
+        	<th width="20%"><a href="" ng-click="predicate = 'description.toString()'; reverse=!reverse">Equipment Description</a></th>
+            <th width="20%"><a href="" ng-click="predicate = 'equip_type.toString()'; reverse=!reverse">Equipment Type</a></th>
+            <th width="20%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
+            <th width="20%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</th>
+            <th width="20%"><a href="" ng-click="predicate = 'location.toString()'; reverse=!reverse">Location</th>
         </tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="item in equip">
-        	<td>{{item.name}}</td>
-            <td>{{item.room}}</td>
+    	<tr ng-repeat="item in equip | orderBy:predicate:reverse | filter:search">
+        	<td class="entries">{{item.description}}</td>
+            <td class="entries">{{item.equip_type}}</td>
+            <td class="entries">{{item.model_num}}</td>
+            <td class="entries">{{item.serial_num}}</td>
+            <td class="entries">{{item.location}}</td>
         </tr>
     </tbody>
 </table>

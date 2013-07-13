@@ -1,41 +1,126 @@
 <h2>Inventory Management</h2>
-
-<div class="search">
-    <div class="box desc">
-        <input type="text" ng-model="search.description" placeholder="Search By Description" />
-    </div>
-    <div class="box type">
-        <input type="text" ng-model="search.equip_type" placeholder="Search By Type" />
-    </div>
-    <div class="box model">
-        <input type="text" ng-model="search.model_num" placeholder="Search By Model Number" />
-    </div>
-    <div class="box serial">
-        <input type="text" ng-model="search.serial_num" placeholder="Search By Serial Number" />
-    </div>
-    <div class="box loc">
-        <input type="text" ng-model="search.location" placeholder="Search By Location" />
-    </div>
-    <div class="clearB"></div>
+<div class="localnav">
+    <ul>
+        <li><a href="" ng-click="search = computers">Computers</a></li>
+        <li><a href="" ng-click="search = cpu">CPU's</a></li>
+        <li><a href="" ng-click="search = equipment">Equipment</a></li>
+    </ul>
 </div>
 
-<table class="timesheet" width="80%" cellpadding="0" cellspacing="0">
-	<thead>
-    	<tr class="inventory">
-        	<th width="20%"><a href="" ng-click="predicate = 'description.toString()'; reverse=!reverse">Equipment Description</a></th>
-            <th width="20%"><a href="" ng-click="predicate = 'equip_type.toString()'; reverse=!reverse">Equipment Type</a></th>
-            <th width="20%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
-            <th width="20%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</th>
-            <th width="20%"><a href="" ng-click="predicate = 'location.toString()'; reverse=!reverse">Location</th>
-        </tr>
-    </thead>
-    <tbody>
-    	<tr ng-repeat="item in equip | orderBy:predicate:reverse | filter:search">
-        	<td class="entries">{{item.description}}</td>
-            <td class="entries">{{item.equip_type}}</td>
-            <td class="entries">{{item.model_num}}</td>
-            <td class="entries">{{item.serial_num}}</td>
-            <td class="entries">{{item.location}}</td>
-        </tr>
-    </tbody>
-</table>
+<div ng-show="search == computers">
+        <table class="timesheet" width="100%" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.manufacturer" placeholder="MFG" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.model_num" placeholder="Model Number" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.serial_num" placeholder="Serial Number" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.purchaseDate" placeholder="Purchase Date" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.location" placeholder="Location" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.cpu" placeholder="CPU" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.optical_drive" placeholder="Optical Drive" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.hdd" placeholder="Hard Drive" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.ram" placeholder="RAM" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.psu" placeholder="Power Supply" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.number_of_mem_sticks" placeholder="# Mem Sticks" /></td>
+                <td width="8.33%"><input type="text" size="17" ng-model="search_filter.IS_tag" placeholder="IS Tag" /></td>
+            </tr>
+        </table>
+
+    <table class="timesheet" width="100%" cellpadding="0" cellspacing="0">
+    	<thead>
+        	<tr class="inventory">
+            	<th width="8.33%"><a href="" ng-click="predicate = 'manufacturer'; reverse=!reverse">Manufacturer</a></th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</a></th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'purchaseDate'; reverse=!reverse">Purchase Date</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'location.toString()'; reverse=!reverse">Location</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'cpu'; reverse=!reverse">CPU</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'optical_drive'; reverse=!reverse">Optical Drive</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'hdd'; reverse=!reverse">Hard Drive</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'ram'; reverse=!reverse">RAM</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'psu'; reverse=!reverse">Power Supply</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'number_of_mem_sticks'; reverse=!reverse"># of Memory Sticks</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'IS_tag'; reverse=!reverse">IS Tag</th>
+            </tr>
+        </thead>
+        <tbody>
+        	<tr class="entries" ng-repeat="item in search | orderBy:predicate:reverse | filter:search_filter">
+            	<td>{{item.manufacturer}}</td>
+                <td>{{item.model_num}}</td>
+                <td>{{item.serial_num}}</td>
+                <td>{{item.purchaseDate}}</td>
+                <td>{{item.location}}</td>
+                <td title='Manufacturer: {{item.cpu.manufacturer}}&#13;Model Number: {{item.cpu.model_num}}&#13;Serial Number: {{item.cpu.serial_num}}&#13;Clock Speed: {{item.cpu.clock_speed}}'>{{item.cpu.manufacturer}}</td>
+                <td title='Manufacturer: {{item.optical_drive.manufacturer}}&#13;Model Number: {{item.optical_drive.model_num}}&#13;Serial Number: {{item.optical_drive.serial_num}}'>{{item.optical_drive.manufacturer}}</td>
+                <td title='Manufacturer: {{item.hdd.manufacturer}}&#13;Model Number: {{item.hdd.model_num}}&#13;Serial Number: {{item.hdd.serial_num}}&#13;Disk Size: {{item.hdd.size}}'>{{item.hdd.manufacturer}}</td>
+                <td title='Manufacturer: {{item.ram.manufacturer}}&#13;Model Number: {{item.ram.model_num}}&#13;Serial Number: {{item.ram.serial_num}}&#13;Ram Type: {{item.ram.type_of_ram}}&#13;Size: {{item.ram.size_in_megs}}'>{{item.ram.manufacturer}}</td>
+                <td title='Manufacturer: {{item.psu.manufacturer}}&#13;Model Number: {{item.psu.model_num}}&#13;Serial Number: {{item.psu.serial_num}}'>{{item.psu.manufacturer}}</td>
+                <td>{{item.number_of_mem_sticks}}</td>
+                <td>{{item.IS_tag}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-show="search == cpu">
+    <table class="timesheet" width="100%" cellspacing="0" cellpadding="0">
+         <tr>
+            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.manufacturer" placeholder="MFG" /></td>
+            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.model_num" placeholder="Model Number" /></td>
+            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.serial_num" placeholder="Serial Number" /></td>
+            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.purchaseDate" placeholder="Purchase Date" /></td>
+            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.location" placeholder="Location" /></td>
+            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.clock_speed" placeholder="Clock Speed" /></td>
+    </table>
+
+    <table class="timesheet" width="100%" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr class="inventory">
+                <th width="16.66%"><a href="" ng-click="predicate = 'manufacturer'; reverse=!reverse">Manufacturer</a></th>
+                <th width="16.66%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
+                <th width="16.66%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</a></th>
+                <th width="16.66%"><a href="" ng-click="predicate = 'purchaseDate'; reverse=!reverse">Purchase Date</th>
+                <th width="16.66%"><a href="" ng-click="predicate = 'location.toString()'; reverse=!reverse">Location</th>
+                <th width="16.66%"><a href="" ng-click="predicate = 'clock_speed'; reverse=!reverse">Clock Speed</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="entries" ng-repeat="item in search | orderBy:predicate:reverse | filter:search_filter">
+                <td>{{item.manufacturer}}</td>
+                <td>{{item.model_num}}</td>
+                <td>{{item.serial_num}}</td>
+                <td>{{item.purchaseDate}}</td>
+                <td>{{item.location}}</td>
+                <td>{{item.clock_speed}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-show="search == equipment">
+    <table class="timesheet" width="100%" cellspacing="0" cellpadding="0">
+         <tr>
+            <td width="25%"><input type="text" size="17" ng-model="search_filter.manufacturer" placeholder="MFG" /></td>
+            <td width="25%"><input type="text" size="17" ng-model="search_filter.model_num" placeholder="Model Number" /></td>
+            <td width="25%"><input type="text" size="17" ng-model="search_filter.serial_num" placeholder="Serial Number" /></td>
+            <td width="25%"><input type="text" size="17" ng-model="search_filter.purchaseDate" placeholder="Purchase Date" /></td>
+
+    </table>
+
+    <table class="timesheet" width="100%" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr class="inventory">
+                <th width="25%"><a href="" ng-click="predicate = 'manufacturer'; reverse=!reverse">Manufacturer</a></th>
+                <th width="25%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
+                <th width="25%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</a></th>
+                <th width="25%"><a href="" ng-click="predicate = 'purchaseDate'; reverse=!reverse">Purchase Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="entries" ng-repeat="item in search | orderBy:predicate:reverse | filter:search_filter">
+                <td>{{item.manufacturer}}</td>
+                <td>{{item.model_num}}</td>
+                <td>{{item.serial_num}}</td>
+                <td>{{item.purchaseDate}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

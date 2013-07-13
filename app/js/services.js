@@ -8,7 +8,7 @@
 angular.module('myApp.services', []).
   value('version', '0.2')
   .factory('userLogin', ['$http', function($http, data) {
-	 $http.post('http://207.75.134.43:8080/api-token-auth/login', {"username": $scope.username, "password": $scope.password}).success(function(data) {
+	 $http.post('http://home.cspuredesign.com:8080/api-token-auth/login', {"username": $scope.username, "password": $scope.password}).success(function(data) {
 		user.data = data;
 		user.auth = true;
 		return user;
@@ -21,7 +21,7 @@ angular.module('myApp.services', []).
 
 function api_url(api) {
 	var url;
-	url = "http://207.75.134.43:8080/" + api;
+	url = "http://home.cspuredesign.com:8080/" + api;
 	return url;
 }
 

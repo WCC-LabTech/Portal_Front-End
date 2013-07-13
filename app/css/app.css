@@ -69,10 +69,15 @@ nav .menu li a:hover {background-color:#ccc;}
 .user .title div {border-bottom:1px solid black; padding-right:25px;}
 .user .total {text-align: right; padding-right:25px; margin-top:10px;}
 
+.localnav {height:30px;}
+.localnav ul {list-style: none;}
+.localnav li {display:inline; margin:0 20px; height:25px; font-size:1.5em;}
+
 .inventory a {text-decoration: none; color:#fff;}
 
 .search {width:80%; height:25px; margin:15px auto;}
 .search .box {float:left; width:20%; text-align: center;}
+
 
 /* Footer */
 footer {text-align:center;}

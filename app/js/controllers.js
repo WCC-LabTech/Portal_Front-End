@@ -208,10 +208,10 @@ angular.module('myApp.controllers', []).
               	entries = api_call($http, 'report/timesheet/' + period + '/', 'get');
               	entries.success(function(entry) {
                		for (x in entry) {
-               			username = $.grep($scope.users, function(e) {return e.url == 'http://207.75.134.43:8080' + entry[x].user});
+               			username = $.grep($scope.users, function(e) {return e.url == 'http://home.cspuredesign.com:8080' + entry[x].user});
                     
                		    entry[x].user = username['0'].first_name + ' ' + username['0'].last_name;
-               		    entry[x].category = 'http://207.75.134.43:8080' + entry[x].category;
+               		    entry[x].category = 'http://home.cspuredesign.com:8080' + entry[x].category;
                		    entry[x] = adjustEntry(entry[x], $scope.categories);
                		}
               		complete = sort_reports(entry);
@@ -243,13 +243,191 @@ angular.module('myApp.controllers', []).
 
   }])
   .controller('inventoryhome', ['$scope', '$http', function($scope, $http) {
-	 		var inventory;
+	 		var computers = api_call($http, 'inventory/all/Computer/', 'get');
+      var cpu = api_call($http, 'inventory/all/Central_processing_unit/', 'get');
+      var equipment = api_call($http, 'inventory/all/Equipment/', 'get');
+      var hd = api_call($http, 'inventory/all/HardDrive/', 'get');
+      var unit = api_call($http, 'inventory/all/Unit/', 'get');
+      //var service = api_call($http, 'inventory/all/Service/', 'get');
+      var mfg = api_call($http, 'inventory/all/Manufacturer/', 'get');
+      var fw = api_call($http, 'inventory/all/Firewall/', 'get');
+      var comp = api_call($http, 'inventory/all/Component/', 'get');
+      var switches = api_call($http, 'inventory/all/Switch/', 'get');
+      var flash = api_call($http, 'inventory/all/Flash_Memory/', 'get');
+      var location = api_call($http, 'inventory/all/Location/', 'get');
+      var router = api_call($http, 'inventory/all/Router/', 'get');
+      var ram = api_call($http, 'inventory/all/Ram/', 'get');
+      var os = api_call($http, 'inventory/all/Operating_system/', 'get');
+      var mem = api_call($http, 'inventory/all/Memory/', 'get');
+      var mb = api_call($http, 'inventory/all/Mother_board/', 'get');
+      var optical = api_call($http, 'inventory/all/Optical_drive/', 'get');
+      var model = api_call($http, 'inventory/all/ModelNumber/', 'get');
+      var port = api_call($http, 'inventory/all/Port/', 'get');
+      var psu = api_call($http, 'inventory/all/Power_supply_unit/', 'get');
+      var x;
 			
-			inventory = api_call($http, 'inventory/Equip/', 'get');
-			inventory.success(function(equip) {
-				$scope.equip = equip;
-			});
-      $scope.predicate = 'description.toString()';
+      computers.success(function(data) {
+          $scope.computers = data;
+      });
+			cpu.success(function(data) {
+          $scope.cpu = data;
+      });
+      equipment.success(function(data) {
+          $scope.equipment = data;
+      });
+      hd.success(function(data) {
+          $scope.hd = data;
+      });
+      unit.success(function(data) {
+          $scope.unit = data;
+      });
+      //service.success(function(data) {
+      //    $scope.service = data;
+      //});
+      mfg.success(function(data) {
+          $scope.mfg = data;
+      });
+      fw.success(function(data) {
+          $scope.fw = data;
+      });
+      comp.success(function(data) {
+          $scope.comp = data;
+      });
+      switches.success(function(data) {
+          $scope.switches = data;
+      });
+      flash.success(function(data) {
+          $scope.flash = data;
+      });
+      location.success(function(data) {
+          $scope.location = data;
+      });
+      router.success(function(data) {
+          $scope.router = data;
+      });
+      ram.success(function(data) {
+          $scope.ram = data;
+      });
+      os.success(function(data) {
+          $scope.os = data;
+      });
+      mem.success(function(data) {
+          $scope.mem = data;
+      });
+      mb.success(function(data) {
+          $scope.mb = data;
+      });
+      optical.success(function(data) {
+          $scope.optical = data;
+      });
+      model.success(function(data) {
+          $scope.model = data;
+      });
+      port.success(function(data) {
+          $scope.port = data;
+      });
+      psu.success(function(data) {
+          $scope.psu = data;
+      });
+
+      setTimeout(function() {
+          var x;
+
+          //Components
+          for (x in $scope.cpu) {
+            manufacturer = $.grep($scope.mfg, function(e) {return e.id == $scope.cpu[x].manufacturer});
+            $scope.cpu[x].manufacturer = manufacturer['0'].name;
+
+            model = $.grep($scope.model, function(e) {return e.id == $scope.cpu[x].model_num});
+            $scope.cpu[x].model_num = model['0'].number;
+
+            location = $.grep($scope.location, function(e) {return e.id == $scope.cpu[x].location});
+            $scope.cpu[x].location = location['0'].building + location['0'].room;
+          }
+
+          for (x in $scope.optical) {
+            manufacturer = $.grep($scope.mfg, function(e) {return e.id == $scope.optical[x].manufacturer});
+            $scope.optical[x].manufacturer = manufacturer['0'].name;
+
+            model = $.grep($scope.model, function(e) {return e.id == $scope.optical[x].model_num});
+            $scope.optical[x].model_num = model['0'].number;
+
+            location = $.grep($scope.location, function(e) {return e.id == $scope.optical[x].location});
+            $scope.optical[x].location = location['0'].building + location['0'].room;
+          }
+
+          for (x in $scope.hd) {
+            manufacturer = $.grep($scope.mfg, function(e) {return e.id == $scope.hd[x].manufacturer});
+            $scope.hd[x].manufacturer = manufacturer['0'].name;
+
+            model = $.grep($scope.model, function(e) {return e.id == $scope.hd[x].model_num});
+            $scope.hd[x].model_num = model['0'].number;
+
+            location = $.grep($scope.location, function(e) {return e.id == $scope.hd[x].location});
+            $scope.hd[x].location = location['0'].building + location['0'].room;
+          }
+
+          for (x in $scope.ram) {
+            manufacturer = $.grep($scope.mfg, function(e) {return e.id == $scope.ram[x].manufacturer});
+            $scope.ram[x].manufacturer = manufacturer['0'].name;
+
+            model = $.grep($scope.model, function(e) {return e.id == $scope.ram[x].model_num});
+            $scope.ram[x].model_num = model['0'].number;
+
+            location = $.grep($scope.location, function(e) {return e.id == $scope.ram[x].location});
+            $scope.ram[x].location = location['0'].building + location['0'].room;
+          }
+
+          for (x in $scope.psu) {
+            manufacturer = $.grep($scope.mfg, function(e) {return e.id == $scope.psu[x].manufacturer});
+            $scope.psu[x].manufacturer = manufacturer['0'].name;
+
+            model = $.grep($scope.model, function(e) {return e.id == $scope.psu[x].model_num});
+            $scope.psu[x].model_num = model['0'].number;
+
+            location = $.grep($scope.location, function(e) {return e.id == $scope.psu[x].location});
+            $scope.psu[x].location = location['0'].building + location['0'].room;
+          }
+
+          // Objects
+          for (x in $scope.computers) {
+            var manufacturer;
+
+            manufacturer = $.grep($scope.mfg, function(e) {return e.id == $scope.computers[x].manufacturer});
+            $scope.computers[x].manufacturer = manufacturer['0'].name;
+
+            model = $.grep($scope.model, function(e) {return e.id == $scope.computers[x].model_num});
+            $scope.computers[x].model_num = model['0'].number;
+
+            location = $.grep($scope.location, function(e) {return e.id == $scope.computers[x].location});
+            $scope.computers[x].location = location['0'].building + location['0'].room;
+
+            cpu = $.grep($scope.cpu, function(e) {return e.id == $scope.computers[x].cpu});
+            $scope.computers[x].cpu = cpu['0'];
+
+            optical = $.grep($scope.optical, function(e) {return e.id == $scope.computers[x].optical_drive});
+            $scope.computers[x].optical_drive = optical['0'];
+
+            hd = $.grep($scope.hd, function(e) {return e.id == $scope.computers[x].hdd});
+            $scope.computers[x].hdd = hd['0'];
+
+            ram = $.grep($scope.ram, function(e) {return e.id == $scope.computers[x].ram});
+            $scope.computers[x].ram  = ram['0'];
+
+            psu = $.grep($scope.psu, function(e) {return e.id == $scope.computers[x].psu});
+            $scope.computers[x].psu = psu['0'];
+          }
+
+          for (x in $scope.equipment) {
+            manufacturer = $.grep($scope.mfg, function(e) {return e.id == $scope.equipment[x].manufacturer});
+            $scope.equipment[x].manufacturer = manufacturer['0'].name;
+
+            model = $.grep($scope.model, function(e) {return e.id == $scope.equipment[x].model_num});
+            $scope.equipment[x].model_num = model['0'].number;
+
+          }
+      }, 500);
+
   }])
   .controller('requestform', ['$scope', '$http', function($scope, $http) {
 

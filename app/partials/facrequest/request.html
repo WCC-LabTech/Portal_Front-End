@@ -1,5 +1,5 @@
 <h2>Faculty Request Form</h2>
-
+<div class="form_response">{{formResponse}}</div>
 <div class="entry_form_full">
 	<form name="request" ng-submit="requestSubmit()">
 		<div class="label">Faculty Name</div>
@@ -11,11 +11,11 @@
 		<div class="label">Request Type</div>
 		<div class="input">
 			<select ng-model="request_type">
-				<option value="RM">Room</option>
-				<option value="EQ">Equipment</option>
-				<option value="CG">Configure</option>
-				<option value="LB">Lab</option>
-				<option value="OT">Other</option>
+				<option value="Room">Room</option>
+				<option value="Equipment">Equipment</option>
+				<option value="Configure">Configure</option>
+				<option value="Labs">Labs</option>
+				<option value="Other">Other</option>
 			</select>
 		</div>
 		<div class="clearB"></div>

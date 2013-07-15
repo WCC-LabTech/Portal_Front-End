@@ -25,7 +25,6 @@ angular.module('myApp.controllers', []).
 		
 		function period(period) {
 			$scope.period = period;
-			console.log($scope.period);
 		}
 		
   }])
@@ -48,8 +47,8 @@ angular.module('myApp.controllers', []).
 		});
 		login.error(function(data, status) {
 			if (400 === status) {
-                            $scope.invalidUsernamePassword = true;
-                        } else {
+        $scope.invalidUsernamePassword = true;
+      } else {
 				alert('No Response from Django Server');
 			}
 		});
@@ -110,6 +109,56 @@ angular.module('myApp.controllers', []).
 	  });
 	  
 	  $scope.predicate = "start_date";
+
+    $scope.deleteEntry = function(entry_id) {
+      var entry;
+      entry = api_call($http, 'workevent/' + entry_id + '/', 'delete');
+      entry.success(function() {
+          entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');
+          entries.success(function(data) {
+          var x;
+          $scope.total = 0;
+          for (x in data) {
+            data[x] = adjustEntry(data[x], $scope.categories);
+            $scope.total += data[x].total;
+          }
+        $scope.entries = data;
+        });
+      });
+
+    }
+
+    $scope.formUpdate = function() {
+      var data = {};
+      var id = $scope.updateValue;
+      data.category = $scope.category;
+      data.start_time = $scope.start_time + ":00";
+      data.end_time = $scope.end_time + ":00";
+      data.start_date = $scope.start_date;
+                  
+                  if ($scope.on_campus.checked == true) {
+                            data.on_campus = true;
+                  } else {
+                            data.on_campus = false;
+                  }
+      data.comments = $scope.comments;      
+      api_call($http, 'workevent/' + id + '/', 'put', data);
+      $scope.form = false;
+      $scope.update = false;
+                  $scope.total = 0;
+                  setTimeout(function() {
+                            entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');
+                            entries.success(function(data) {
+                                          var x;
+                                          for (x in data) {
+                                                data[x] = adjustEntry(data[x], $scope.categories);
+                                                $scope.total += data[x].total;
+                                      }
+                                  $scope.entries = data;
+                            });
+                  }, 500);
+
+    }
 	  
 	  $scope.formSubmit = function() {
 		  var data = {};
@@ -248,7 +297,7 @@ angular.module('myApp.controllers', []).
       var equipment = api_call($http, 'inventory/all/Equipment/', 'get');
       var hd = api_call($http, 'inventory/all/HardDrive/', 'get');
       var unit = api_call($http, 'inventory/all/Unit/', 'get');
-      //var service = api_call($http, 'inventory/all/Service/', 'get');
+      var service = api_call($http, 'inventory/all/Service/', 'get');
       var mfg = api_call($http, 'inventory/all/Manufacturer/', 'get');
       var fw = api_call($http, 'inventory/all/Firewall/', 'get');
       var comp = api_call($http, 'inventory/all/Component/', 'get');
@@ -281,9 +330,9 @@ angular.module('myApp.controllers', []).
       unit.success(function(data) {
           $scope.unit = data;
       });
-      //service.success(function(data) {
-      //    $scope.service = data;
-      //});
+      service.success(function(data) {
+          $scope.service = data;
+      });
       mfg.success(function(data) {
           $scope.mfg = data;
       });
@@ -426,56 +475,117 @@ angular.module('myApp.controllers', []).
             $scope.equipment[x].model_num = model['0'].number;
 
           }
-      }, 500);
+      }, 800);
 
   }])
   .controller('requestform', ['$scope', '$http', function($scope, $http) {
-
+      $scope.formResponse = null;
   		$scope.requestSubmit = function() {
-			var due_date = new Date($scope.due_date).toISOString();
+    		var data = {};
+        data.labtech_Name = $scope.lab_tech;
+  			data.faculty_Name = $scope.faculty_name;
+  			data.subject = $scope.subject;
+  			data.description = $scope.description;
+  			data.due_date = $scope.due_date;
+  			data.request_Type = $scope.request_type;
+  			api_call($http, 'request/admin/', 'post', data);
 
-  			var data = {};
-                        data.labtech_Name = $scope.lab_tech;
-			data.faculty_Name = $scope.faculty_name;
-			data.subject = $scope.subject;
-			data.description = $scope.description;
-			data.due_date = due_date;
-			data.request_Type = $scope.request_type;
-			data.request_status = 'pd';
-			console.log(data);			
-			api_call($http, 'request/admin/', 'post', data);
+        $scope.formResponse = "Your request has been submitted. A Lab Aide or Lab Tech will be assigned to your request soon";
+        $scope.lab_tech = null;
+        $scope.faculty_name = null;
+        $scope.subject = null;
+        $scope.file = null;
+        $scope.description = null;
+        $scope.due_date = null;
+        $scope.request_type = null;
   		}
   }])
   .controller('requests', ['$scope', '$http', function($scope, $http) {
-  		var requests;
+    var currentUser;
+    var requests;
 		var x;
 		var username;
     var users = {};
     var users_get = api_call($http, 'user/', 'get');
+    // Source: http://stackoverflow.com/questions/497790
+
     $scope.predicate = 'description';
     users_get.success(function(response) {
       users = response;
+      currentUser = $.grep(users, function(e) {return e.username == readCookie('username')});
+      currentUser = currentUser['0'].url;
+      currentUser = get_id(currentUser.substring(0, currentUser.length - 1));
     });
-
+    
       setTimeout(function() {
   		requests = api_call($http, 'request/admin/', 'get');
   		
         requests.success(function(response) {
-  		  
-        	for (x in response) {
-          response[x].due_date = new Date(response[x].due_date).toLocaleString();
-	   			response[x].labtech_Name = getUserById(users, response[x].labtech_Name);
-          if (response[x].request_status == "pd") {
-            response[x].labtech_Name = "Requested: " + response[x].labtech_Name;
-            response[x].request_status = "Pending";
-            response[x].accept = true;
-          }
-
+  		    x = response.length;
+        	while (x--) {
+            console.log(x);
+            if (response[x].request_status == "Completed") {
+              response.splice(x, 1);
+              
+              continue;
+            }
+            var check_date = new Date(response[x].due_date).toLocaleString();
+            var today = new Date().toLocaleString();
+            if (today > check_date) {
+              response[x].check = "#ff0000";
+            } else {
+              response[x].check = null;
+            }
+  	   			response[x].labtech_Name = getUserById(users, response[x].labtech_Name);
+            if (response[x].request_status == "Pending") {
+              response[x].labtech_Name = "Requested: " + response[x].labtech_Name;
+              response[x].accept = true;
+            }
+            
 			    }
          
 					$scope.requests = response;
          
   		  });
       }, 100);
+
+    $scope.accept = function(id, due, desc, subject, faculty, type) {
+      var data = {};
+      data.due_date = due;
+      data.description = desc;
+      data.subject = subject;
+      data.faculty_Name = faculty;
+      data.labtech_Name = currentUser;
+      data.request_Type = type;
+      data.request_status = "Delegated";
+      api_call($http, 'request/admin/' + id + "/", "put", data);
+      setTimeout(function() {
+        requests = api_call($http, 'request/admin/', 'get');
+        requests.success(function(response) {
+
+          x = response.length;
+          while (x--) {
+            if (response[x].request_status == "Completed") {
+              response.splice(x, 1);
+              
+              continue;
+            }
+            var check_date = new Date(response[x].due_date).toLocaleString();
+            var today = new Date().toLocaleString();
+            if (today >= check_date) {
+              response[x].check = "#ff0000";
+            } else {
+              response[x].check = null;
+            }
+            response[x].labtech_Name = getUserById(users, response[x].labtech_Name);
+            if (response[x].request_status == "Pending") {
+              response[x].labtech_Name = "Requested: " + response[x].labtech_Name;
+              response[x].accept = true;
+            }
+          }
+          $scope.requests = response;
+        });
+      }, 100); 
+    }
 
   }]);

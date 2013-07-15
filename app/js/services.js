@@ -33,6 +33,14 @@ function api_call($http, api, method, data) {
 	if (method == 'get') {
 		respond = $http.get(api_url(api));
 	}
+
+  if (method == 'delete') {
+    respond = $http.delete(api_url(api));
+  }
+
+  if (method == 'put') {
+    respond = $http.put(api_url(api), data);
+  }
 	
 	return respond;
 }
@@ -121,6 +129,7 @@ function adjustEntry(data, categories) {
        var day;
        var start_date;
        
+       data.category_url = data.category;
        catName = $.grep(categories, function(e) {return e.url == data.category});
        data.category = catName['0'].name;
        start_date = data.start_date.replace(/-/g, '/');
@@ -132,7 +141,6 @@ function adjustEntry(data, categories) {
        day = day.getUTCDay();
        data.day = weekDay(day);
        data.total = Math.round(hours *100) / 100;
-       console.log(start);
               
        return data;
        

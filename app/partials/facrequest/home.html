@@ -1,5 +1,4 @@
 <h2>Faculty Request System</h2>
-
 <table class="timesheet" width="80%" cellspacing="0" cellpadding="0">
 	<thead>
     	<tr>
@@ -12,14 +11,20 @@
         </tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="request in requests">
-    		<td class="entries">{{request.due_date}}</td>
-    		<td class="entries">{{request.labtech_Name}}</td>
-    		<td class="entries">{{request.request_Type}}</td>
-    		<td class="entries">{{request.subject}}</td>
-    		<td class="entries">{{request.request_status}}</td>
-            <td class="entries"><input type="button" ng-show="request.accept" ng-click="acceptRequest" value="Accept Request" /></td>
+    	<tr ng-repeat="request in requests | orderBy:['-request_status', 'due_date']" style="background-color: {{request.check}};">
+    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.due_date}}</td>
+    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.labtech_Name}}</td>
+    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.request_Type}}</td>
+    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.subject}}</td>
+    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.request_status}}</td>
+            <td class="entries"><input type="button" ng-show="request.accept" ng-click="accept(request.id, request.due_date, request.description, request.subject, request.faculty_Name, request.request_Type);" value="Accept Request" /></td>
     	</tr>
 
     </tbody>
 </table>
+
+<div class="entry_form" ng-show="desc">
+    <div class="close"><a href="#" ng-click="desc = false;" onclick="return false;">X - Close</a></div>
+    <h2>{{subject}}</h2>
+    <p>{{description}}</p>
+</div>

@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"text",
+				"text-decoration"
+			],
+			[
+				"la",
+				"labtech_Name"
+			],
+			[
 				"start",
 				"start_date"
 			],
@@ -16,13 +24,10 @@
 	"buffers":
 	[
 		{
-			"contents": "'use strict';\n\n/* Services */\n\n\n// Demonstrate how to register services\n// In this case it is a simple value service.\nangular.module('myApp.services', []).\n  value('version', '0.2')\n  .factory('userLogin', ['$http', function($http, data) {\n	 $http.post('Http://10.0.0.3:8080/api-token-auth/login', {\"username\": $scope.username, \"password\": $scope.password}).success(function(data) {\n		user.data = data;\n		user.auth = true;\n		return user;\n	 }).error(function() {\n		 user.auth = false;\n		 return user;\n	 });\n  }]);\n\nfunction api_url(api) {\n	var url;\n	url = \"Http://10.0.0.3:8080/\" + api;\n	return url;\n}\n\nfunction api_call($http, api, method, data) {\n	var respond;\n	if (method == 'post') {\n		respond = $http.post(api_url(api), data);\n	}\n	if (method == 'get') {\n		respond = $http.get(api_url(api));\n	}\n	\n	return respond;\n}\n\nfunction getCat($http, cat) {\n	var category\n	$http.get(api_url('categories/' + cat + '/')).success(function(data) {\n		console.log(data.name);\n		category = data.name;\n	});\n	\n	return category;\n}\n\nfunction readCookie(key) {\n	var currentcookie;\n	var firstidx;\n	var lastidx;\n	currentcookie = document.cookie;\n    if (currentcookie.length > 0)\n    {\n        firstidx = currentcookie.indexOf(key + \"=\");\n        if (firstidx != -1)\n        {\n            firstidx = firstidx + key.length + 1;\n            lastidx = currentcookie.indexOf(\";\",firstidx);\n            if (lastidx == -1)\n            {\n                lastidx = currentcookie.length;\n            }\n            return unescape(currentcookie.substring(firstidx, lastidx));\n        }\n    }\n    return null;\n}\n\nfunction setCookie(c_name,value) {\n	var exdate= cookieExp();\n	var c_value=escape(value) + \"; expires=\"+exdate;\n	document.cookie=c_name + \"=\" + c_value;\n}\n\nfunction cookieExp() {\n	var currentDate = new Date();\n	var expDate = new Date(currentDate.getTime() + 86400000);\n	\n	return expDate.toGMTString();\n}\n\nfunction get_id(url) {\n       var split = url.split('/');\n       var id = split[split.length - 1];\n       \n       return id;\n}\n\nfunction is_loggedIn() {\n	var loggedIn;\n	loggedIn = readCookie(\"username\");\n	if (loggedIn == \"null\" || loggedIn == null) {\n			return false;\n		} else {\n			return true;\n		}\n}\n\nfunction weekDay(day) {\n       var weekday=new Array(7);\n       weekday[0]=\"Sunday\";\n       weekday[1]=\"Monday\";\n       weekday[2]=\"Tuesday\";\n       weekday[3]=\"Wednesday\";\n       weekday[4]=\"Thursday\";\n       weekday[5]=\"Friday\";\n       weekday[6]=\"Saturday\";\n       \n       return weekday[day];\n}\n\nfunction adjustEntry(data, categories) {\n       var catName;\n       var start;\n       var end;\n       var mili;\n       var hours;\n       var day;\n       \n       catName = $.grep(categories, function(e) {return e.url == data.category});\n       data.category = catName['0'].name;\n       start = new Date(data.start_date + \" \" + data.start_time);\n       end = new Date(data.start_date + \" \" + data.end_time);\n       mili = end - start;\n       hours = (((mili / 1000) / 60) / 60);\n       day = new Date(data.start_date);\n       day = day.getUTCDay();\n       data.day = weekDay(day);\n       data.total = Math.round(hours *100) / 100;\n              \n       return data;\n       \n}\n\nfunction get_username($http, data) {\n  var returnuser = null;\n  var userlink = data.substring(1);\n  var user = api_call($http, userlink, 'get');\n  user.success(function(username) {\n      returnuser = username.username;\n  });\n  console.log(returnuser);\n}\n\nfunction sort_reports(data) {\n  var response = {};\n  var x;\n  var iter = 0;\n  for (x in data) {\n      if (typeof response[data[x].user] == 'undefined') {\n        response[data[x].user] = {};\n        response[data[x].user].username = data[x].user;\n      }\n      response[data[x].user][iter] = {};\n\n      response[data[x].user][iter]['start_date'] = data[x].start_date;\n      response[data[x].user][iter]['category'] = data[x].category;\n      response[data[x].user][iter]['start_time'] = data[x].start_time;\n      response[data[x].user][iter]['end_time'] = data[x].end_time;\n      response[data[x].user][iter]['total'] = data[x].total;\n      iter = iter + 1;\n    }\n  \n\n  return response;\n}",
 			"file": "/opt/lampp/htdocs/labaide/app/js/services.js",
-			"file_size": 4107,
-			"file_write_time": 1372908770000000,
 			"settings":
 			{
-				"buffer_size": 4103,
+				"buffer_size": 4487,
 				"line_ending": "Unix"
 			}
 		},
@@ -30,7 +35,15 @@
 			"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
 			"settings":
 			{
-				"buffer_size": 8406,
+				"buffer_size": 17442,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/opt/lampp/htdocs/labaide/app/partials/inventory/home.html",
+			"settings":
+			{
+				"buffer_size": 9056,
 				"line_ending": "Unix"
 			}
 		},
@@ -38,7 +51,7 @@
 			"file": "/env/site/faculty_requests/Faculty_request/project/faculty_request/models.py",
 			"settings":
 			{
-				"buffer_size": 945,
+				"buffer_size": 957,
 				"line_ending": "Unix"
 			}
 		},
@@ -46,7 +59,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/adminperiods.html",
 			"settings":
 			{
-				"buffer_size": 1223,
+				"buffer_size": 1437,
 				"line_ending": "Unix"
 			}
 		},
@@ -54,7 +67,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/css/app.css",
 			"settings":
 			{
-				"buffer_size": 11280,
+				"buffer_size": 11578,
 				"line_ending": "Unix"
 			}
 		},
@@ -62,7 +75,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
 			"settings":
 			{
-				"buffer_size": 702,
+				"buffer_size": 876,
 				"line_ending": "Unix"
 			}
 		},
@@ -70,7 +83,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/request.html",
 			"settings":
 			{
-				"buffer_size": 1439,
+				"buffer_size": 1420,
 				"line_ending": "Unix"
 			}
 		},
@@ -110,7 +123,15 @@
 			"file": "/opt/lampp/htdocs/labaide/app/js/app.js",
 			"settings":
 			{
-				"buffer_size": 1244,
+				"buffer_size": 1271,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/periods.html",
+			"settings":
+			{
+				"buffer_size": 2994,
 				"line_ending": "Unix"
 			}
 		}
@@ -192,7 +213,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -206,6 +227,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"8.33",
 			"response"
 		],
 		"highlight": true,
@@ -214,6 +236,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"16.66"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -232,15 +255,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/services.js",
 					"settings":
 					{
-						"buffer_size": 4103,
+						"buffer_size": 4487,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								437,
-								437
+								261,
+								261
 							]
 						],
 						"settings":
@@ -250,7 +273,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1479.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -260,15 +283,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
 					"settings":
 					{
-						"buffer_size": 8406,
+						"buffer_size": 17442,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8356,
-								8356
+								17319,
+								17319
 							]
 						],
 						"settings":
@@ -278,17 +301,45 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3621.0,
+						"translation.y": 7293.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+					"file": "/opt/lampp/htdocs/labaide/app/partials/inventory/home.html",
+					"settings":
+					{
+						"buffer_size": 9056,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4610,
+								4610
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "/env/site/faculty_requests/Faculty_request/project/faculty_request/models.py",
 					"settings":
 					{
-						"buffer_size": 945,
+						"buffer_size": 957,
 						"regions":
 						{
 						},
@@ -310,19 +361,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/adminperiods.html",
 					"settings":
 					{
-						"buffer_size": 1223,
+						"buffer_size": 1437,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								597,
-								597
+								555,
+								555
 							]
 						],
 						"settings":
@@ -338,19 +389,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "/opt/lampp/htdocs/labaide/app/css/app.css",
 					"settings":
 					{
-						"buffer_size": 11280,
+						"buffer_size": 11578,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3221,
-								3221
+								4158,
+								4158
 							]
 						],
 						"settings":
@@ -358,25 +409,25 @@
 							"syntax": "Packages/CSS/CSS.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 510.0,
+						"translation.y": 867.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
 					"settings":
 					{
-						"buffer_size": 702,
+						"buffer_size": 876,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								549,
-								549
+								837,
+								837
 							]
 						],
 						"settings":
@@ -393,19 +444,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 7,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/request.html",
 					"settings":
 					{
-						"buffer_size": 1439,
+						"buffer_size": 1420,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1295,
-								1295
+								0,
+								0
 							]
 						],
 						"settings":
@@ -420,7 +471,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 8,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/show.html",
 					"settings":
 					{
@@ -446,7 +497,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 9,
 					"file": "/opt/lampp/htdocs/labaide/app/js/filters.js",
 					"settings":
 					{
@@ -474,7 +525,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 10,
 					"file": "/opt/lampp/htdocs/labaide/app/index.html",
 					"settings":
 					{
@@ -496,13 +547,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 442.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 11,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/adminreports.html",
 					"settings":
 					{
@@ -528,24 +579,52 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 12,
 					"file": "/opt/lampp/htdocs/labaide/app/js/app.js",
 					"settings":
 					{
-						"buffer_size": 1244,
+						"buffer_size": 1271,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1094,
-								1094
+								0,
+								0
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/periods.html",
+					"settings":
+					{
+						"buffer_size": 2994,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1186,
+								1186
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -593,7 +672,7 @@
 	},
 	"replace":
 	{
-		"height": 0.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":

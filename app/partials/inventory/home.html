@@ -2,12 +2,14 @@
 <div class="localnav">
     <ul>
         <li><a href="" ng-click="search = computers">Computers</a></li>
-        <li><a href="" ng-click="search = cpu">CPU's</a></li>
-        <li><a href="" ng-click="search = equipment">Equipment</a></li>
+        <li><a href="" ng-click="search = router">Routers</a></li>
+        <li><a href="" ng-click="search = switches">Switches</a></li>
+        <li><a href="" ng-click="search = fw">Firewalls</a></li>
     </ul>
 </div>
 
-<div ng-show="search == computers" style="display: none;">
+<div ng-show="search == computers" ng-cloak>
+        <!--
         <table class="timesheet" width="100%" cellpadding="0" cellspacing="0">
             <tr>
                 <td width="8.33%"><input type="text" size="17" ng-model="search_filter.manufacturer" placeholder="MFG" /></td>
@@ -24,7 +26,7 @@
                 <td width="8.33%"><input type="text" size="17" ng-model="search_filter.IS_tag" placeholder="IS Tag" /></td>
             </tr>
         </table>
-
+        -->
     <table class="timesheet" width="100%" cellpadding="0" cellspacing="0">
     	<thead>
         	<tr class="inventory">
@@ -44,82 +46,143 @@
         </thead>
         <tbody>
         	<tr class="entries" ng-repeat="item in search | orderBy:predicate:reverse | filter:search_filter">
-            	<td>{{item.manufacturer}}</td>
-                <td>{{item.model_num}}</td>
+            	<td>{{item.manufacturer.name}}</td>
+                <td>{{item.model_num.number}}</td>
                 <td>{{item.serial_num}}</td>
                 <td>{{item.purchaseDate}}</td>
-                <td>{{item.location}}</td>
-                <td title='Manufacturer: {{item.cpu.manufacturer}}&#13;Model Number: {{item.cpu.model_num}}&#13;Serial Number: {{item.cpu.serial_num}}&#13;Clock Speed: {{item.cpu.clock_speed}}'>{{item.cpu.manufacturer}}</td>
-                <td title='Manufacturer: {{item.optical_drive.manufacturer}}&#13;Model Number: {{item.optical_drive.model_num}}&#13;Serial Number: {{item.optical_drive.serial_num}}'>{{item.optical_drive.manufacturer}}</td>
-                <td title='Manufacturer: {{item.hdd.manufacturer}}&#13;Model Number: {{item.hdd.model_num}}&#13;Serial Number: {{item.hdd.serial_num}}&#13;Disk Size: {{item.hdd.size}}'>{{item.hdd.manufacturer}}</td>
-                <td title='Manufacturer: {{item.ram.manufacturer}}&#13;Model Number: {{item.ram.model_num}}&#13;Serial Number: {{item.ram.serial_num}}&#13;Ram Type: {{item.ram.type_of_ram}}&#13;Size: {{item.ram.size_in_megs}}'>{{item.ram.manufacturer}}</td>
-                <td title='Manufacturer: {{item.psu.manufacturer}}&#13;Model Number: {{item.psu.model_num}}&#13;Serial Number: {{item.psu.serial_num}}'>{{item.psu.manufacturer}}</td>
+                <td>{{item.location.building}}{{item.location.room}}</td>
+                <td title='Manufacturer: {{item.cpu.manufacturer.name}}&#13;Model Number: {{item.cpu.model_num.number}}&#13;Serial Number: {{item.cpu.serial_num}}&#13;Clock Speed: {{item.cpu.clock_speed}}'>{{item.cpu.manufacturer.name}}</td>
+                <td title='Manufacturer: {{item.optical_drive.manufacturer.name}}&#13;Model Number: {{item.optical_drive.model_num.number}}&#13;Serial Number: {{item.optical_drive.serial_num}}'>{{item.optical_drive.manufacturer.name}}</td>
+                <td title='Manufacturer: {{item.hdd.manufacturer.name}}&#13;Model Number: {{item.hdd.model_num.number}}&#13;Serial Number: {{item.hdd.serial_num}}&#13;Disk Size: {{item.hdd.size}}'>{{item.hdd.manufacturer.name}}</td>
+                <td title='Manufacturer: {{item.ram.manufacturer.name}}&#13;Model Number: {{item.ram.model_num.number}}&#13;Serial Number: {{item.ram.serial_num}}&#13;Ram Type: {{item.ram.type_of_ram}}&#13;Size: {{item.ram.size_in_megs}}'>{{item.ram.manufacturer.name}}</td>
+                <td title='Manufacturer: {{item.psu.manufacturer.name}}&#13;Model Number: {{item.psu.model_num.number}}&#13;Serial Number: {{item.psu.serial_num}}'>{{item.psu.manufacturer.name}}</td>
                 <td>{{item.number_of_mem_sticks}}</td>
                 <td>{{item.IS_tag}}</td>
             </tr>
         </tbody>
     </table>
 </div>
-<div ng-show="search == cpu" style="display: none;">
+<div ng-show="search == router" ng-cloak>
+    <!--
     <table class="timesheet" width="100%" cellspacing="0" cellpadding="0">
          <tr>
-            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.manufacturer" placeholder="MFG" /></td>
-            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.model_num" placeholder="Model Number" /></td>
-            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.serial_num" placeholder="Serial Number" /></td>
-            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.purchaseDate" placeholder="Purchase Date" /></td>
-            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.location" placeholder="Location" /></td>
-            <td width="16.66%"><input type="text" size="17" ng-model="search_filter.clock_speed" placeholder="Clock Speed" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.manufacturer" placeholder="MFG" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.model_num" placeholder="Model Number" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.serial_num" placeholder="Serial Number" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.purchaseDate" placeholder="Purchase Date" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.location" placeholder="Location" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.clock_speed" placeholder="Ports" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.clock_speed" placeholder="# of Mem Sticks" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.clock_speed" placeholder="Service Contract" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.clock_speed" placeholder="Ram" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.clock_speed" placeholder="Flash" /></td>
+            <td width="9.09%"><input type="text" size="17" ng-model="search_filter.clock_speed" placeholder="IS Tag" /></td>
     </table>
-
+    -->
     <table class="timesheet" width="100%" cellspacing="0" cellpadding="0">
         <thead>
             <tr class="inventory">
-                <th width="16.66%"><a href="" ng-click="predicate = 'manufacturer'; reverse=!reverse">Manufacturer</a></th>
-                <th width="16.66%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
-                <th width="16.66%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</a></th>
-                <th width="16.66%"><a href="" ng-click="predicate = 'purchaseDate'; reverse=!reverse">Purchase Date</th>
-                <th width="16.66%"><a href="" ng-click="predicate = 'location.toString()'; reverse=!reverse">Location</th>
-                <th width="16.66%"><a href="" ng-click="predicate = 'clock_speed'; reverse=!reverse">Clock Speed</th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'manufacturer'; reverse=!reverse">Manufacturer</a></th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</a></th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'purchaseDate'; reverse=!reverse">Purchase Date</th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'location.toString()'; reverse=!reverse">Location</th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'ports'; reverse=!reverse">Ports</th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'number_of_mem_sticks'; reverse=!reverse"># of Mem Sticks</th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'service_contract'; reverse=!reverse">Service Contract</th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'ram'; reverse=!reverse">Ram</th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'flash'; reverse=!reverse">Flash</th>
+                <th width="9.09%"><a href="" ng-click="predicate = 'IS_tag'; reverse=!reverse">IS Tag</th>
 
             </tr>
         </thead>
         <tbody>
             <tr class="entries" ng-repeat="item in search | orderBy:predicate:reverse | filter:search_filter">
-                <td>{{item.manufacturer}}</td>
-                <td>{{item.model_num}}</td>
+                <td>{{item.manufacturer.name}}</td>
+                <td>{{item.model_num.number}}</td>
                 <td>{{item.serial_num}}</td>
                 <td>{{item.purchaseDate}}</td>
-                <td>{{item.location}}</td>
-                <td>{{item.clock_speed}}</td>
+                <td>{{item.location.building}}{{item.location.room}}</td>
+                <td>{{item.ports.name}} {{item.ports.type_of_port}}</td>
+                <td>{{item.number_of_mem_sticks}}</td>
+                <td title='{{item.service_contract.service_contract}}'>{{item.service_contract.id}}</td>
+                <td title='Manufacturer: {{item.ram.manufacturer.name}}&#13;Model Number: {{item.ram.model_num.number}}&#13;Serial Number: {{item.ram.serial_num}}&#13;Ram Type: {{item.ram.type_of_ram}}&#13;Size: {{item.ram.size_in_megs}}'>{{item.ram.manufacturer.name}}</td>
+                <td>{{item.flash}}</td>
+                <td>{{item.IS_tag}}</td>
             </tr>
         </tbody>
     </table>
 </div>
-<div ng-show="search == equipment" style="display: none;">
-    <table class="timesheet" width="100%" cellspacing="0" cellpadding="0">
-         <tr>
-            <td width="25%"><input type="text" size="17" ng-model="search_filter.manufacturer" placeholder="MFG" /></td>
-            <td width="25%"><input type="text" size="17" ng-model="search_filter.model_num" placeholder="Model Number" /></td>
-            <td width="25%"><input type="text" size="17" ng-model="search_filter.serial_num" placeholder="Serial Number" /></td>
-            <td width="25%"><input type="text" size="17" ng-model="search_filter.purchaseDate" placeholder="Purchase Date" /></td>
-
-    </table>
-
+<div ng-show="search == switches" ng-cloak>
     <table class="timesheet" width="100%" cellspacing="0" cellpadding="0">
         <thead>
             <tr class="inventory">
-                <th width="25%"><a href="" ng-click="predicate = 'manufacturer'; reverse=!reverse">Manufacturer</a></th>
-                <th width="25%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
-                <th width="25%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</a></th>
-                <th width="25%"><a href="" ng-click="predicate = 'purchaseDate'; reverse=!reverse">Purchase Date</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'manufacturer'; reverse=!reverse">Manufacturer</a></th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</a></th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'purchaseDate'; reverse=!reverse">Purchase Date</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'location.toString()'; reverse=!reverse">Location</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'ports'; reverse=!reverse">Ports</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'number_of_mem_sticks'; reverse=!reverse"># of Mem Sticks</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'service_contract'; reverse=!reverse">Service Contract</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'ram'; reverse=!reverse">Ram</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'flash'; reverse=!reverse">Flash</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'expansion_slot'; reverse=!reverse">Expansion Slot</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'IS_tag'; reverse=!reverse">IS Tag</th>
+
             </tr>
         </thead>
         <tbody>
             <tr class="entries" ng-repeat="item in search | orderBy:predicate:reverse | filter:search_filter">
-                <td>{{item.manufacturer}}</td>
-                <td>{{item.model_num}}</td>
+                <td>{{item.manufacturer.name}}</td>
+                <td>{{item.model_num.number}}</td>
                 <td>{{item.serial_num}}</td>
                 <td>{{item.purchaseDate}}</td>
+                <td>{{item.location.building}}{{item.location.room}}</td>
+                <td>{{item.ports.name}} {{item.ports.type_of_port}}</td>
+                <td>{{item.number_of_mem_sticks}}</td>
+                <td title='{{item.service_contract.service_contract}}'>{{item.service_contract.id}}</td>
+                <td title='Manufacturer: {{item.ram.manufacturer.name}}&#13;Model Number: {{item.ram.model_num.number}}&#13;Serial Number: {{item.ram.serial_num}}&#13;Ram Type: {{item.ram.type_of_ram}}&#13;Size: {{item.ram.size_in_megs}}'>{{item.ram.manufacturer.name}}</td>
+                <td>{{item.flash}}</td>
+                <td>{{item.expansion_slot}}</td>
+                <td>{{item.IS_tag}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div ng-show="search == fw" ng-cloak>
+    <table class="timesheet" width="100%" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr class="inventory">
+                <th width="8.33%"><a href="" ng-click="predicate = 'manufacturer'; reverse=!reverse">Manufacturer</a></th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'model_num'; reverse=!reverse">Model Number</a></th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'serial_num'; reverse=!reverse">Serial Number</a></th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'purchaseDate'; reverse=!reverse">Purchase Date</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'location.toString()'; reverse=!reverse">Location</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'ports'; reverse=!reverse">Ports</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'number_of_mem_sticks'; reverse=!reverse"># of Mem Sticks</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'service_contract'; reverse=!reverse">Service Contract</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'ram'; reverse=!reverse">Ram</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'flash'; reverse=!reverse">Flash</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'expansion_slot'; reverse=!reverse">Expansion Slot</th>
+                <th width="8.33%"><a href="" ng-click="predicate = 'IS_tag'; reverse=!reverse">IS Tag</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="entries" ng-repeat="item in search | orderBy:predicate:reverse | filter:search_filter">
+                <td>{{item.manufacturer.name}}</td>
+                <td>{{item.model_num.number}}</td>
+                <td>{{item.serial_num}}</td>
+                <td>{{item.purchaseDate}}</td>
+                <td>{{item.location.building}}{{item.location.room}}</td>
+                <td>{{item.ports.name}} {{item.ports.type_of_port}}</td>
+                <td>{{item.number_of_mem_sticks}}</td>
+                <td title='{{item.service_contract.service_contract}}'>{{item.service_contract.id}}</td>
+                <td title='Manufacturer: {{item.ram.manufacturer.name}}&#13;Model Number: {{item.ram.model_num.number}}&#13;Serial Number: {{item.ram.serial_num}}&#13;Ram Type: {{item.ram.type_of_ram}}&#13;Size: {{item.ram.size_in_megs}}'>{{item.ram.manufacturer.name}}</td>
+                <td>{{item.flash}}</td>
+                <td>{{item.expansion_slot}}</td>
+                <td>{{item.IS_tag}}</td>
             </tr>
         </tbody>
     </table>

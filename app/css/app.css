@@ -82,6 +82,9 @@ nav .menu li a:hover {background-color:#ccc;}
 .search {width:80%; height:25px; margin:15px auto;}
 .search .box {float:left; width:20%; text-align: center;}
 
+.red {background-color:#ff0000;}
+.none {display:none;}
+
 
 /* Footer */
 footer {text-align:center;}

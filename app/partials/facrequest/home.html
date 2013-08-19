@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="request in requests | orderBy:['-request_status', 'due_date']" style="background-color: {{request.check}};">
+    	<tr ng-repeat="request in requests | orderBy:['-request_status', 'due_date']" class="{{request.check}}">
     		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.due_date}}</td>
     		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.labtech_Name}}</td>
     		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.request_Type}}</td>

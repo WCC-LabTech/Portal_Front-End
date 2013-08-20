@@ -11,7 +11,8 @@
 		<div class="input">{{requestName}}</div>
 		<div class="clearB"></div>
 		<div class="label">Requested Lab Tech</div>
-		<div class="input"><input type="text" ng-model="lab_tech" /></div>
+		<!--<div class="input"><input type="text" ng-model="lab_tech" /></div>-->
+		<div class="input"><select ng-model="lab_tech" ng-options="tech.id as tech.first_name + ' ' + tech.last_name for tech in lab_techs" /></div>
 		<div class="clearB"></div>
 		<div class="label">Request Type</div>
 		<div class="input">

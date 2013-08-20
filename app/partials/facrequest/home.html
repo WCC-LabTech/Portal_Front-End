@@ -11,13 +11,13 @@
         </tr>
     </thead>
     <tbody>
-    	<tr ng-repeat="request in requests | orderBy:['-request_status', 'due_date']" class="{{request.check}}">
-    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.due_date}}</td>
-    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.labtech_Name}}</td>
-    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.request_Type}}</td>
-    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.subject}}</td>
-    		<td ng-click="$parent.desc = true; $parent.description = request.description; $parent.subject = request.subject;" class="entries">{{request.request_status}}</td>
-            <td class="entries"><input type="button" ng-show="request.accept" ng-click="accept(request.id, request.due_date, request.description, request.subject, request.faculty_Name, request.request_Type);" value="Accept Request" /></td>
+    	<tr ng-repeat="request in requests | orderBy:['-fields.request_status', 'fields.due_date']" class="{{request.fields.check}}">
+    		<td ng-click="$parent.desc = true; $parent.description = request.fields.description; $parent.subject = request.fields.subject;" class="entries">{{request.fields.due_date}}</td>
+    		<td ng-click="$parent.desc = true; $parent.description = request.fields.description; $parent.subject = request.fields.subject;" class="entries">{{request.fields.labtech_Name}}</td>
+    		<td ng-click="$parent.desc = true; $parent.description = request.fields.description; $parent.subject = request.fields.subject;" class="entries">{{request.fields.request_Type}}</td>
+    		<td ng-click="$parent.desc = true; $parent.description = request.fields.description; $parent.subject = request.fields.subject;" class="entries">{{request.fields.subject}}</td>
+    		<td ng-click="$parent.desc = true; $parent.description = request.fields.description; $parent.subject = request.fields.subject;" class="entries">{{request.fields.request_status}}</td>
+            <td class="entries"><input type="button" ng-show="request.fields.accept" ng-click="accept(request.pk, request.fields.due_date, request.fields.description, request.fields.subject, request.fields.faculty_Name, request.fields.request_Type);" value="Accept Request" /></td>
     	</tr>
 
     </tbody>

@@ -39,7 +39,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/js/services.js",
 			"settings":
 			{
-				"buffer_size": 4652,
+				"buffer_size": 4757,
 				"line_ending": "Unix"
 			}
 		},
@@ -47,16 +47,8 @@
 			"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
 			"settings":
 			{
-				"buffer_size": 14951,
+				"buffer_size": 15922,
 				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/opt/lampp/htdocs/decrypt.php",
-			"settings":
-			{
-				"buffer_size": 3514,
-				"line_ending": "Windows"
 			}
 		},
 		{
@@ -103,7 +95,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
 			"settings":
 			{
-				"buffer_size": 1803,
+				"buffer_size": 1972,
 				"line_ending": "Unix"
 			}
 		},
@@ -111,7 +103,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/request.html",
 			"settings":
 			{
-				"buffer_size": 1562,
+				"buffer_size": 1712,
 				"line_ending": "Unix"
 			}
 		},
@@ -152,6 +144,14 @@
 			"settings":
 			{
 				"buffer_size": 1271,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/opt/lampp/htdocs/labaide/testing.html",
+			"settings":
+			{
+				"buffer_size": 477,
 				"line_ending": "Unix"
 			}
 		}
@@ -220,6 +220,7 @@
 	},
 	"file_history":
 	[
+		"/opt/lampp/htdocs/decrypt.php",
 		"/opt/lampp/htdocs/labaide/app/partials/timesheets/admin.html",
 		"/opt/lampp/htdocs/labaide/app/partials/timesheets/periods.html",
 		"/home/craig/labaide/app/labaide.sublime-project",
@@ -277,15 +278,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/services.js",
 					"settings":
 					{
-						"buffer_size": 4652,
+						"buffer_size": 4757,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								530,
-								530
+								4672,
+								4672
 							]
 						],
 						"settings":
@@ -295,7 +296,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 273.0,
+						"translation.y": 1191.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -305,15 +306,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
 					"settings":
 					{
-						"buffer_size": 14951,
+						"buffer_size": 15922,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								11550,
+								11550
 							]
 						],
 						"settings":
@@ -323,40 +324,13 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5202.0,
+						"translation.y": 5712.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "/opt/lampp/htdocs/decrypt.php",
-					"settings":
-					{
-						"buffer_size": 3514,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								293,
-								293
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 153.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/periods.html",
 					"settings":
 					{
@@ -384,7 +358,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/inventory/home.html",
 					"settings":
 					{
@@ -412,7 +386,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 4,
 					"file": "/env/site/faculty_requests/Faculty_request/project/faculty_request/models.py",
 					"settings":
 					{
@@ -438,7 +412,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 5,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/adminperiods.html",
 					"settings":
 					{
@@ -466,7 +440,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 6,
 					"file": "/opt/lampp/htdocs/labaide/app/css/app.css",
 					"settings":
 					{
@@ -492,11 +466,11 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
+					"buffer": 7,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
 					"settings":
 					{
-						"buffer_size": 1803,
+						"buffer_size": 1972,
 						"regions":
 						{
 						},
@@ -521,19 +495,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 8,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/request.html",
 					"settings":
 					{
-						"buffer_size": 1562,
+						"buffer_size": 1712,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								590,
+								590
 							]
 						],
 						"settings":
@@ -548,7 +522,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 10,
+					"buffer": 9,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/show.html",
 					"settings":
 					{
@@ -574,7 +548,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
+					"buffer": 10,
 					"file": "/opt/lampp/htdocs/labaide/app/js/filters.js",
 					"settings":
 					{
@@ -602,7 +576,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 12,
+					"buffer": 11,
 					"file": "/opt/lampp/htdocs/labaide/app/index.html",
 					"settings":
 					{
@@ -630,7 +604,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 13,
+					"buffer": 12,
 					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/adminreports.html",
 					"settings":
 					{
@@ -656,7 +630,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 14,
+					"buffer": 13,
 					"file": "/opt/lampp/htdocs/labaide/app/js/app.js",
 					"settings":
 					{
@@ -674,6 +648,32 @@
 						"settings":
 						{
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "/opt/lampp/htdocs/labaide/testing.html",
+					"settings":
+					{
+						"buffer_size": 477,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								416,
+								416
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,

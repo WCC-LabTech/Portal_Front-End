@@ -29,34 +29,33 @@ angular.module('myApp.controllers', []).
 		
   }])
   .controller('userLogin', ['$scope', '$http', function($scope, $http) {
-	  $scope.is_loggedIn = is_loggedIn();
+	    $scope.is_loggedIn = is_loggedIn();
 		if ($scope.is_loggedIn == true) {
 			$scope.username = readCookie("username");
 			$http.defaults.headers.common['AUTHENTICATE'] = readCookie('Authorization');
 		}
 		var data = new Object;
-        var login;
+    var login;
 		$scope.login = function() {
-	    	data = {"username": $scope.username, "password":  $scope.password};
-            console.log(data);
+            data = $.param({'username': $scope.username, 'password': $scope.password});
+            //data = {"username": $scope.username, "password":$scope.password};
 		    login = api_call($http, 'auth/login/', 'post', data);
 		    login.success(function(data) {
-               console.log(data);
-			   setCookie('Authorization', data.token);
-			   setCookie('username', $scope.username);
-			   $http.defaults.headers.common['AUTHENTICATE'] = data.token;
-			   $scope.is_loggedIn = true;
-		});
-		login.error(function(data, status) {
-			if (400 === status) {
-        $scope.invalidUsernamePassword = true;
-      } else {
-				alert('No Response from Django Server');
-			}
-		});
-    	return false;
+          setCookie('Authorization', data.token);
+			    setCookie('username', $scope.username);
+			    $http.defaults.headers.common['AUTHENTICATE'] = data.token;
+			    $scope.is_loggedIn = true;
+	    	});
+		    login.error(function(data, status) {
+			    if (400 === status) {
+                    $scope.invalidUsernamePassword = true;
+                } else {
+				    alert('No Response from Django Server');
+		    	}
+	    	});
+    	    return false;
 	
-	};
+	    };
 	
 	$scope.logout = function() { 
 		setCookie('username', null);
@@ -73,7 +72,7 @@ angular.module('myApp.controllers', []).
 		  $scope.lab_aide = true;
 		  $scope.lab_tech = true;
 	 	  $scope.faculty = true;
-	  	$scope.admin = true;
+    	  	$scope.admin = true;
 	  //}
 
     $scope.$on('user_login', function() {
@@ -319,29 +318,50 @@ angular.module('myApp.controllers', []).
   }])
   .controller('requestform', ['$scope', '$http', function($scope, $http) {
       var users = {};
-	  var currentUser;
-	  var currentUrl;	  
-	  var users_get = api_call($http, 'user/', 'get');
+  	  var currentUser;
+  	  var currentUrl;	  
+  	  var users_get = api_call($http, 'user/', 'get');
+      var x;
       users_get.success(function(response) {
-      	users = response;
-      	currentUser = $.grep(users, function(e) {return e.username == readCookie('username')});
-      	currentUrl = currentUser['0'].url;
-      	$scope.requestId = get_id(currentUrl.substring(0, currentUrl.length - 1));
-		$scope.requestName = currentUser['0'].first_name + " " + currentUser['0'].last_name;
+          users = response;
+      	  currentUser = $.grep(users, function(e) {return e.username == readCookie('username')});
+      	  currentUrl = currentUser['0'].url;
+      	  $scope.requestId = currentUser['0'].id;
+		      $scope.requestName = currentUser['0'].first_name + " " + currentUser['0'].last_name;
+          var lab_tech = users;
+          var lab_techs = [];
+          for (x in lab_tech) {
+            var y;
+            for (y in lab_tech[x].groups) {
+                if (lab_tech[x].groups[y]==2) {
+                  lab_techs.push(lab_tech[x]);
+                }
+            }
+          }
+          $scope.lab_techs = lab_techs;
       });
 	  
 	  $scope.formResponse = null;
   		$scope.requestSubmit = function() {
     		var data = {};
-        data.labtech_Name = $scope.lab_tech;
-  			data.faculty_Name = $scope.requestId;
+        data.labtech_Name = +$scope.lab_tech;
+  			data.faculty_Name = +$scope.requestId;
   			data.subject = $scope.subject;
   			data.description = $scope.description;
   			data.due_date = $scope.due_date;
   			data.request_Type = $scope.request_type;
-  			api_call($http, 'request/admin/', 'post', data);
+        data.request_status = 'Pending';
+        data = $.param(data);
+  			var form_post = api_call($http, 'request/derp/', 'post', data);
+        form_post.success(function(data) {
+          $scope.formResponse = "Your request has been submitted. A Lab Aide or Lab Tech will be assigned to your request soon";
+        })
+        form_post.error(function(data) {
+          console.log(data);
+          $scope.formResponse = "There was an error submitting your request. Please contact an administrator"
+        })
 
-        $scope.formResponse = "Your request has been submitted. A Lab Aide or Lab Tech will be assigned to your request soon";
+        
         $scope.lab_tech = null;
         $scope.faculty_name = null;
         $scope.subject = null;
@@ -361,32 +381,32 @@ angular.module('myApp.controllers', []).
     users_get.success(function(response) {
       users = response;
       currentUser = $.grep(users, function(e) {return e.username == readCookie('username')});
-      currentUser = currentUser['0'].url;
-      currentUser = get_id(currentUser.substring(0, currentUser.length - 1));
+      currentUser = currentUser['0'].id;
+      //currentUser = get_id(currentUser.substring(0, currentUser.length - 1));
     });
     $scope.predicate = 'description';
       setTimeout(function() {
-  		requests = api_call($http, 'request/admin/', 'get');
+  		requests = api_call($http, 'request/requests/', 'get');
   		
         requests.success(function(response) {
   		    x = response.length;
         	while (x--) {
-            	if (response[x].request_status == "Completed") {
+            	if (response[x].fields.request_status == "Completed") {
              		response.splice(x, 1);
               
               		continue;
             	}
-            	var check_date = new Date(response[x].due_date).toLocaleString();
+            	var check_date = new Date(response[x].fields.due_date).toLocaleString();
             	var today = new Date().toLocaleString();
             	if (Date.parse(today) > Date.parse(check_date)) {
-              		response[x].check = "red";
+              		response[x].fields.check = "red";
             	} else {
-              		response[x].check = null;
+              		response[x].fields.check = null;
             	}
-  	   			response[x].labtech_Name = getUserById(users, response[x].labtech_Name);
-            	if (response[x].request_status == "Pending") {
-              		response[x].labtech_Name = "Requested: " + response[x].labtech_Name;
-              		response[x].accept = true;
+  	   			response[x].fields.labtech_Name = getUserById(users, response[x].fields.labtech_Name);
+            	if (response[x].fields.request_status == "Pending") {
+              		response[x].fields.labtech_Name = "Requested: " + response[x].fields.labtech_Name;
+              		response[x].fields.accept = true;
             	}
             
 			}
@@ -403,29 +423,29 @@ angular.module('myApp.controllers', []).
       data.labtech_Name = currentUser;
       data.request_Type = type;
       data.request_status = "Delegated";
-      api_call($http, 'request/admin/' + id + "/", "put", data);
+      api_call($http, 'request/requests/' + id + "/", "put", data);
       setTimeout(function() {
-        requests = api_call($http, 'request/admin/', 'get');
+        requests = api_call($http, 'request/requests', 'get');
         requests.success(function(response) {
 
           x = response.length;
           while (x--) {
-            if (response[x].request_status == "Completed") {
+            if (response[x].fields.request_status == "Completed") {
               response.splice(x, 1);
               
               continue;
             }
-            var check_date = new Date(response[x].due_date).toLocaleString();
+            var check_date = new Date(response[x].fields.due_date).toLocaleString();
             var today = new Date().toLocaleString();
             if (today >= check_date) {
-              response[x].check = "#ff0000";
+              response[x].fields.check = "#ff0000";
             } else {
-              response[x].check = null;
+              response[x].fields.check = null;
             }
-            response[x].labtech_Name = getUserById(users, response[x].labtech_Name);
-            if (response[x].request_status == "Pending") {
-              response[x].labtech_Name = "Requested: " + response[x].labtech_Name;
-              response[x].accept = true;
+            response[x].fields.labtech_Name = getUserById(users, response[x].fields.labtech_Name);
+            if (response[x].fields.request_status == "Pending") {
+              response[x].fields.labtech_Name = "Requested: " + response[x].fields.labtech_Name;
+              response[x].fields.accept = true;
             }
           }
           $scope.requests = response;

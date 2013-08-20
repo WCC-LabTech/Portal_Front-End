@@ -414,18 +414,15 @@ angular.module('myApp.controllers', []).
       	});
       }, 100);
 
-    $scope.accept = function(id, due, desc, subject, faculty, type) {
+    $scope.accept = function(id) {
       var data = {};
-      data.due_date = due;
-      data.description = desc;
-      data.subject = subject;
-      data.faculty_Name = faculty;
+      data.id = id;
       data.labtech_Name = currentUser;
-      data.request_Type = type;
-      data.request_status = "Delegated";
-      api_call($http, 'request/requests/' + id + "/", "put", data);
+      data.request_status = "Accepted";
+      data = $.param(data);
+      api_call($http, 'request/update/', 'post', data);
       setTimeout(function() {
-        requests = api_call($http, 'request/requests', 'get');
+        requests = api_call($http, 'request/requests/', 'get');
         requests.success(function(response) {
 
           x = response.length;
@@ -450,7 +447,7 @@ angular.module('myApp.controllers', []).
           }
           $scope.requests = response;
         });
-      }, 100); 
+      }, 200); 
     }
 
   }]);

@@ -17,7 +17,7 @@
     		<td ng-click="$parent.desc = true; $parent.description = request.fields.description; $parent.subject = request.fields.subject;" class="entries">{{request.fields.request_Type}}</td>
     		<td ng-click="$parent.desc = true; $parent.description = request.fields.description; $parent.subject = request.fields.subject;" class="entries">{{request.fields.subject}}</td>
     		<td ng-click="$parent.desc = true; $parent.description = request.fields.description; $parent.subject = request.fields.subject;" class="entries">{{request.fields.request_status}}</td>
-            <td class="entries"><input type="button" ng-show="request.fields.accept" ng-click="accept(request.pk, request.fields.due_date, request.fields.description, request.fields.subject, request.fields.faculty_Name, request.fields.request_Type);" value="Accept Request" /></td>
+            <td class="entries"><input type="button" ng-show="request.fields.accept" ng-click="accept(request.pk);" value="Accept Request" /></td>
     	</tr>
 
     </tbody>

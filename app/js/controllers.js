@@ -30,21 +30,58 @@ angular.module('myApp.controllers', []).
   }])
   .controller('userLogin', ['$scope', '$http', function($scope, $http) {
 	    $scope.is_loggedIn = is_loggedIn();
+
 		if ($scope.is_loggedIn == true) {
 			$scope.username = readCookie("username");
 			$http.defaults.headers.common['AUTHENTICATE'] = readCookie('Authorization');
+            var groups = api_call($http, 'user/' + readCookie('userId') + '/', 'get');
+            groups.success(function(response) {
+                    var group = response.groups;
+                    for (x in group) {
+                        if (group[x] == 4) {
+                            $scope.admin = true;
+                        } else if (group[x] == 3) {
+                            $scope.faculty = true;
+                        } else if (group[x] == 2) {
+                            $scope.lab_tech= true;
+                        } else if (group[x] == 1) {
+                            $scope.lab_aide = true;
+                        }
+                    }
+                });
+
 		}
 		var data = new Object;
-    var login;
+        var login;
+        var x;
 		$scope.login = function() {
             data = $.param({'username': $scope.username, 'password': $scope.password});
             //data = {"username": $scope.username, "password":$scope.password};
 		    login = api_call($http, 'auth/login/', 'post', data);
 		    login.success(function(data) {
-          setCookie('Authorization', data.token);
+                setCookie('Authorization', data.token);
 			    setCookie('username', $scope.username);
+                setCookie('userId', data.id);
 			    $http.defaults.headers.common['AUTHENTICATE'] = data.token;
 			    $scope.is_loggedIn = true;
+                var userId = data.id;
+                var groups = api_call($http, 'user/' + userId + '/', 'get');
+                groups.success(function(response) {
+                    var group = response.groups;
+                    for (x in group) {
+                        if (group[x] == 4) {
+                            $scope.admin = true;
+                        } else if (group[x] == 3) {
+                            $scope.faculty = true;
+                        } else if (group[x] == 2) {
+                            $scope.lab_tech= true;
+                        } else if (group[x] == 1) {
+                            $scope.lab_aide = true;
+                        }
+                    }
+                });
+                
+
 	    	});
 		    login.error(function(data, status) {
 			    if (400 === status) {
@@ -106,7 +143,6 @@ angular.module('myApp.controllers', []).
                         data[x] = adjustEntry(data[x], $scope.categories);
                         $scope.total += data[x].total;
 		  }
-                  console.log(data);
 		  $scope.entries = data;
 	  });
 	  
@@ -195,11 +231,8 @@ angular.module('myApp.controllers', []).
   .controller('tsadmin', ['$scope', '$http', function($scope, $http) {
 	  var payperiods;
 	  var x;
-          payperiods = api_call($http, 'payperiod/', 'get');
+          payperiods = api_call($http, 'list/', 'get');
           payperiods.success(function(periods) {
-          		for (x in periods) {
-          			periods[x].id = get_id(periods[x].url);
-          		}
              $scope.periods = periods;
           });
           $scope.predicate = "-id";
@@ -208,12 +241,12 @@ angular.module('myApp.controllers', []).
               var data = {};
               data.name = $scope.name;
               data.start = $scope.start_date;
-              data.end = $scope.end_date
-              
-              api_call($http, 'payperiod/', 'post', data);
+              data.end = $scope.end_date;
+              data = $.param(data);
+              api_call($http, 'add/', 'post', data);
               $scope.period = false;
               setTimeout(function() {
-                            payperiods = api_call($http, 'payperiod/', 'get');
+                            payperiods = api_call($http, 'list/', 'get');
                             payperiods.success(function(periods) {
                                           $scope.periods = periods;
                             });
@@ -293,15 +326,20 @@ angular.module('myApp.controllers', []).
 
   }])
   .controller('inventoryhome', ['$scope', '$http', function($scope, $http) {
-	    var computers = api_call($http, 'inventory/all/Computer/', 'get');
+	  var computers = api_call($http, 'inventory/all/Computer/', 'get');
       var unit = api_call($http, 'inventory/all/Unit/', 'get');
       var fw = api_call($http, 'inventory/all/Firewall/', 'get');
       var switches = api_call($http, 'inventory/all/Switch/', 'get');
       var router = api_call($http, 'inventory/all/Router/', 'get');
       var x;
+      var y;
 			
       computers.success(function(data) {
-          $scope.computers = data;
+          $scope.computers = data
+          for (x in data) {
+            console.log(data[x]);
+                
+          }
       });
       unit.success(function(data) {
           $scope.unit = data;
@@ -327,7 +365,7 @@ angular.module('myApp.controllers', []).
       	  currentUser = $.grep(users, function(e) {return e.username == readCookie('username')});
       	  currentUrl = currentUser['0'].url;
       	  $scope.requestId = currentUser['0'].id;
-		      $scope.requestName = currentUser['0'].first_name + " " + currentUser['0'].last_name;
+		  $scope.requestName = currentUser['0'].first_name + " " + currentUser['0'].last_name;
           var lab_tech = users;
           var lab_techs = [];
           for (x in lab_tech) {
@@ -357,7 +395,6 @@ angular.module('myApp.controllers', []).
           $scope.formResponse = "Your request has been submitted. A Lab Aide or Lab Tech will be assigned to your request soon";
         })
         form_post.error(function(data) {
-          console.log(data);
           $scope.formResponse = "There was an error submitting your request. Please contact an administrator"
         })
 
@@ -386,7 +423,7 @@ angular.module('myApp.controllers', []).
     });
     $scope.predicate = 'description';
       setTimeout(function() {
-  		requests = api_call($http, 'request/requests/', 'get');
+  		requests = api_call($http, 'request/admin/', 'get');
   		
         requests.success(function(response) {
   		    x = response.length;

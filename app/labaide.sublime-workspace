@@ -47,7 +47,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
 			"settings":
 			{
-				"buffer_size": 15922,
+				"buffer_size": 17215,
 				"line_ending": "Unix"
 			}
 		},
@@ -63,7 +63,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/inventory/home.html",
 			"settings":
 			{
-				"buffer_size": 14822,
+				"buffer_size": 14823,
 				"line_ending": "Unix"
 			}
 		},
@@ -95,7 +95,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
 			"settings":
 			{
-				"buffer_size": 1972,
+				"buffer_size": 1837,
 				"line_ending": "Unix"
 			}
 		},
@@ -127,7 +127,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/index.html",
 			"settings":
 			{
-				"buffer_size": 3387,
+				"buffer_size": 3388,
 				"line_ending": "Unix"
 			}
 		},
@@ -270,7 +270,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -306,15 +306,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
 					"settings":
 					{
-						"buffer_size": 15922,
+						"buffer_size": 17215,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								11550,
-								11550
+								0,
+								0
 							]
 						],
 						"settings":
@@ -324,7 +324,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5712.0,
+						"translation.y": 510.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -352,7 +352,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 204.0,
+						"translation.y": 816.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -362,15 +362,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/partials/inventory/home.html",
 					"settings":
 					{
-						"buffer_size": 14822,
+						"buffer_size": 14823,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								315,
-								315
+								0,
+								0
 							]
 						],
 						"settings":
@@ -470,7 +470,7 @@
 					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
 					"settings":
 					{
-						"buffer_size": 1972,
+						"buffer_size": 1837,
 						"regions":
 						{
 						},
@@ -580,15 +580,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/index.html",
 					"settings":
 					{
-						"buffer_size": 3387,
+						"buffer_size": 3388,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2332,
-								2332
+								0,
+								0
 							]
 						],
 						"settings":

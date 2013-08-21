@@ -1,0 +1,42 @@
+<h2>Faculty Request Form</h2>
+<div class="localnav">
+	<ul>
+    	<li><a href="#/facrequest">View Requests</a></li>
+    </ul>
+</div>
+<div class="form_response">{{formResponse}}</div>
+<div class="entry_form_full">
+	<form name="request" ng-submit="requestSubmit()">
+		<div class="label">Faculty Name</div>
+		<div class="input">{{requestName}}</div>
+		<div class="clearB"></div>
+		<div class="label">Requested Lab Tech</div>
+		<!--<div class="input"><input type="text" ng-model="lab_tech" /></div>-->
+		<div class="input"><select ng-model="lab_tech" ng-options="tech.id as tech.first_name + ' ' + tech.last_name for tech in lab_techs" /></div>
+		<div class="clearB"></div>
+		<div class="label">Request Type</div>
+		<div class="input">
+			<select ng-model="request_type">
+				<option value="Room">Room</option>
+				<option value="Equipment">Equipment</option>
+				<option value="Configure">Configure</option>
+				<option value="Labs">Labs</option>
+				<option value="Other">Other</option>
+			</select>
+		</div>
+		<div class="clearB"></div>
+		<div class="label">File Upload</div>
+		<div class="input"><input type="file" ng-model="file" /></div>
+		<div class="clearB"></div>
+		<div class="label">Subject</div>
+		<div class="input"><input type="text" ng-model="subject" /></div>
+		<div class="clearB"></div>
+		<div class="label">Description</div>
+		<div class="input"><textarea ng-model="description"></textarea></div>
+		<div class="clearB"></div>
+		<div class="label">Due Date</div>
+		<div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" ng-model="due_date" /></div>
+		<div class="clearB"></div>
+		<div class="submit"><input type="submit" name="submit" value="Submit Request" /></div>
+	</form>
+</div>

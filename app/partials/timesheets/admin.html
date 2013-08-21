@@ -1,0 +1,59 @@
+<h2>Payroll Admin</h2>
+
+<table class="timesheet" width="80%" cellspacing="0" cellpadding="0">
+	<thead>
+    	<tr>
+    		<th width="20%">Pay Period</th>
+        	<th width="40%">Start Date</th>
+        	<th width="40%">End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    	<tr ng-repeat="period in periods | orderBy:predicate">
+    		<td><a onclick="setCookie('period', '{{period.id}}'); setCookie('periodName', '{{period.name}}');" href="#/adminperiods">{{period.name}}</a></td>
+	        <td class="entries">{{period.start}}</td>
+    	    <td class="entries">{{period.end}}</td>
+	    </tr>
+    	
+    </tbody>
+
+</table>
+
+<div class="controls">
+    <ul class="option">
+        <li><a href="#" onclick="return false;" ng-click="period = true;">Add Pay Period</a></li>
+        <li><a href="#" onclick="return false;" ng-click="category = true;">Add Category</a></li>
+        <li><a href="#/reports" onclick="return false;" ng-click="">Timesheet Reports</a></li>
+    </ul>
+    <div class="clearB"></div>
+</div>
+
+<div class="entry_form" ng-show="period">
+    <div class="close"><a href="#" ng-click="period = false;" onclick="return false;">X - Close</a></div>
+    <form name="entryForm" ng-submit="periodSubmit()">
+        <div class="label">Pay Period Name: </div>
+        <div class="input"><input type="text" ng-model="name" /> </div>
+        <div class="clearB"></div>
+        <div class="label">Start Date: </div>
+        <div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" ng-model="start_date" /></div>
+        <div class="clearB"></div>
+        <div class="label">End Date: </div>
+        <div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" ng-model="end_date" /></div>
+        <div class="clearB"></div>
+        <div class="submit"><input type="submit" name="submit" value="Add Pay Period" /></div>
+    </form>
+</div>
+
+<div class="entry_form" ng-show="category">
+    <div class="close"><a href="#" ng-click="category = false;" onclick="return false;">X - Close</a></div>
+    <form name="entryForm" ng-submit="catSubmit()">
+        <div class="label">Category Name: </div>
+        <div class="input"><input type="text" ng-model="catName" /></div>
+        <div class="clearB"></div>
+        <div class="label">Is this a project?</div>
+        <div class="input"><input type="checkbox" ng-model="is_project" /></div>
+        <div class="clearB"></div>
+        <div class="submit"><input type="submit" name="submit" value="Add Category" /></div>
+        
+    </form>
+</div>

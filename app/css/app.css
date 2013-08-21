@@ -11,14 +11,16 @@ header .login {position:absolute; top:13px; right:50px; color:#fff; text-align:r
 header .login a {color:#00F;}
 
 /* Navigation */
-nav {width:150px; height:100%; padding:20px 5px 0; float:left; border-right:1px solid black;}
+nav {width:150px; min-height:800px; padding:20px 5px 0; float:left; border-right:1px solid black;}
 nav .menu {font-size:1.3em; width:125px; margin:20px auto;}
 nav .menu ul {list-style:none;}
-nav .menu li {padding-left:20px;}
-nav .menu li a {display:block; width:100px;}
+nav .menu li {padding-left:5px; font-size:.9em;}
+nav .menu li a {display:block; width:135px;}
 nav .menu li a:hover {background-color:#ccc;}
 
 /* Content */
+.soon {font-size:4em; font-weight:bold;}
+
 #content {margin-left:175px; min-height:800px;}
 .timesheet caption {text-align:left; font-size:2em; font-weight:bold;}
 .timesheet {border:1px solid #ccc; border-radius:6px; box-shadow:0 1px 1px #ccc; margin:0 auto;}
@@ -43,9 +45,47 @@ nav .menu li a:hover {background-color:#ccc;}
 .timesheet th:only-child {border-radius:6px 6px 0 0;}
 .timesheet tr:hover{background: #fbf8e9; transition: all 0.1s ease-in-out;}
 .timesheet td a {display:block; padding:10px;}
-.timesheet .entries td, .timesheet .entries {padding:10px;}
+.timesheet .entries td, .timesheet .entries, .timesheet .total td{padding:10px;}
+.timesheet .total td:first-child {text-align: right; font-weight:bold;}
 
-.entry_form {position:absolute; width:800px; left:50%; margin-left:-400px; top:100px; background-color:#fff; padding:20px; border:1px solid black; border-radius:8px;}
+.form_response {position:absolute; width:500px; left:50%; margin-left:-250px; font-size:1.2em;}
+
+.entry_form {position:absolute; width:500px; left:50%; margin-left:-250px; top:100px; background-color:#fff; padding:20px; border:1px solid black; border-radius:8px;}
+.entry_form .close{position: absolute; top:5px; right:5px;}
+.entry_form .label {float:left; margin-left:50px; width:100px;}
+.entry_form .input {float:left; width:200px;}
+.entry_form h2 {margin-top:15px;}
+.entry_form p {margin-top:5px; font-size: 1.3em;}
+
+.entry_form_full {position:absolute; width:500px; left:50%; margin-left:-271px; top:150px; background-color:#fff; padding:20px; border:1px solid black; border-radius:8px;}
+.entry_form_full .close{position: absolute; top:5px; right:5px;}
+.entry_form_full .label {float:left; margin-left:50px; width:200px; padding-bottom:15px;}
+.entry_form_full .input {float:left; width:200px; padding-bottom:15px;}
+.entry_form_full .submit {text-align: right; margin-right:50px;}
+
+.controls {width: 90%; text-align: center; margin:25px auto;}
+.controls .option ul {list-style: none;}
+.controls .option li {display: inline; margin:25px 25px 0 0;}
+.controls .option a {text-decoration:none; color:black; height:20px; width:150px; padding:5px; text-align: center; font-size:1.3em; border:1px solid black; border-radius:8px; box-shadow: 3px 3px 3px 0 #000;}
+
+.user {float:left; border:1px solid black; border-radius:8px; margin:10px 20px; padding:10px;}
+.user .title {float:left;}
+.user .title div {border-bottom:1px solid black; padding-right:25px;}
+.user .total {text-align: right; padding-right:25px; margin-top:10px;}
+
+.localnav {height:30px;}
+.localnav ul {list-style: none;}
+.localnav li {display:inline; margin:0 20px; height:25px; font-size:1.5em;}
+
+.inventory a {text-decoration: none; color:#fff;}
+
+.search {width:80%; height:25px; margin:15px auto;}
+.search .box {float:left; width:20%; text-align: center;}
+
+.red {background-color:#ff0000;}
+.none {display:none;}
+
+
 /* Footer */
 footer {text-align:center;}
 
@@ -61,6 +101,7 @@ footer {text-align:center;}
 	-moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
 	box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);
 	background-color:#fff;
+	display:none;
 }
 .ui-datepicker a {
 	text-decoration: none;

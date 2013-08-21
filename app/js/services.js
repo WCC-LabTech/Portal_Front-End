@@ -8,7 +8,7 @@
 angular.module('myApp.services', []).
   value('version', '0.2')
   .factory('userLogin', ['$http', function($http, data) {
-	 $http.post('Http://home.cspuredesign.com:8080/api-token-auth/login', {"username": $scope.username, "password": $scope.password}).success(function(data) {
+	 $http.post('http://home.cspuredesign.com:8080/auth/login', {"username": $scope.username, "password": $scope.password}).success(function(data) {
 		user.data = data;
 		user.auth = true;
 		return user;
@@ -21,18 +21,27 @@ angular.module('myApp.services', []).
 
 function api_url(api) {
 	var url;
-	url = "Http://home.cspuredesign.com:8080/" + api;
+	url = "http://home.cspuredesign.com:8080/" + api;
 	return url;
 }
 
 function api_call($http, api, method, data) {
 	var respond;
 	if (method == 'post') {
-		respond = $http.post(api_url(api), data);
+    	respond = $http.post(api_url(api), data, { headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
+      //respond = $http.post(api_url(api), data);
 	}
 	if (method == 'get') {
 		respond = $http.get(api_url(api));
 	}
+
+  if (method == 'delete') {
+    respond = $http.delete(api_url(api));
+  }
+
+  if (method == 'put') {
+    respond = $http.put(api_url(api), data);
+  }
 	
 	return respond;
 }
@@ -82,6 +91,13 @@ function cookieExp() {
 	return expDate.toGMTString();
 }
 
+function get_id(url) {
+       var split = url.split('/');
+       var id = split[split.length - 1];
+       
+       return id;
+}
+
 function is_loggedIn() {
 	var loggedIn;
 	loggedIn = readCookie("username");
@@ -90,4 +106,85 @@ function is_loggedIn() {
 		} else {
 			return true;
 		}
+}
+
+function weekDay(day) {
+       var weekday=new Array(7);
+       weekday[0]="Sunday";
+       weekday[1]="Monday";
+       weekday[2]="Tuesday";
+       weekday[3]="Wednesday";
+       weekday[4]="Thursday";
+       weekday[5]="Friday";
+       weekday[6]="Saturday";
+       
+       return weekday[day];
+}
+
+function adjustEntry(data, categories) {
+       var catName;
+       var start;
+       var end;
+       var mili;
+       var hours;
+       var day;
+       var start_date;
+       
+       data.category_url = data.category;
+       catName = $.grep(categories, function(e) {return e.url == data.category});
+       data.category = catName['0'].name;
+       start_date = data.start_date.replace(/-/g, '/');
+       start = new Date(start_date + " " + data.start_time);
+       end = new Date(start_date + " " + data.end_time);
+       mili = end - start;
+       hours = (((mili / 1000) / 60) / 60);
+       day = new Date(data.start_date);
+       day = day.getUTCDay();
+       data.day = weekDay(day);
+       data.total = Math.round(hours *100) / 100;
+              
+       return data;
+       
+}
+
+function get_username($http, data) {
+  var returnuser = null;
+  var userlink = data.substring(1);
+  var user = api_call($http, userlink, 'get');
+  user.success(function(username) {
+      returnuser = username.username;
+  });
+  console.log(returnuser);
+}
+
+function sort_reports(data) {
+  var response = {};
+  var x;
+  var iter = 0;
+  for (x in data) {
+      if (typeof response[data[x].user] == 'undefined') {
+        response[data[x].user] = {};
+        response[data[x].user].username = data[x].user;
+      }
+      response[data[x].user][iter] = {};
+
+      response[data[x].user][iter]['start_date'] = data[x].start_date;
+      response[data[x].user][iter]['category'] = data[x].category;
+      response[data[x].user][iter]['start_time'] = data[x].start_time;
+      response[data[x].user][iter]['end_time'] = data[x].end_time;
+      response[data[x].user][iter]['total'] = data[x].total;
+      iter = iter + 1;
+    }
+  
+
+  return response;
+}
+
+function getUserById(users, id) {
+  var username;
+  var user;
+  var userId = api_url('user/') + id + '/';
+  username = $.grep(users, function(e) {return e.id == id});
+  user = username['0'].first_name + " " + username['0'].last_name;
+  return user;
 }

@@ -1,0 +1,35 @@
+
+	<div class="name"></div>
+    <div class="pay_period"><h2>Pay Period: {{period}}</h2></div>
+
+        <div class="user" ng-repeat="entry in entries | orderBy:'username'">
+            <h2>{{entry.username}}</h2>
+            <div class="title">Start Date<hr>
+                <div ng-repeat="time in entry | orderBy:'start_date'">
+                    <span>{{time.start_date}}</span>
+                    <span>{{time.start_time}}</span>
+                    <span>{{time.end_time}}</span>
+                    <span>{{time.total}}</span>
+                </div>
+            </div>
+            <!--
+            <div class="title">Start Time<hr>
+                <div ng-repeat="time in entry | orderBy:['start_date', 'start_time']">
+                    <span>{{time.start_time}}</span>
+                </div>
+            </div>
+            <div class="title">End Time<hr>
+                <div ng-repeat="time in entry | orderBy:['start_date', 'start_time']">
+                    <span>{{time.end_time}}</span>
+                </div>
+            </div>
+            <div class="title">Total<hr>
+                <div ng-repeat="time in entry | orderBy:['start_date', 'start_time']">
+                    <span>{{time.total}}</span>
+                </div>
+            </div> -->
+            <div class="clearB"></div>
+            <div class="total">
+                <span><h3>Total Hours: {{entry.total}}<h3></span>
+            </div>
+        </div>

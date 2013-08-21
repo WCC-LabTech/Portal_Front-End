@@ -1,4 +1,4 @@
-<h2>Pay Period: {{period}}</h2>
+<h2>Pay Period: {{periodName}}</h2>
 
 <table class="timesheet" width="80%" cellpadding="0" cellspacing="0">
 	<caption>Entries</caption>
@@ -9,18 +9,26 @@
             <th>Category</th>
             <th>Start</th>
             <th>End</th>
+	        <th>Hour's Worked</th>
+            <th>Modify Entry</th>
         </tr>
     </thead>
     <tbody>
-    	<tr class="entries" ng-repeat="entry in entries | orderBy:predicate">
+    	<tr class="entries" ng-repeat="entry in entries | orderBy:['start_date', 'start_time']">
         	<td>{{entry.start_date}}</td>
-    		<td></td>
+    		<td>{{entry.day}}</td>
     		<td>{{entry.category}}</td>
-            <td>{{entry.start_time}}</td>
-            <td>{{entry.end_time}}</td>
+            <td>{{entry.start_time | date:'h:mma'}}</td>
+            <td>{{entry.end_time | date:'h:mma'}}</td>
+	        <td>{{entry.total}}</td>
+            <td><input type="button" ng-click="deleteEntry(entry.id)" value="Delete Entry" /><input type="button" ng-click="$parent.update = true; $parent.updateValue = entry.id; $parent.category = entry.category_url; $parent.start_time = entry.start_time; $parent.end_time = entry.end_time; $parent.start_date = entry.start_date; $parent.on_campus = entry.on_campus; $parent.comments = entry.comments; " value="Edit Entry" /></td>
         </tr>
+	<tr class="total">
+		<td colspan="5">Total: </td>
+		<td colspan="2">{{total}} hours</td>
+	</tr>
     	<tr>
-    		<td colspan="5"><a href="#" onclick="return false;" ng-click="form = true;">Add Entry</a></td>
+    		<td colspan="7"><a href="#" onclick="return false;" ng-click="form = true;">Add Entry</a></td>
     	</tr>
     </tbody>
 </table>
@@ -34,7 +42,7 @@
         </tr>
     </thead>
     <tbody>
-    	<tr class="entries" ng-repeat="entry in entries | orderBy:predicate">
+    	<tr class="entries" ng-repeat="entry in entries | orderBy:['start_date', 'start_time']">
         	<td>{{entry.start_date}}</td>
             <td>{{entry.comments}}</td>
         </tr>
@@ -42,21 +50,55 @@
 </table>
 
 <div class="entry_form" ng-show="form">
+	<div class="close"><a href="#" ng-click="form = false;" onclick="return false;">X - Close</a></div>
     <form name="entryForm" ng-submit="formSubmit()">
     	<div class="label">Category:</div>
-        <div class="input"><select ng-model="category">
-        						<option ng-repeat="category in categories" value="{{category.id}}">{{category.name}}</option>
-                           </select>
+        <div class="input"><select ng-model="category" tabindex="10" ng-options="r.url as r.name for r in categories">
+        						<!--<option ng-repeat="category in categories" value="{{category.url}}">{{category.name}}</option>-->
+                           </select></div>
+        <div class="clearB"></div>
         <div class="label">Start Time:</div>
-        <div class="input"><input ui-timepicker type="text" id="start_time" ng-model="start_time" name="start_time" required />
+        <div class="input"><input ui-timepicker tabindex="20" type="time" value="00:00:00" id="start_time" ng-model="start_time" name="start_time" required /></div>
+        <div class="clearB"></div>
         <div class="label">End Time:</div>
-        <div class="input"><input ui-datetime type="text" id="end_time" ng-model="end_time" name="end_time" required/></div>
+        <div class="input"><input ui-datetime tabindex="30" type="time" value="00:00:00" id="end_time" ng-model="end_time" name="end_time" required/></div>
+        <div class="clearB"></div>
         <div class="label">Start Date:</div> 
-        <div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" id="start_date" ng-model="start_date" name="start_date" required/></div>
-        <div class="label">End Date:</div> 
-        <div class="input"><input ui-date ui-date-format="yy-mm-dd" type="text" id="end_date" ng-model="end_date" name="end_date" required/></div>
+        <div class="input"><input ui-date ui-date-format="yy-mm-dd" tabindex="40" type="text" id="start_date" ng-model="start_date" name="start_date" required/></div>
+        <div class="clearB"></div>
+	<div class="label">On Campus?</div>
+	<div class="input"><input type="checkbox" tabindex="50" ng-model="on_campus" /></div>
+	<div class="clearB"></div>
         <div class="label">Comments:</div>
-        <div class="input"><textarea ng-model="comments"></textarea>
-    	<div class="submit"><input type="submit" name="submit" value="Record Entry" />
+        <div class="input"><textarea ng-model="comments" tabindex="60"></textarea></div>
+    	<div class="clearB"></div>
+        <div class="submit"><input type="submit" tabindex="70" name="submit" value="Record Entry" /></div>
+    </form>
+</div>
+
+<div class="entry_form" ng-show="update">
+    <div class="close"><a href="#" ng-click="update = false;" onclick="return false;">X - Close</a></div>
+    <form name="entryForm" ng-submit="formUpdate()">
+        <div class="label">Category:</div>
+        <div class="input"><select ng-model="category" tabindex="10" ng-options="r.url as r.name for r in categories">
+                           </select></div>
+        <div class="clearB"></div>
+        <div class="label">Start Time:</div>
+        <div class="input"><input ui-timepicker tabindex="20" type="time" value="00:00:00" id="start_time" ng-model="start_time" name="start_time" required /></div>
+        <div class="clearB"></div>
+        <div class="label">End Time:</div>
+        <div class="input"><input ui-datetime tabindex="30" type="time" value="00:00:00" id="end_time" ng-model="end_time" name="end_time" required/></div>
+        <div class="clearB"></div>
+        <div class="label">Start Date:</div> 
+        <div class="input"><input ui-date ui-date-format="yy-mm-dd" tabindex="40" type="text" id="start_date" ng-model="start_date" name="start_date" required/></div>
+        <div class="clearB"></div>
+    <div class="label">On Campus?</div>
+    <div class="input"><input type="checkbox" tabindex="50" ng-model="on_campus" /></div>
+    <div class="clearB"></div>
+        <div class="label">Comments:</div>
+        <div class="input"><textarea ng-model="comments" tabindex="60"></textarea></div>
+        <div class="clearB"></div>
+        <input type="hidden" ng-model="updateId" value="{{updateValue}}" />
+        <div class="submit"><input type="submit" tabindex="70" name="submit" value="Record Entry" /></div>
     </form>
 </div>

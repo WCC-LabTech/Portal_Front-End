@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en" ng-app="myApp">
 <head>
@@ -6,15 +7,17 @@
   <link rel="stylesheet" href="css/app.css"/>
 </head>
 <body>
-	<header ng-controller="userLogin">
+    <div ng-controller="userLogin">
+	<header>
       	<h1>Washtenaw Community College</h1>
         <div id="login" class="login" ng-hide="is_loggedIn">
            	<form name="loginForm" ng-submit="login()">
 				<input type="text" required class="input-block-level" placeholder="Username" ng-model="username" name="username">
-        		<div ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+        		
+				<input type="password" required class="input-block-level" placeholder="Password" ng-model="password" name="password">
+                <div ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
 					<span ng-show="loginForm.username.$error.required">Username required.</span>
 				</div>
-				<input type="password" required class="input-block-level" placeholder="Password" ng-model="password" name="password">
 				<div ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
 					<span ng-show="loginForm.password.$error.required">Password required.</span>
 				</div>
@@ -29,63 +32,47 @@
             	<span><h2>Logged in as {{username}} | <a href="#" onclick="return false;" ng-click="logout()">Logout</a></h2></span>
             </div>
 	</header>
-	<nav ng-controller="nav">
-    	<div class="menu" ng-show="lab_aide">
+	<nav>
+    	<div class="menu">
         	<h2>Navigation</h2>
 			<ul>
 				<li><a href="http://bosapp.wccnet.edu/wiki" target="_blank">Wiki</a></li>
-    			<li><a href="#/view2">view2</a></li>
-                <li><a href="#/view3">view3</a></li>
-                <li><a href="#/view4">view4</a></li>
-                <li><a href="#/view5">view5</a></li>
 			</ul>
         </div>
         <div class="menu" ng-show="lab_aide">
         	<h2>Lab Aide</h2>
 			<ul>
-				<li><a href="#/view1">view1</a></li>
-    			<li><a href="#/view2">view2</a></li>
-                <li><a href="#/view3">view3</a></li>
-                <li><a href="#/view4">view4</a></li>
-                <li><a href="#/view5">view5</a></li>
+				<li><a href="#/facrequest">Faculty Requests</a></li>
 			</ul>
         </div>
         <div class="menu" ng-show="lab_tech">
         	<h2>Lab Tech</h2>
 			<ul>
 				<li><a href="#/timesheet">Timesheets</a></li>
-    			<li><a href="#/view2">view2</a></li>
-                <li><a href="#/view3">view3</a></li>
-                <li><a href="#/view4">view4</a></li>
-                <li><a href="#/view5">view5</a></li>
+    		<li><a href="#/facrequest">Faculty Requests</a></li>
 			</ul>
         </div>
         <div class="menu" ng-show="faculty">
         	<h2>Faculty</h2>
 			<ul>
-				<li><a href="#/view1">view1</a></li>
-    			<li><a href="#/view2">view2</a></li>
-                <li><a href="#/view3">view3</a></li>
-                <li><a href="#/view4">view4</a></li>
-                <li><a href="#/view5">view5</a></li>
+				<li><a href="#/inventory">Inventory Management</a></li>
+    		<li><a href="#/request">Faculty Requests</a></li>
 			</ul>
         </div>
         <div class="menu" ng-show="admin">
         	<h2>Admin</h2>
 			<ul>
-				<li><a href="#/view1">view1</a></li>
-    			<li><a href="#/view2">view2</a></li>
-                <li><a href="#/view3">view3</a></li>
-                <li><a href="#/view4">view4</a></li>
-                <li><a href="#/view5">view5</a></li>
+				<li><a href="#/tsadmin">Time Sheets</a></li>
+				<li><a href="#/facrequest">Faculty Requests</a></li>
 			</ul>
         </div>
 	</nav>
+    </div>
   	<div id="content" ng-view>
   
   	</div>
 	<div class="clearB"></div>
-  	<footer>Angular seed app: v<span app-version></span></footer>
+  	<footer>WCC Faculty Portal - Version 1.0</footer>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>

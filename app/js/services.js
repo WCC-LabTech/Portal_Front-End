@@ -21,7 +21,7 @@ angular.module('myApp.services', []).
 
 function api_url(api) {
 	var url;
-	url = "http://home.cspuredesign.com:8080/" + api;
+	url = "http://207.75.134.56:8080/" + api;
 	return url;
 }
 

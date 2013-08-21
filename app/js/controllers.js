@@ -10,12 +10,12 @@ angular.module('myApp.controllers', []).
 		var data;
 		var periods;
                 var x;
-		data = api_call($http, 'payperiod/', 'get');
+		data = api_call($http, 'list/', 'get');
 		data.success(function(response) {
-                        for (x in response) {
-                            response[x].id = get_id(response[x].url);
-                        }
-			$scope.periods = response;
+                    //    for (x in response) {
+                    //        response[x].id = get_id(response[x].url);
+                    //    }
+			$scope.periods = response.pay_periods;
 		});
 		data.error(function() {
 			alert('error');
@@ -233,7 +233,7 @@ angular.module('myApp.controllers', []).
 	  var x;
           payperiods = api_call($http, 'list/', 'get');
           payperiods.success(function(periods) {
-             $scope.periods = periods;
+             $scope.periods = periods.pay_periods;
           });
           $scope.predicate = "-id";
           
@@ -248,7 +248,7 @@ angular.module('myApp.controllers', []).
               setTimeout(function() {
                             payperiods = api_call($http, 'list/', 'get');
                             payperiods.success(function(periods) {
-                                          $scope.periods = periods;
+                                          $scope.periods = periods.pay_periods;
                             });
               }, 500);
               

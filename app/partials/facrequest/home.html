@@ -1,5 +1,4 @@
-<h2>Faculty Request System</h2>
-<table class="timesheet" width="80%" cellspacing="0" cellpadding="0">
+<table class="timesheet requests" width="70%" cellspacing="0" cellpadding="0">
 	<thead>
     	<tr>
     		<th width="10%">Due Date</th>
@@ -20,6 +19,23 @@
             <td class="entries"><input type="button" ng-show="request.fields.accept" ng-click="accept(request.pk);" value="Accept Request" /></td>
     	</tr>
 
+    </tbody>
+</table>
+<table class="timesheet user-requests" width:"25%" cellspacing="0" cellpadding="0">
+    <caption>Your Specific Requests</caption>
+    <thead>
+        <tr>
+            <th>Due Date</th>
+            <th>Subject</th>
+            <th>Complete</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="entry in user_requests | orderBy:'due_date'">
+            <td ng-click="$parent.desc = true; $parent.description = entry.description; $parent.subject = entry.subject;" class="entries">{{entry.due_date}}</td>
+            <td ng-click="$parent.desc = true; $parent.description = entry.description; $parent.subject = entry.subject;" class="entries">{{entry.subject}}</td>
+            <td class="entries"><input type="button" ng-click="complete(entry.pk);" value="Complete Request" /></td>
+        </tr>
     </tbody>
 </table>
 

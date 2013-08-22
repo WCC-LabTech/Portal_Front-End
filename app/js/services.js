@@ -21,13 +21,14 @@ angular.module('myApp.services', []).
 
 function api_url(api) {
 	var url;
-	url = "http://207.75.134.56:8080/" + api;
+	url = "http://home.cspuredesign.com:8080/" + api;
 	return url;
 }
 
 function api_call($http, api, method, data) {
 	var respond;
 	if (method == 'post') {
+      data = $.param(data);
     	respond = $http.post(api_url(api), data, { headers: {'Content-Type': 'application/x-www-form-urlencoded'}});
       //respond = $http.post(api_url(api), data);
 	}
@@ -49,7 +50,6 @@ function api_call($http, api, method, data) {
 function getCat($http, cat) {
 	var category
 	$http.get(api_url('categories/' + cat + '/')).success(function(data) {
-		console.log(data.name);
 		category = data.name;
 	});
 	
@@ -130,8 +130,8 @@ function adjustEntry(data, categories) {
        var day;
        var start_date;
        
-       data.category_url = data.category;
-       catName = $.grep(categories, function(e) {return e.url == data.category});
+       data.category_id = data.category;
+       catName = $.grep(categories, function(e) {return e.id == data.category});
        data.category = catName['0'].name;
        start_date = data.start_date.replace(/-/g, '/');
        start = new Date(start_date + " " + data.start_time);
@@ -187,4 +187,38 @@ function getUserById(users, id) {
   username = $.grep(users, function(e) {return e.id == id});
   user = username['0'].first_name + " " + username['0'].last_name;
   return user;
+}
+
+function request_adjust(data, users) {
+  var x = data.length;
+  while (x--) {
+    if (data[x].fields.request_status == "Completed") {
+      data.splice(x, 1);
+      continue;
+    }
+    var check_date = new Date(data[x].fields.due_date).toLocaleString();
+    var today = new Date().toLocaleString();
+    if (Date.parse(today) > Date.parse(check_date)) {
+      data[x].fields.check = "red";
+    } else {
+      data[x].fields.check = null;
+    }
+    data[x].fields.labtech_Name = getUserById(users, data[x].fields.labtech_Name);
+    if (data[x].fields.request_status == "Pending") {
+      data[x].fields.labtech_Name = "Requested: " + data[x].fields.labtech_Name;
+      data[x].fields.accept = true;
+    } 
+  }
+  return data;
+}
+
+function user_req_adjust(data, users) {
+  var x = data.length;
+  while (x--) {
+    if (data[x].request_status == "Completed") {
+      data.splice(x, 1);
+      continue;
+    }
+  }
+  return data;
 }

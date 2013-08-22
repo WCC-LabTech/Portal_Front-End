@@ -55,15 +55,15 @@ angular.module('myApp.controllers', []).
         var login;
         var x;
 		$scope.login = function() {
-            data = $.param({'username': $scope.username, 'password': $scope.password});
+            data = {'username': $scope.username, 'password': $scope.password};
             //data = {"username": $scope.username, "password":$scope.password};
 		    login = api_call($http, 'auth/login/', 'post', data);
 		    login.success(function(data) {
                 setCookie('Authorization', data.token);
-			    setCookie('username', $scope.username);
+			          setCookie('username', $scope.username);
                 setCookie('userId', data.id);
-			    $http.defaults.headers.common['AUTHENTICATE'] = data.token;
-			    $scope.is_loggedIn = true;
+			          $http.defaults.headers.common['AUTHENTICATE'] = data.token;
+			          $scope.is_loggedIn = true;
                 var userId = data.id;
                 var groups = api_call($http, 'user/' + userId + '/', 'get');
                 groups.success(function(response) {
@@ -180,7 +180,7 @@ angular.module('myApp.controllers', []).
                             data.on_campus = false;
                   }
       data.comments = $scope.comments;      
-      api_call($http, 'workevent/' + id + '/', 'put', data);
+      api_call($http, 'workevent/update/' + id + '/', 'post', data);
       $scope.form = false;
       $scope.update = false;
                   $scope.total = 0;
@@ -211,7 +211,7 @@ angular.module('myApp.controllers', []).
                             data.on_campus = false;
                   }
 		  data.comments = $scope.comments;		  
-		  api_call($http, 'workevent/', 'post', data);
+		  api_call($http, 'workevent/add/', 'post', data);
 		  $scope.form = false;
                   $scope.total = 0;
                   setTimeout(function() {
@@ -259,7 +259,7 @@ angular.module('myApp.controllers', []).
 			  data.name = $scope.catName;
 			  data.is_project = $scope.is_project;
 
-			  api_call($http, 'category/', 'post', data);
+			  api_call($http, 'category/add/', 'post', data);
 			  $scope.category = false;
 		  }
   }])
@@ -336,10 +336,6 @@ angular.module('myApp.controllers', []).
 			
       computers.success(function(data) {
           $scope.computers = data
-          for (x in data) {
-            console.log(data[x]);
-                
-          }
       });
       unit.success(function(data) {
           $scope.unit = data;
@@ -411,8 +407,9 @@ angular.module('myApp.controllers', []).
   .controller('requests', ['$scope', '$http', function($scope, $http) {
     var currentUser;
     var requests;
-	var x;
-	var username;
+    var user_req;
+	  var x;
+	  var username;
     var users = {};
     var users_get = api_call($http, 'user/', 'get');
     users_get.success(function(response) {
@@ -422,69 +419,58 @@ angular.module('myApp.controllers', []).
       //currentUser = get_id(currentUser.substring(0, currentUser.length - 1));
     });
     $scope.predicate = 'description';
-      setTimeout(function() {
-  		requests = api_call($http, 'request/admin/', 'get');
-  		
-        requests.success(function(response) {
-  		    x = response.length;
-        	while (x--) {
-            	if (response[x].fields.request_status == "Completed") {
-             		response.splice(x, 1);
-              
-              		continue;
-            	}
-            	var check_date = new Date(response[x].fields.due_date).toLocaleString();
-            	var today = new Date().toLocaleString();
-            	if (Date.parse(today) > Date.parse(check_date)) {
-              		response[x].fields.check = "red";
-            	} else {
-              		response[x].fields.check = null;
-            	}
-  	   			response[x].fields.labtech_Name = getUserById(users, response[x].fields.labtech_Name);
-            	if (response[x].fields.request_status == "Pending") {
-              		response[x].fields.labtech_Name = "Requested: " + response[x].fields.labtech_Name;
-              		response[x].fields.accept = true;
-            	}
-            
-			}
-         	$scope.requests = response;
-      	});
-      }, 100);
-
+    setTimeout(function() {
+      requests = api_call($http, 'request/admin/', 'get');
+    	requests.success(function(response) {
+        response = request_adjust(response, users);
+        $scope.requests = response;
+    	});
+      user_req = api_call($http, 'request/user/' + readCookie('userId') + '/', 'get');
+      user_req.success(function(data) {
+        data = user_req_adjust(data.requests, users);
+        $scope.user_requests = data;
+      });
+    }, 100);
+    
+      
     $scope.accept = function(id) {
       var data = {};
       data.id = id;
       data.labtech_Name = currentUser;
-      data.request_status = "Accepted";
-      data = $.param(data);
+      data.request_status = "Approved";
       api_call($http, 'request/update/', 'post', data);
       setTimeout(function() {
-        requests = api_call($http, 'request/requests/', 'get');
+        requests = api_call($http, 'request/admin/', 'get');
         requests.success(function(response) {
-
-          x = response.length;
-          while (x--) {
-            if (response[x].fields.request_status == "Completed") {
-              response.splice(x, 1);
-              
-              continue;
-            }
-            var check_date = new Date(response[x].fields.due_date).toLocaleString();
-            var today = new Date().toLocaleString();
-            if (today >= check_date) {
-              response[x].fields.check = "#ff0000";
-            } else {
-              response[x].fields.check = null;
-            }
-            response[x].fields.labtech_Name = getUserById(users, response[x].fields.labtech_Name);
-            if (response[x].fields.request_status == "Pending") {
-              response[x].fields.labtech_Name = "Requested: " + response[x].fields.labtech_Name;
-              response[x].fields.accept = true;
-            }
-          }
+          response = request_adjust(response, users);
           $scope.requests = response;
         });
+        user_req = api_call($http, 'request/user/' + readCookie('userId') + '/', 'get');
+        user_req.success(function(data) {
+        data = user_req_adjust(data.requests, users);
+        $scope.user_requests = data;
+      });
       }, 200); 
+    }
+
+    $scope.complete = function(id) {
+      var data = {}
+      data.id = id;
+      data.labtech_Name = currentUser;
+      data.request_status = "Completed";
+      api_call($http, 'request/update/', 'post', data);
+      setTimeout(function() {
+        requests = api_call($http, 'request/admin/', 'get');
+        requests.success(function(response) {
+          response = request_adjust(response, users);
+          $scope.requests = response;
+        });
+        user_req = api_call($http, 'request/user/' + readCookie('userId') + '/', 'get');
+        user_req.success(function(data) {
+        data = user_req_adjust(data.requests, users);
+        $scope.user_requests = data;
+      });
+      }, 200);
     }
 
   }]);

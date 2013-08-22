@@ -21,7 +21,7 @@
             <td>{{entry.start_time | date:'h:mma'}}</td>
             <td>{{entry.end_time | date:'h:mma'}}</td>
 	        <td>{{entry.total}}</td>
-            <td><input type="button" ng-click="deleteEntry(entry.id)" value="Delete Entry" /><input type="button" ng-click="$parent.update = true; $parent.updateValue = entry.id; $parent.category = entry.category_url; $parent.start_time = entry.start_time; $parent.end_time = entry.end_time; $parent.start_date = entry.start_date; $parent.on_campus = entry.on_campus; $parent.comments = entry.comments; " value="Edit Entry" /></td>
+            <td><input type="button" ng-click="deleteEntry(entry.id)" value="Delete Entry" /><input type="button" ng-click="$parent.update = true; $parent.updateValue = entry.id; $parent.category = entry.category_id; $parent.start_time = entry.start_time; $parent.end_time = entry.end_time; $parent.start_date = entry.start_date; $parent.on_campus = entry.on_campus; $parent.comments = entry.comments; " value="Edit Entry" /></td>
         </tr>
 	<tr class="total">
 		<td colspan="5">Total: </td>
@@ -53,7 +53,7 @@
 	<div class="close"><a href="#" ng-click="form = false;" onclick="return false;">X - Close</a></div>
     <form name="entryForm" ng-submit="formSubmit()">
     	<div class="label">Category:</div>
-        <div class="input"><select ng-model="category" tabindex="10" ng-options="r.url as r.name for r in categories">
+        <div class="input"><select ng-model="category" tabindex="10" ng-options="r.id as r.name for r in categories">
         						<!--<option ng-repeat="category in categories" value="{{category.url}}">{{category.name}}</option>-->
                            </select></div>
         <div class="clearB"></div>
@@ -80,7 +80,7 @@
     <div class="close"><a href="#" ng-click="update = false;" onclick="return false;">X - Close</a></div>
     <form name="entryForm" ng-submit="formUpdate()">
         <div class="label">Category:</div>
-        <div class="input"><select ng-model="category" tabindex="10" ng-options="r.url as r.name for r in categories">
+        <div class="input"><select ng-model="category" tabindex="10" ng-options="r.id as r.name for r in categories">
                            </select></div>
         <div class="clearB"></div>
         <div class="label">Start Time:</div>

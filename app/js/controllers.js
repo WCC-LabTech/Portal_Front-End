@@ -158,18 +158,20 @@ angular.module('myApp.controllers', []).
 
     $scope.deleteEntry = function(entry_id) {
       var entry;
-      entry = api_call($http, 'workevent/' + entry_id + '/', 'delete');
+      var data = {};
+      data.id = entry_id;
+      entry = api_call($http, 'workevent/delete/' + entry_id + '/', 'post', data);
       entry.success(function() {
           entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');
           entries.success(function(data) {
-          var x;
-          $scope.total = 0;
-          for (x in data) {
-            data[x] = adjustEntry(data[x], $scope.categories);
-            $scope.total += data[x].total;
-          }
-        $scope.entries = data;
-        });
+            var x;
+            $scope.total = 0;
+            for (x in data) {
+                data[x] = adjustEntry(data[x], $scope.categories);
+                $scope.total += data[x].total;
+            }
+            $scope.entries = data;
+          });
       });
 
     }

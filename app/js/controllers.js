@@ -98,6 +98,7 @@ angular.module('myApp.controllers', []).
 		setCookie('username', null);
 		//setCookie('groups', null);
 		setCookie('Authorization', null);
+    setCookie('userId', null);
 		$http.defaults.headers.common['Authorization'] = null;
 		document.location.reload(true);
 	}
@@ -123,28 +124,35 @@ angular.module('myApp.controllers', []).
 	  var entries;
 	  var categories;
 	  var periods;
-          var total;
-          $scope.total = 0;
-          $scope.on_campus = false;
+    $scope.loading = true;
+    var total;
+    $scope.total = 0;
+    $scope.on_campus = false;
 	  
 	  $scope.form = false;
 	  //Get Categories data
 		categories = api_call($http, 'category/', 'get');
 		categories.success(function(response) {
-                        $scope.categories = response;
-		});
-	  
-	  $scope.period = readCookie('period');
-	  $scope.periodName = readCookie('periodName');
-	  entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');
-          entries.success(function(data) {
-		  var x;
-		  for (x in data) {
-                        data[x] = adjustEntry(data[x], $scope.categories);
-                        $scope.total += data[x].total;
-		  }
-		  $scope.entries = data;
-	  });
+      $scope.categories = response;
+		  $scope.period = readCookie('period');
+  	  $scope.periodName = readCookie('periodName');
+  	  entries = api_call($http, 'workevent/payperiod/' + $scope.period + '/', 'get');
+      entries.success(function(data) {
+  		  var x;
+  		  for (x in data) {
+          data[x] = adjustEntry(data[x], $scope.categories);
+          $scope.total += data[x].total;
+  		  }
+        $scope.loading = false;
+  		  $scope.entries = data;
+  	  });
+      entries.error(function(data, status) {
+        if (status == 403) {
+          $scope.error = "You must be logged in to view this page";
+        }
+    });
+    });
+    
 	  
 	  $scope.predicate = "start_date";
 
@@ -326,14 +334,13 @@ angular.module('myApp.controllers', []).
 
   }])
   .controller('inventoryhome', ['$scope', '$http', function($scope, $http) {
-	  var computers = api_call($http, 'inventory/all/Computer/', 'get');
+	    $scope.search = null;
+      var computers = api_call($http, 'inventory/all/Computer/', 'get');
       var unit = api_call($http, 'inventory/all/Unit/', 'get');
       var fw = api_call($http, 'inventory/all/Firewall/', 'get');
       var switches = api_call($http, 'inventory/all/Switch/', 'get');
       var router = api_call($http, 'inventory/all/Router/', 'get');
-      var x;
-      var y;
-			
+      
       computers.success(function(data) {
           $scope.computers = data
       });
@@ -384,8 +391,8 @@ angular.module('myApp.controllers', []).
   			data.description = $scope.description;
   			data.due_date = $scope.due_date;
   			data.request_Type = $scope.request_type;
+        data.upload = $scope.file;
         data.request_status = 'Pending';
-        data = $.param(data);
   			var form_post = api_call($http, 'request/derp/', 'post', data);
         form_post.success(function(data) {
           $scope.formResponse = "Your request has been submitted. A Lab Aide or Lab Tech will be assigned to your request soon";

@@ -21,6 +21,8 @@ nav .menu li a:hover {background-color:#ccc;}
 /* Content */
 .soon {font-size:4em; font-weight:bold;}
 
+.loading {position:absolute; top:45%; left:45%; background-image:url('../img/loading.gif'); width:80px; height:80px;}
+
 #content {margin-left:175px; min-height:800px; position:relative;}
 .timesheet caption {text-align:left; font-size:2em; font-weight:bold;}
 .timesheet {border:1px solid #ccc; border-radius:6px; box-shadow:0 1px 1px #ccc; margin:0 auto;}

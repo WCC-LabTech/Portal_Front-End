@@ -27,14 +27,15 @@
         <tr>
             <th>Due Date</th>
             <th>Subject</th>
-            <th>Complete</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="entry in user_requests | orderBy:'due_date'">
             <td ng-click="$parent.desc = true; $parent.description = entry.description; $parent.subject = entry.subject;" class="entries">{{entry.due_date}}</td>
             <td ng-click="$parent.desc = true; $parent.description = entry.description; $parent.subject = entry.subject;" class="entries">{{entry.subject}}</td>
-            <td class="entries"><input type="button" ng-click="complete(entry.pk);" value="Complete Request" /></td>
+            <td class="entries" ng-show="entry.complete"><input type="button" ng-click="complete(entry.pk);" value="Complete Request" /></td>
+            <td class="entries" ng-show="entry.accept"><input type="button" ng-click="accept(entry.pk);" value="Accept Request" /></td>
         </tr>
     </tbody>
 </table>
@@ -43,4 +44,8 @@
     <div class="close"><a href="#" ng-click="desc = false;" onclick="return false;">X - Close</a></div>
     <h2>{{subject}}</h2>
     <p>{{description}}</p>
+</div>
+
+<div class="loading" ng-show="loading">
+    <p>{{error}}</p>
 </div>

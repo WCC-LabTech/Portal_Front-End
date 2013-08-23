@@ -334,7 +334,7 @@ angular.module('myApp.controllers', []).
 
   }])
   .controller('inventoryhome', ['$scope', '$http', function($scope, $http) {
-	    $scope.search = null;
+	    $scope.search = false;
       var computers = api_call($http, 'inventory/all/Computer/', 'get');
       var unit = api_call($http, 'inventory/all/Unit/', 'get');
       var fw = api_call($http, 'inventory/all/Firewall/', 'get');
@@ -343,9 +343,6 @@ angular.module('myApp.controllers', []).
       
       computers.success(function(data) {
           $scope.computers = data
-      });
-      unit.success(function(data) {
-          $scope.unit = data;
       });
       fw.success(function(data) {
           $scope.fw = data;
@@ -412,6 +409,8 @@ angular.module('myApp.controllers', []).
   		}
   }])
   .controller('requests', ['$scope', '$http', function($scope, $http) {
+    $scope.loading = true;
+    $scope.predicate = 'description';
     var currentUser;
     var requests;
     var user_req;
@@ -424,9 +423,6 @@ angular.module('myApp.controllers', []).
       currentUser = $.grep(users, function(e) {return e.username == readCookie('username')});
       currentUser = currentUser['0'].id;
       //currentUser = get_id(currentUser.substring(0, currentUser.length - 1));
-    });
-    $scope.predicate = 'description';
-    setTimeout(function() {
       requests = api_call($http, 'request/admin/', 'get');
     	requests.success(function(response) {
         response = request_adjust(response, users);
@@ -436,8 +432,12 @@ angular.module('myApp.controllers', []).
       user_req.success(function(data) {
         data = user_req_adjust(data.requests, users);
         $scope.user_requests = data;
+        $scope.loading = false;
       });
-    }, 100);
+      user_req.error(function(data, status) {
+        $scope.error = "There was an error loading requests";
+      });
+    });
     
       
     $scope.accept = function(id) {

@@ -219,6 +219,13 @@ function user_req_adjust(data, users) {
       data.splice(x, 1);
       continue;
     }
+
+    if (data[x].request_status == "Pending") {
+      data[x].accept = true;
+    }
+    if (data[x].request_status == "Approved") {
+      data[x].complete = true;
+    }
   }
   return data;
 }

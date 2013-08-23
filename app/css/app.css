@@ -96,6 +96,9 @@ nav .menu li a:hover {background-color:#ccc;}
 footer {text-align:center;}
 
 
+/* Angular JS */
+[ng\:cloak], [ng-cloak], .ng-cloak {display: none !important;}
+
 
 /* Date Picker */
 .ui-datepicker {

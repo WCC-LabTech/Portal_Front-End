@@ -21,7 +21,9 @@ nav .menu li a:hover {background-color:#ccc;}
 /* Content */
 .soon {font-size:4em; font-weight:bold;}
 
-#content {margin-left:175px; min-height:800px;}
+.loading {position:absolute; top:45%; left:45%; background-image:url('../img/loading.gif'); width:80px; height:80px;}
+
+#content {margin-left:175px; min-height:800px; position:relative;}
 .timesheet caption {text-align:left; font-size:2em; font-weight:bold;}
 .timesheet {border:1px solid #ccc; border-radius:6px; box-shadow:0 1px 1px #ccc; margin:0 auto;}
 .timesheet td, .timesheet th { border-left: 1px solid #ccc; border-top: 1px solid #ccc; text-align: left;}
@@ -47,6 +49,10 @@ nav .menu li a:hover {background-color:#ccc;}
 .timesheet td a {display:block; padding:10px;}
 .timesheet .entries td, .timesheet .entries, .timesheet .total td{padding:10px;}
 .timesheet .total td:first-child {text-align: right; font-weight:bold;}
+
+.requests {position:absolute; top:25px; right:10px;}
+
+.user-requests {position:absolute; top:25px; left:10px;}
 
 .form_response {position:absolute; width:500px; left:50%; margin-left:-250px; font-size:1.2em;}
 
@@ -89,6 +95,9 @@ nav .menu li a:hover {background-color:#ccc;}
 /* Footer */
 footer {text-align:center;}
 
+
+/* Angular JS */
+[ng\:cloak], [ng-cloak], .ng-cloak {display: none !important;}
 
 
 /* Date Picker */

@@ -57,14 +57,17 @@
         						<!--<option ng-repeat="category in categories" value="{{category.url}}">{{category.name}}</option>-->
                            </select></div>
         <div class="clearB"></div>
-        <div class="label">Start Time:</div>
-        <div class="input"><input ui-timepicker tabindex="20" type="time" value="00:00:00" id="start_time" ng-model="start_time" name="start_time" required /></div>
-        <div class="clearB"></div>
-        <div class="label">End Time:</div>
-        <div class="input"><input ui-datetime tabindex="30" type="time" value="00:00:00" id="end_time" ng-model="end_time" name="end_time" required/></div>
-        <div class="clearB"></div>
         <div class="label">Start Date:</div> 
-        <div class="input"><input ui-date ui-date-format="yy-mm-dd" tabindex="40" type="text" id="start_date" ng-model="start_date" name="start_date" required/></div>
+        <div class="input date"><input ui-date ui-date-format="yy-mm-dd" tabindex="40" type="text" id="date" ng-model="start_date" name="start_date" required/></div>
+        <div class="label time">Start Time:</div>
+        <div class="input time-input"><input ui-timepicker tabindex="20" type="time" value="00:00:00" id="time" ng-model="start_time" name="start_time" required /></div>
+        <div class="clearB"></div>
+        <div class="label">End Date:</div> 
+        <div class="input date"><input ui-date ui-date-format="yy-mm-dd" tabindex="40" type="text" id="date" ng-model="end_date" name="end_date" required/></div>
+        <div class="label time">End Time:</div>
+        <div class="input time-input"><input ui-datetime tabindex="30" type="time" value="00:00:00" id="time" ng-model="end_time" name="end_time" required/></div>
+        <div class="clearB"></div>
+        
         <div class="clearB"></div>
 	<div class="label">On Campus?</div>
 	<div class="input"><input type="checkbox" tabindex="50" ng-model="on_campus" /></div>

@@ -94,14 +94,18 @@ angular.module('myApp.controllers', []).
 	
 	    };
 	
-	$scope.logout = function() { 
-		setCookie('username', null);
-		//setCookie('groups', null);
-		setCookie('Authorization', null);
-    setCookie('userId', null);
-		$http.defaults.headers.common['Authorization'] = null;
-		document.location.reload(true);
-	}
+  	$scope.logout = function() { 
+  		setCookie('username', null);
+  		//setCookie('groups', null);
+  		setCookie('Authorization', null);
+      setCookie('userId', null);
+  		$http.defaults.headers.common['Authorization'] = null;
+  		document.location.reload(true);
+  	}
+    $scope.forgot = function() {
+
+    }
+
   }])
   .controller('nav', ['$scope', function($scope) {
 	  var loggedin = is_loggedIn();
@@ -180,9 +184,11 @@ angular.module('myApp.controllers', []).
       var data = {};
       var id = $scope.updateValue;
       data.category = $scope.category;
-      data.start_time = $scope.start_time + ":00";
-      data.end_time = $scope.end_time + ":00";
-      data.start_date = $scope.start_date;
+      //data.start_time = $scope.start_time + ":00";
+      //data.end_time = $scope.end_time + ":00";
+      //data.start_date = $scope.start_date;
+      data.start = new Date($scope.start_date + " " + $scope.start_tme);
+      data.end = new Date($scope.end_date + " " + $scope.end_time);
                   
                   if ($scope.on_campus.checked == true) {
                             data.on_campus = true;
@@ -482,4 +488,38 @@ angular.module('myApp.controllers', []).
       }, 200);
     }
 
-  }]);
+}])
+.controller('rst_password', ['$scope', '$http', function($scope, $http) {
+  $scope.formSubmit = function() {
+    var reset;
+    var data = {}
+    data.username = $scope.user;
+    reset = api_call($http, 'password/request_link/', 'post', data);
+    reset.success(function() {
+      $scope.message = "A link has been sent to your email address to reset your password";
+    });
+    reset.error(function(data, status) {
+      $scope.message = "There was an error sending your request";
+    })
+  }
+}])
+.controller('password', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+  $scope.message = null;
+    
+    $scope.formSubmit = function() {
+      if ($scope.password == $scope.check) {
+        var data = {};
+        data.password = $scope.password;
+        data.link = $routeParams.link;
+        var chgPwrd = api_call($http, 'password/reset/', 'post', data);
+        chgPwrd.success(function() {
+          $scope.message = "Your password has been updated. You can log in now";
+        });
+        chgPwrd.error(function(data, status) {
+          $scope.message = "There was an error with changing your password. Please try again.";
+        })
+      } else {
+        $scope.message = "Password Verification does not match.";
+      }
+    }
+}]);  

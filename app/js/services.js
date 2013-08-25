@@ -18,6 +18,7 @@ angular.module('myApp.services', []).
 	 });
 	  
   }]);
+angular.module('app', ['ngRoute']);
 
 function api_url(api) {
 	var url;

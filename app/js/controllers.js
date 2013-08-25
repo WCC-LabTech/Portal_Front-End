@@ -258,7 +258,6 @@ angular.module('myApp.controllers', []).
               data.name = $scope.name;
               data.start = $scope.start_date;
               data.end = $scope.end_date;
-              data = $.param(data);
               api_call($http, 'add/', 'post', data);
               $scope.period = false;
               setTimeout(function() {
@@ -496,6 +495,7 @@ angular.module('myApp.controllers', []).
     data.username = $scope.user;
     reset = api_call($http, 'password/request_link/', 'post', data);
     reset.success(function() {
+      $scope.hide = true;
       $scope.message = "A link has been sent to your email address to reset your password";
     });
     reset.error(function(data, status) {
@@ -513,6 +513,7 @@ angular.module('myApp.controllers', []).
         data.link = $routeParams.link;
         var chgPwrd = api_call($http, 'password/reset/', 'post', data);
         chgPwrd.success(function() {
+          $scope.hide = true;
           $scope.message = "Your password has been updated. You can log in now";
         });
         chgPwrd.error(function(data, status) {

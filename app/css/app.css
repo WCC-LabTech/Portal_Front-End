@@ -73,6 +73,7 @@ nav .menu li a:hover {background-color:#ccc;}
 .entry_form_full .label {float:left; margin-left:50px; width:200px; padding-bottom:15px;}
 .entry_form_full .input {float:left; width:200px; padding-bottom:15px;}
 .entry_form_full .submit {text-align: right; margin-right:50px;}
+.entry_form_full h3 {margin-bottom:20px; text-align: center; }
 
 .controls {width: 90%; text-align: center; margin:25px auto;}
 .controls .option ul {list-style: none;}

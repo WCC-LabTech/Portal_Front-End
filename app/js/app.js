@@ -14,6 +14,8 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
 
 	$routeProvider.when('/facrequest', {templateUrl: 'partials/facrequest/home.html', controller: 'requests'});
 	$routeProvider.when('/request', {templateUrl: 'partials/facrequest/request.html', controller: 'requestform'});
+	$routeProvider.when('/rst_password', {templateUrl: 'partials/password/reset.html', controller: 'rst_password'});
+	$routeProvider.when('/chg_password', {templateUrl: 'partials/password/home.html', controller: 'password'});
 
     $routeProvider.otherwise({redirectTo: '/home'});
   }]);

@@ -18,6 +18,7 @@ angular.module('myApp.services', []).
 	 });
 	  
   }]);
+angular.module('app', ['ngRoute']);
 
 function api_url(api) {
 	var url;
@@ -154,7 +155,6 @@ function get_username($http, data) {
   user.success(function(username) {
       returnuser = username.username;
   });
-  console.log(returnuser);
 }
 
 function sort_reports(data) {

@@ -39,7 +39,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/js/services.js",
 			"settings":
 			{
-				"buffer_size": 4749,
+				"buffer_size": 5857,
 				"line_ending": "Unix"
 			}
 		},
@@ -47,7 +47,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
 			"settings":
 			{
-				"buffer_size": 17252,
+				"buffer_size": 18713,
 				"line_ending": "Unix"
 			}
 		},
@@ -55,7 +55,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/periods.html",
 			"settings":
 			{
-				"buffer_size": 5243,
+				"buffer_size": 5545,
 				"line_ending": "Unix"
 			}
 		},
@@ -63,7 +63,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/inventory/home.html",
 			"settings":
 			{
-				"buffer_size": 14823,
+				"buffer_size": 12094,
 				"line_ending": "Unix"
 			}
 		},
@@ -71,7 +71,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/adminperiods.html",
 			"settings":
 			{
-				"buffer_size": 1437,
+				"buffer_size": 788,
 				"line_ending": "Unix"
 			}
 		},
@@ -79,7 +79,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/css/app.css",
 			"settings":
 			{
-				"buffer_size": 11815,
+				"buffer_size": 12384,
 				"line_ending": "Unix"
 			}
 		},
@@ -87,7 +87,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
 			"settings":
 			{
-				"buffer_size": 1837,
+				"buffer_size": 2871,
 				"line_ending": "Unix"
 			}
 		},
@@ -95,7 +95,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/request.html",
 			"settings":
 			{
-				"buffer_size": 1712,
+				"buffer_size": 1719,
 				"line_ending": "Unix"
 			}
 		},
@@ -103,7 +103,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/index.html",
 			"settings":
 			{
-				"buffer_size": 3388,
+				"buffer_size": 3442,
 				"line_ending": "Unix"
 			}
 		},
@@ -111,7 +111,7 @@
 			"file": "/opt/lampp/htdocs/labaide/app/js/app.js",
 			"settings":
 			{
-				"buffer_size": 1271,
+				"buffer_size": 1494,
 				"line_ending": "Unix"
 			}
 		},
@@ -220,6 +220,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"console.log\n\nconsole.log",
+			"console.log\n\n",
+			"console.log",
+			"add/",
+			"list/",
+			"/list",
 			"console\nconsole.log",
 			"});\n",
 			"8.33",
@@ -242,7 +248,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -250,15 +256,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/services.js",
 					"settings":
 					{
-						"buffer_size": 4749,
+						"buffer_size": 5857,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								583,
-								583
+								3822,
+								3822
 							]
 						],
 						"settings":
@@ -268,7 +274,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2414.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -278,15 +284,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/controllers.js",
 					"settings":
 					{
-						"buffer_size": 17252,
+						"buffer_size": 18713,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								11649,
+								11649
 							]
 						],
 						"settings":
@@ -296,7 +302,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 7780.0,
+						"translation.y": 5083.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -306,15 +312,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/periods.html",
 					"settings":
 					{
-						"buffer_size": 5243,
+						"buffer_size": 5545,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1969,
-								1969
+								0,
+								0
 							]
 						],
 						"settings":
@@ -334,7 +340,7 @@
 					"file": "/opt/lampp/htdocs/labaide/app/partials/inventory/home.html",
 					"settings":
 					{
-						"buffer_size": 14823,
+						"buffer_size": 12094,
 						"regions":
 						{
 						},
@@ -362,15 +368,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/partials/timesheets/adminperiods.html",
 					"settings":
 					{
-						"buffer_size": 1437,
+						"buffer_size": 788,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								555,
-								555
+								742,
+								742
 							]
 						],
 						"settings":
@@ -390,15 +396,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/css/app.css",
 					"settings":
 					{
-						"buffer_size": 11815,
+						"buffer_size": 12384,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4393,
-								4393
+								0,
+								0
 							]
 						],
 						"settings":
@@ -416,7 +422,7 @@
 					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/home.html",
 					"settings":
 					{
-						"buffer_size": 1837,
+						"buffer_size": 2871,
 						"regions":
 						{
 						},
@@ -445,15 +451,15 @@
 					"file": "/opt/lampp/htdocs/labaide/app/partials/facrequest/request.html",
 					"settings":
 					{
-						"buffer_size": 1712,
+						"buffer_size": 1719,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								590,
-								590
+								0,
+								0
 							]
 						],
 						"settings":
@@ -472,7 +478,7 @@
 					"file": "/opt/lampp/htdocs/labaide/app/index.html",
 					"settings":
 					{
-						"buffer_size": 3388,
+						"buffer_size": 3442,
 						"regions":
 						{
 						},
@@ -500,7 +506,7 @@
 					"file": "/opt/lampp/htdocs/labaide/app/js/app.js",
 					"settings":
 					{
-						"buffer_size": 1271,
+						"buffer_size": 1494,
 						"regions":
 						{
 						},

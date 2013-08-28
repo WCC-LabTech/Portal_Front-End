@@ -10,7 +10,7 @@ angular.module('myApp.controllers', []).
 		var data;
 		var periods;
                 var x;
-		data = api_call($http, 'list/', 'get');
+		data = api_call($http, 'payperiod/list/', 'get');
 		data.success(function(response) {
                     //    for (x in response) {
                     //        response[x].id = get_id(response[x].url);
@@ -247,7 +247,7 @@ angular.module('myApp.controllers', []).
   .controller('tsadmin', ['$scope', '$http', function($scope, $http) {
 	  var payperiods;
 	  var x;
-          payperiods = api_call($http, 'list/', 'get');
+          payperiods = api_call($http, 'payperiod/list/', 'get');
           payperiods.success(function(periods) {
              $scope.periods = periods.pay_periods;
           });
@@ -258,13 +258,13 @@ angular.module('myApp.controllers', []).
               data.name = $scope.name;
               data.start = $scope.start_date;
               data.end = $scope.end_date;
-              api_call($http, 'add/', 'post', data);
+              api_call($http, 'payperiod/add/', 'post', data);
               $scope.period = false;
               setTimeout(function() {
-                            payperiods = api_call($http, 'list/', 'get');
-                            payperiods.success(function(periods) {
-                                          $scope.periods = periods.pay_periods;
-                            });
+                payperiods = api_call($http, 'payperiod/list/', 'get');
+                payperiods.success(function(periods) {
+                  $scope.periods = periods.pay_periods;
+                });
               }, 500);
               
           }
@@ -272,8 +272,11 @@ angular.module('myApp.controllers', []).
 		  $scope.catSubmit = function() {
 			  var data = {};
 			  data.name = $scope.catName;
-			  data.is_project = $scope.is_project;
-
+        if ($scope.is_project === true) {
+			    data.is_project = true;
+        } else {
+          data.is_project = false;
+        }
 			  api_call($http, 'category/add/', 'post', data);
 			  $scope.category = false;
 		  }
@@ -303,29 +306,34 @@ angular.module('myApp.controllers', []).
               period = readCookie('period');
               $scope.period = readCookie('periodName');
               setTimeout(function() {
-              	entries = api_call($http, 'report/timesheet/' + period + '/', 'get');
+              	entries = api_call($http, 'report/workevent/payperiod/' + period + '/', 'get');
               	entries.success(function(entry) {
+                  /*
                		for (x in entry) {
-               			username = $.grep($scope.users, function(e) {return e.url == 'http://home.cspuredesign.com:8080' + entry[x].user});
+               			  //username = $.grep($scope.users, function(e) {return e.url == 'http://home.cspuredesign.com:8080' + entry[x].user});
                     
-               		    entry[x].user = username['0'].first_name + ' ' + username['0'].last_name;
-               		    entry[x].category = 'http://home.cspuredesign.com:8080' + entry[x].category;
+               		    //entry[x].user = username['0'].first_name + ' ' + username['0'].last_name;
+               		    //entry[x].category = 'http://home.cspuredesign.com:8080' + entry[x].category;
                		    entry[x] = adjustEntry(entry[x], $scope.categories);
                		}
-              		complete = sort_reports(entry);
-              		for (z in complete) {
+                  */
+              		//entry = sort_reports(entry);
+                  /*
+              		for (z in entry) {
               			total = 0;
-              			for (y in complete[z]) {
-              				if (complete[z][y].total != null) {
-	              				total += complete[z][y].total;
+              			for (y in entry[z].events) {
+              				if (entry[z].events[y].duration != null) {
+	              				total += entry[z].events[y].duration;
 	              			}
               			}
-              			complete[z].total = total;
+              			entry[z].total = total;
 
               		}
-              		$scope.entries = complete;
+                  */
+                  $scope.entries = entry;
 
-              	});
+                  });
+
               }, 50);
 
               $scope.predicate = "start_date";
@@ -395,7 +403,7 @@ angular.module('myApp.controllers', []).
   			data.description = $scope.description;
   			data.due_date = $scope.due_date;
   			data.request_Type = $scope.request_type;
-        data.upload = $scope.file;
+        data.upload = null;
         data.request_status = 'Pending';
   			var form_post = api_call($http, 'request/derp/', 'post', data);
         form_post.success(function(data) {

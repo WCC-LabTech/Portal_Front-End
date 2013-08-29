@@ -22,7 +22,7 @@ angular.module('app', ['ngRoute']);
 
 function api_url(api) {
 	var url;
-	url = "http://home.cspuredesign.com:8080/" + api;
+	url = "http://bosapp.wccnet.edu:8080/" + api;
 	return url;
 }
 
